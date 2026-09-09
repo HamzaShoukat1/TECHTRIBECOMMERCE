@@ -24,12 +24,12 @@ export type IPRODUCTDETAIL = {
     productPrice: number;
     productImage: {
         url: string;
-        
-    } 
+
+    }
     productDescription: string;
     productReviews?: string[];
     productSizes: ("L" | "XL" | "XS")[];
-    productColors?: string[];
+    productColors?: ("blue" | "black" | "green")[]
     productQuantity: number;
     createdAt: string;
     updatedAt: string;

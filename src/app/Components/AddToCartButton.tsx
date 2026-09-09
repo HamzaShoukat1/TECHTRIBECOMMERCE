@@ -1,21 +1,46 @@
 "use client";
 
-import { useCart } from "../context/cartContext";
-import type { CartItem } from "../context/cartContext";
+import { useCart, type CartItem } from "../context/cartContext";
+import { AddToCart } from "../services/Cart.Service";
 
 type ProductProps = {
-    product: CartItem;
-    quantity: number
+    product: CartItem
+    quantity: number;
+    selectedSize: string | null;
+    selectedColor: string | null;
+
 };
 
-export default function AddToCartButton({ product, quantity }: ProductProps) {
+export default function AddToCartButton({
+    product,
+    quantity,
+    selectedSize,
+    selectedColor,
+}: ProductProps) {
+
     const { addToItem } = useCart();
 
-    const handleClick = () => {
-        addToItem({
-            ...product,
-            productQuantity: quantity,
-        });
+    const handleClick = async () => {
+        try {
+            const response = await AddToCart(
+                product._id,
+                quantity,
+                selectedSize,
+                selectedColor
+            );
+
+            console.log("Cart response:", response);
+
+            addToItem({
+                ...product,
+                productQuantity: quantity,
+                selectedColor,
+                selectedSize,
+            });
+
+        } catch (error) {
+            console.error("Failed to add product to cart:", error);
+        }
     };
 
     return (

@@ -1,8 +1,8 @@
+
 "use client";
 
 import { createContext, useContext, useState } from "react";
 import { useLocalStorage } from "../hooks/Uselocalstorage";
-
 
 export type CartItem = {
     _id: string;
@@ -11,11 +11,14 @@ export type CartItem = {
     productImage: {
         url: string;
     };
+
     productDescription: string;
     productReviews?: string[];
     productSizes: ("L" | "XL" | "XS")[];
-    productColors?: string[];
+    productColors?: ("blue" | "black" | "green")[];
     productQuantity: number;
+    selectedSize: string | null;
+    selectedColor: string | null;
     createdAt: string;
     updatedAt: string;
 };
@@ -23,24 +26,39 @@ export type CartItem = {
 type CartContextType = {
     isOpen: boolean;
     setIsOpen: (open: boolean) => void;
+
     cart: CartItem[];
+
     addToItem: (item: CartItem) => void;
+
     removeItem: (id: string) => void;
+
     increaseQuantity: (id: string) => void;
+
     decreaseQuantity: (id: string) => void;
+
     subtotal: number;
+
     isInitialized: boolean;
 };
 
 const CartContext = createContext<CartContextType>({
     isOpen: false,
+
     setIsOpen: () => { },
+
     cart: [],
+
     addToItem: () => { },
+
     removeItem: () => { },
+
     increaseQuantity: () => { },
+
     decreaseQuantity: () => { },
+
     subtotal: 0,
+
     isInitialized: false,
 });
 
@@ -50,23 +68,31 @@ export const CartProvider = ({
     children: React.ReactNode;
 }) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [cart, setCart, isInitialized] = useLocalStorage<CartItem[]>("shopping_cart", []);
 
-
-
-
-
+    const [cart, setCart, isInitialized] = useLocalStorage<CartItem[]>(
+        "shopping_cart",
+        []
+    );
 
     const addToItem = (item: CartItem) => {
         setCart((prev) => {
-            const existing = prev.find((i) => i._id === item._id);
+
+            const existing = prev.find(
+                (i) =>
+                    i._id === item._id &&
+                    i.selectedSize === item.selectedSize &&
+                    i.selectedColor === item.selectedColor
+            );
 
             if (existing) {
                 return prev.map((i) =>
-                    i._id === item._id
+                    i._id === item._id &&
+                        i.selectedSize === item.selectedSize &&
+                        i.selectedColor === item.selectedColor
                         ? {
                             ...i,
-                            productQuantity: i.productQuantity + 1,
+                            productQuantity:
+                                i.productQuantity + item.productQuantity,
                         }
                         : i
                 );
@@ -84,14 +110,19 @@ export const CartProvider = ({
     };
 
     const removeItem = (id: string) => {
-        setCart((prev) => prev.filter((item) => item._id !== id));
+        setCart((prev) =>
+            prev.filter((item) => item._id !== id)
+        );
     };
 
     const increaseQuantity = (id: string) => {
         setCart((prev) =>
             prev.map((item) =>
                 item._id === id
-                    ? { ...item, productQuantity: item.productQuantity + 1 }
+                    ? {
+                        ...item,
+                        productQuantity: item.productQuantity + 1,
+                    }
                     : item
             )
         );
@@ -102,14 +133,22 @@ export const CartProvider = ({
             prev
                 .map((item) =>
                     item._id === id
-                        ? { ...item, productQuantity: item.productQuantity - 1 }
+                        ? {
+                            ...item,
+                            productQuantity:
+                                item.productQuantity - 1,
+                        }
                         : item
                 )
                 .filter((item) => item.productQuantity > 0)
         );
     };
 
-    const subtotal = cart.reduce((total, item) => total + item.productPrice * item.productQuantity, 0);
+    const subtotal = cart.reduce(
+        (total, item) =>
+            total + item.productPrice * item.productQuantity,
+        0
+    );
 
     return (
         <CartContext.Provider

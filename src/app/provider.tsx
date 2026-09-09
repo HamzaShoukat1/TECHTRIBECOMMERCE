@@ -11,14 +11,14 @@ const queryClient = new QueryClient({
     }
   }
 })
-// const localStoragePersister = createAsyncStoragePersister({
-//   storage: typeof window !== "undefined" ? window.localStorage : undefined,
-// })
+const localStoragePersister = createAsyncStoragePersister({
+  storage: typeof window !== "undefined" ? window.localStorage : undefined,
+})
 
-// persistQueryClient({
-//   queryClient,
-//   persister: localStoragePersister,
-// })
+persistQueryClient({
+  queryClient,
+  persister: localStoragePersister,
+})
 export default function Providers({ children }: { children: React.ReactNode }) {
 
   return (

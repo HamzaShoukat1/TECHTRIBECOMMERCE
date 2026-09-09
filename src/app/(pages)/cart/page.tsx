@@ -41,8 +41,8 @@ export default function CartPage() {
                             ) : (
                                 cart.map((item) => (
                                     <div
-                                    key={item._id}
-                                    className="flex flex-col gap-4 border-b border-gray-100 pb-6 md:border-none md:pb-0 md:grid md:grid-cols-[2.5fr_1fr_1fr_1.2fr_50px] md:items-center md:px-8 md:py-4"
+                                        key={item._id}
+                                        className="flex flex-col gap-4 border-b border-gray-100 pb-6 md:border-none md:pb-0 md:grid md:grid-cols-[2.5fr_1fr_1fr_1.2fr_50px] md:items-center md:px-8 md:py-4"
                                     >
                                         {/* Column 1: Image & Name */}
                                         <div className="flex items-center gap-4 sm:gap-8">

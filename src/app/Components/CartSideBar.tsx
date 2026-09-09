@@ -48,28 +48,28 @@ export default function CartSidebar() {
 
                             {cart.map((item, index) => (
 
-                                
+
                                 <div
-                                key={item._id ?? index}
+                                    key={item._id ?? index}
                                     className="flex items-center gap-7"
                                 >
 
                                     {/* Product Image */}
-                                  <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[16px] bg-[#F4EEDF]">
-    {item.productImage?.url ? (
-        <Image
-            src={item.productImage.url}
-            alt={item.productName}
-            width={96}
-            height={96}
-            className="h-full w-full object-cover"
-        />
-    ) : (
-        <div className="flex h-full w-full items-center justify-center text-xs text-gray-400">
-            No image
-        </div>
-    )}
-</div>
+                                    <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[16px] bg-[#F4EEDF]">
+                                        {item.productImage?.url ? (
+                                            <Image
+                                                src={item.productImage.url}
+                                                alt={item.productName}
+                                                width={96}
+                                                height={96}
+                                                className="h-full w-full object-cover"
+                                            />
+                                        ) : (
+                                            <div className="flex h-full w-full items-center justify-center text-xs text-gray-400">
+                                                No image
+                                            </div>
+                                        )}
+                                    </div>
 
                                     {/* Product Details */}
                                     <div className="min-w-0 flex-1">
