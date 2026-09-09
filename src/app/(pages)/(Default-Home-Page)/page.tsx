@@ -5,9 +5,11 @@ import sectionImage from "../../public/images/scandinavian-interior-mockup-wall-
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import { IMAGES_DATA, PRODUCT_IMAGE_DATA, rect36, rect37, rect38, rect39, rect40, rect41, rect43, rect44, rect45 } from "../../utils/index"
+import { IMAGES_DATA, rect36, rect37, rect38, rect39, rect40, rect41, rect43, rect44, rect45 } from "../../utils/index"
 import RoomCarousel from '../../Components/RoomCarousal';
 import ProductCard from '../../Components/ProductCard';
+import { getAllProducts } from '../../services/product.service';
+import type { IProduct, IProductResponse } from '../../utils/Types';
 
 
 
@@ -23,7 +25,10 @@ import ProductCard from '../../Components/ProductCard';
 
 
 
-export default function Page() {
+export default async function Page() {
+  const productsResponse: IProductResponse = await getAllProducts();
+  const products = productsResponse?.AllProducts?.slice(0, 8) ?? [];
+
   return (
     <main className="w-full min-h-screen bg-white space-y-[32px]">
       {/* Hero Section */}
@@ -95,16 +100,14 @@ export default function Page() {
         <h2 className='font-bold text-[40px] flex justify-center pb-3'>Our Products</h2>
         <div className='grid grid-cols-1 gap-[32px]  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center mx-auto'>
 
-          {PRODUCT_IMAGE_DATA.map(ProductData => (
+          {products.map((product: IProduct) => (
             <ProductCard
-              id={ProductData.id}
-              key={ProductData.id}
-              Label={ProductData.Label ?? ""}
-              image={ProductData.image}
-              heading={ProductData.heading}
-              paragraph={ProductData.paragraph}
-              price={ProductData.price}
-              cutPrice={ProductData.cutPrice}
+              id={product._id}
+              key={product._id}
+              image={product.productImage.url}
+              heading={product.productName}
+              paragraph={product.productDescription || ""}
+              price={product.productPrice}
 
             />
           ))}

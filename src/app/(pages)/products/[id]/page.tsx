@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 import { FaFacebook, FaLinkedin, FaTwitter } from 'react-icons/fa'
 import ProductInteractiveSection from '@/src/app/Components/ProductInteractivity'
 import ReusableBanner from '@/src/app/Components/ReusableBanner'
@@ -8,13 +9,17 @@ import { IPRODUCTDETAIL } from '@/src/app/utils/Types'
 export default async function ProductDetailsPage({ params }: any) {
     const { id } = await params
 
+    if (!/^[a-f\d]{24}$/i.test(id)) {
+        notFound()
+    }
+
     const singleProduct: IPRODUCTDETAIL = await getSingleProduct(id)
     const ProductArray: IPRODUCTDETAIL = singleProduct || {} as IPRODUCTDETAIL
 
     const heading = ProductArray.productName || "Asgaard sofa"
     const price = ProductArray.productPrice || "Rs. 250,000.00"
     const description = ProductArray.productDescription
-    const image = ProductArray.productImage
+    const image = ProductArray.productImage.url
 
     return (
         <>

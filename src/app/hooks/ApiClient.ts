@@ -15,7 +15,5 @@ export async function ApiClient(url: string, options?: RequestInit) {
     }
 
 
-    //   console.log("ers",response)
-    console.log("data", data.data.AllProducts)
-    return data.data
+    return data?.data
 }

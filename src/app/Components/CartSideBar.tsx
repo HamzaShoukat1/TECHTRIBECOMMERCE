@@ -46,33 +46,34 @@ export default function CartSidebar() {
                     ) : (
                         <div className="flex w-full flex-col gap-4">
 
-                            {cart.map((item) => (
+                            {cart.map((item, index) => (
 
                                 
                                 <div
-                                key={item._id}
+                                key={item._id ?? index}
                                     className="flex items-center gap-7"
                                 >
 
                                     {/* Product Image */}
-                                    <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[16px] bg-[#F4EEDF]">
-
-                                        <Image
-                                            src={item.productImage}
-                                            alt={item.productName}
-                                            width={96}
-                                            height={96}
-                                            className="h-full w-full object-cover"
-                                        />
-
-                                    </div>
+                                  <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[16px] bg-[#F4EEDF]">
+    {item.productImage?.url ? (
+        <Image
+            src={item.productImage.url}
+            alt={item.productName}
+            width={96}
+            height={96}
+            className="h-full w-full object-cover"
+        />
+    ) : (
+        <div className="flex h-full w-full items-center justify-center text-xs text-gray-400">
+            No image
+        </div>
+    )}
+</div>
 
                                     {/* Product Details */}
                                     <div className="min-w-0 flex-1">
 
-                                        <h3 className="truncate text-[16px] text-[#111111]">
-                                            {item.productImage}
-                                        </h3>
 
                                         <div className="mt-2 flex items-center gap-3 text-[16px] text-[#717171]">
 

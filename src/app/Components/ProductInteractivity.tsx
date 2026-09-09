@@ -36,7 +36,7 @@ export default function ProductInteractiveSection({ product }: { product: CartIt
             </div>
 
             {/* Your Add to Cart Button */}
-            <AddToCartButton product={product} quantity={product.productQuantity} />
+            <AddToCartButton product={product} quantity={quantity} />
         </div>
     );
 }

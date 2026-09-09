@@ -3,18 +3,14 @@
 import { createContext, useContext, useState } from "react";
 import { useLocalStorage } from "../hooks/Uselocalstorage";
 
-// export type CartItem = {
-//     id: number;
-//     name: string;
-//     price: number;
-//     quantity: number;
-//     image: string | StaticImageData;
-// };
+
 export type CartItem = {
     _id: string;
     productName: string;
     productPrice: number;
-    productImage: string;
+    productImage: {
+        url: string;
+    };
     productDescription: string;
     productReviews?: string[];
     productSizes: ("L" | "XL" | "XS")[];
@@ -70,7 +66,7 @@ export const CartProvider = ({
                     i._id === item._id
                         ? {
                             ...i,
-                            quantity: i.productQuantity + 1,
+                            productQuantity: i.productQuantity + 1,
                         }
                         : i
                 );
@@ -80,7 +76,6 @@ export const CartProvider = ({
                 ...prev,
                 {
                     ...item,
-                    quantity: 1,
                 },
             ];
         });
@@ -96,7 +91,7 @@ export const CartProvider = ({
         setCart((prev) =>
             prev.map((item) =>
                 item._id === id
-                    ? { ...item, quantity: item.productQuantity + 1 }
+                    ? { ...item, productQuantity: item.productQuantity + 1 }
                     : item
             )
         );
@@ -107,7 +102,7 @@ export const CartProvider = ({
             prev
                 .map((item) =>
                     item._id === id
-                        ? { ...item, quantity: item.productQuantity - 1 }
+                        ? { ...item, productQuantity: item.productQuantity - 1 }
                         : item
                 )
                 .filter((item) => item.productQuantity > 0)

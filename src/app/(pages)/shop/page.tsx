@@ -86,7 +86,7 @@ export default async function page() {
             <ProductCard
               id={product._id}
               key={product._id}
-              image={typeof product.productImage === 'string' ? product.productImage : product.productImage}
+              image={product.productImage.url}
               heading={product.productName}
               paragraph={product.productDescription || ""}
               price={product.productPrice}

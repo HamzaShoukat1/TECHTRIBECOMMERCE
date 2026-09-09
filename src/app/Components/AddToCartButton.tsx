@@ -13,11 +13,8 @@ export default function AddToCartButton({ product, quantity }: ProductProps) {
 
     const handleClick = () => {
         addToItem({
-            id: product.id,
-            name: product.name,
-            price: product.price,
-            quantity: quantity,
-            image: product.image,
+            ...product,
+            productQuantity: quantity,
         });
     };
 

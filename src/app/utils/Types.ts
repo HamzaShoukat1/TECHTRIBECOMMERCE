@@ -5,7 +5,9 @@ export type IProduct = {
     _id: string;
     productName: string;
     productPrice: number;
-    productImage: string;
+    productImage: {
+        url: string;
+    };
     productDescription: string;
 
 };
@@ -20,7 +22,10 @@ export type IPRODUCTDETAIL = {
     _id: string;
     productName: string;
     productPrice: number;
-    productImage: string 
+    productImage: {
+        url: string;
+        
+    } 
     productDescription: string;
     productReviews?: string[];
     productSizes: ("L" | "XL" | "XS")[];
