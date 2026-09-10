@@ -1,7 +1,9 @@
 "use client";
 
-import { useCart, type CartItem } from "../context/cartContext";
-import { AddToCart } from "../services/Cart.Service";
+import { toast } from "sonner";
+import { useCart } from "../context/cartContext";
+import { useAddToCart } from "../hooks/useAddtoCart";
+import { CartItem } from "../utils/Types";
 
 type ProductProps = {
     product: CartItem
@@ -18,37 +20,36 @@ export default function AddToCartButton({
     selectedColor,
 }: ProductProps) {
 
-    const { addToItem } = useCart();
+    const { mutate, isPending } = useAddToCart()
+    const { setIsOpen } = useCart();
 
     const handleClick = async () => {
-        try {
-            const response = await AddToCart(
-                product._id,
-                quantity,
-                selectedSize,
-                selectedColor
-            );
+        mutate({
+            productId: product._id,
+            quantity,
+            selectedColor,
+            selectedSize
+        },
+            {
+                onSuccess: () => {
+                    setIsOpen(true);
+                },
+                onError: (err) => {
 
-            console.log("Cart response:", response);
+                }
+            },
 
-            addToItem({
-                ...product,
-                productQuantity: quantity,
-                selectedColor,
-                selectedSize,
-            });
-
-        } catch (error) {
-            console.error("Failed to add product to cart:", error);
-        }
+        )
     };
+
 
     return (
         <button
             onClick={handleClick}
-            className="border border-black font-poppins rounded-[15px] cursor-pointer hover:bg-black hover:text-white transition duration-300 font-normal text-[20px] w-53.75 h-16"
+            disabled={isPending}
+            className="border border-black font-poppins rounded-[15px] cursor-pointer hover:bg-black hover:text-white transition duration-300 font-normal text-[20px] w-53.75 h-16 disabled:opacity-50"
         >
-            Add To Cart
+            {isPending ? "Adding..." : "Add To Cart"}
         </button>
     );
 }

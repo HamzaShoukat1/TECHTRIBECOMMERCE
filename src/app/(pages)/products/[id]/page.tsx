@@ -86,7 +86,7 @@ export default async function ProductDetailsPage({ params }: any) {
                 {/* RIGHT SIDE: Product Info Panel */}
                 <div className='w-full max-w-[606.01px] flex flex-col text-black'>
                     <h1 className='text-[42px] leading-tight font-poppins font-normal mb-1'>{heading}</h1>
-                    <p className='text-[24px] font-medium text-[#9F9F9F] font-poppins mb-3'>{price}</p>
+                    <p className='text-[24px] font-medium text-[#9F9F9F] font-poppins mb-3'>${price}</p>
 
                     {/* Rating System Mock */}
                     <div className='flex items-center gap-4 mb-4 text-[13px] text-[#9F9F9F]'>

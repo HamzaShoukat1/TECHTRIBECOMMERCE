@@ -4,11 +4,29 @@ import Image from "next/image";
 import { useCart } from "../context/cartContext";
 import grouppng from "../public/images/Group.png";
 import Link from "next/link";
+import { useCartQuery } from "../hooks/useCartQuery";
+import { CartItem } from "../utils/Types";
+import { useRemoveCart } from "../hooks/UseRemoveCart";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
+import { useState } from "react";
 
 export default function CartSidebar() {
-    const { isOpen, setIsOpen, cart, removeItem, subtotal } = useCart();
+    const { isOpen, setIsOpen } = useCart();
+    const { data: cart, isLoading, isError, } = useCartQuery()
+    const { mutate: removeFromCart, isPending: isRemoving } = useRemoveCart()
+    const [removingItemId, setRemovingItemId] = useState<string | null>(null);
+
+
+
+    const subtotal = cart?.items.reduce(
+        (total, item) => total + item.productPrice * item.productQuantity,
+        0
+    ) ?? 0;
 
     if (!isOpen) return null;
+
+
 
     return (
         <div className="fixed inset-0 z-50 flex w-full justify-end bg-black/30 ">
@@ -39,18 +57,22 @@ export default function CartSidebar() {
                 {/* Cart Items */}
                 <div className="flex-1 overflow-y-auto px-[26px] py-10">
 
-                    {cart.length === 0 ? (
+                    {isLoading ? (
                         <p className="text-sm text-[#7A7A7A]">
-                            Your cart is empty.
+                            Loading...
+                        </p>
+                    ) : isError ? (
+                        <p className="text-sm text-[#7A7A7A]">
+                            Error loading cart.
                         </p>
                     ) : (
                         <div className="flex w-full flex-col gap-4">
 
-                            {cart.map((item, index) => (
+                            {cart?.items?.map((item: CartItem) => (
 
 
                                 <div
-                                    key={item._id ?? index}
+                                    key={item._id}
                                     className="flex items-center gap-7"
                                 >
 
@@ -86,22 +108,39 @@ export default function CartSidebar() {
                                             </span>
 
                                             <span className="font-medium text-[#D49A20]">
-                                                Rs. {(item.productPrice * item.productQuantity).toLocaleString()}
+                                                ${(item.productPrice * item.productQuantity).toLocaleString()}
                                             </span>
 
                                         </div>
 
                                     </div>
 
-                                    {/* Remove Button */}
                                     <button
-                                        onClick={() => removeItem(item._id)}
-                                        aria-label={`Remove ${item.productName}`}
-                                        className="flex  w-full max-w-[20px] cursor-pointer shrink-0 items-center justify-center rounded-full bg-[#A7A7A7] text-sm font-semibold text-white transition hover:bg-[#111111]"
-                                    >
-                                        ×
-                                    </button>
+                                        onClick={() => {
+                                            setRemovingItemId(item._id);
 
+                                            removeFromCart(item._id, {
+                                                onSuccess: () => {
+                                                    setRemovingItemId(null);
+                                                    toast.success("Item removed from cart");
+                                                },
+                                                onError: () => {
+                                                    setRemovingItemId(null);
+
+                                                    toast.error("Failed to remove item");
+                                                },
+                                            });
+                                        }}
+                                        disabled={isRemoving}
+                                        aria-label={`Remove ${item.productName}`}
+                                        className="flex w-full max-w-[20px] h-5 cursor-pointer shrink-0 items-center justify-center rounded-full bg-[#A7A7A7] text-sm font-semibold text-white transition hover:bg-[#111111] "
+                                    >
+                                        {isRemoving && removingItemId === item._id ? (
+                                            <Loader2 className="h-5 w-5 animate-spin" />
+                                        ) : (
+                                            "×"
+                                        )}
+                                    </button>
                                 </div>
 
                             ))}
@@ -122,7 +161,7 @@ export default function CartSidebar() {
                         </span>
 
                         <span className="font-semibold text-[#D49A20] tracking-normal font-poppins">
-                            Rs. {subtotal.toLocaleString()}
+                            ${subtotal.toLocaleString()}
                         </span>
 
                     </div>

@@ -278,7 +278,7 @@ export default function CheckoutPage() {
                         </span>
 
                         <span className="text-[24px] font-medium">
-                            Rs. {subtotal?.toLocaleString() || "0"}
+                            ${subtotal?.toLocaleString() || "0"}
                         </span>
 
                     </div>
@@ -311,7 +311,7 @@ export default function CheckoutPage() {
                                     </span>
 
                                     <span className="font-light text-[16px]">
-                                        Rs. {(item.price * item.quantity).toLocaleString()}
+                                        ${(item.price * item.quantity).toLocaleString()}
                                     </span>
 
                                 </div>
@@ -328,7 +328,7 @@ export default function CheckoutPage() {
                                 </span>
 
                                 <span className="font-light text-[16px]">
-                                    Rs. {subtotal?.toLocaleString() || "0"}
+                                    ${subtotal?.toLocaleString() || "0"}
                                 </span>
 
                             </div>
@@ -343,7 +343,7 @@ export default function CheckoutPage() {
                                 </span>
 
                                 <span className="text-[24px] font-bold text-[#B88E2F]">
-                                    Rs. {subtotal?.toLocaleString() || "0"}
+                                    ${subtotal?.toLocaleString() || "0"}
                                 </span>
 
                             </div>

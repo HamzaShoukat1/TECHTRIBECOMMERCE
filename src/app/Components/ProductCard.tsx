@@ -42,11 +42,11 @@ export default function ProductCard({ id, Label, image, heading, paragraph, pric
 
                     <div className="flex items-center gap-3">
                         <span className="font-semibold font-poppins text-[20px] text-[#3A3A3A]">
-                            {price}
+                            ${price}
                         </span>
                         {cutPrice && (
                             <span className="font-normal font-poppins text-[16px] text-[#B0B0B0] line-through">
-                                {cutPrice}
+                                ${cutPrice}
                             </span>
                         )}
                     </div>

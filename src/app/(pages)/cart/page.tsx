@@ -1,23 +1,38 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
 import shopPageBanner from "../../public/images/Shop-page-images/Rectangle 1(1).png";
 import Link from "next/link";
 import ReusableBanner from "../../Components/ReusableBanner";
-import { useCart } from "../../context/cartContext";
 import UsableSkeleton from "../../Components/UsableSkeleton";
+import { useCartQuery } from "../../hooks/useCartQuery";
+import { useRemoveCart } from "../../hooks/UseRemoveCart";
+import { toast } from "sonner";
+import { Loader2 } from "lucide-react";
 
 export default function CartPage() {
-    const { cart, subtotal, removeItem, isInitialized } = useCart();
+    const { data: cart, isLoading, isError } = useCartQuery();
+    const { mutate: removeFromCart, isPending: isRemoving } = useRemoveCart();
+    const [removingItemId, setRemovingItemId] = useState<string | null>(null);
+
+    const subtotal = cart?.items.reduce(
+        (total, item) => total + item.productPrice * item.productQuantity,
+        0
+    ) ?? 0;
 
     return (
         <div className="font-poppins bg-white min-h-screen">
             {/* 1. Page Header Hero Banner always stays on top */}
             <ReusableBanner title="Cart" image={shopPageBanner} />
 
-            {!isInitialized ? (
+            {isLoading ? (
                 <UsableSkeleton />
+            ) : isError ? (
+                <p className="px-6 py-16 text-center text-[#9F9F9F]">
+                    Unable to load your cart.
+                </p>
             ) : (
                 <section className="mx-auto flex w-full max-w-[1440px] flex-col gap-8 px-4 py-16 lg:flex-row lg:items-start xl:px-16">
 
@@ -34,12 +49,12 @@ export default function CartPage() {
 
                         {/* Cart Items Iteration */}
                         <div className="mt-6 flex flex-col gap-6">
-                            {cart.length === 0 ? (
+                            {!cart || cart.items.length === 0 ? (
                                 <div className="rounded-md border border-[#EEE3D0] bg-[#F9F1E7]/30 px-6 py-12 text-center text-[18px] text-[#9F9F9F]">
                                     Your cart is currently empty.
                                 </div>
                             ) : (
-                                cart.map((item) => (
+                                cart.items.map((item) => (
                                     <div
                                         key={item._id}
                                         className="flex flex-col gap-4 border-b border-gray-100 pb-6 md:border-none md:pb-0 md:grid md:grid-cols-[2.5fr_1fr_1fr_1.2fr_50px] md:items-center md:px-8 md:py-4"
@@ -55,16 +70,26 @@ export default function CartPage() {
                                                     className="h-full w-full object-cover"
                                                 />
                                             </div>
-                                            <p className="text-[16px] text-[#9F9F9F] font-normal truncate max-w-[180px] sm:max-w-none">
-                                                {item.productName}
-                                            </p>
+                                            <div className="min-w-0">
+                                                <p className="text-[16px] text-[#9F9F9F] font-normal truncate max-w-[180px] sm:max-w-none">
+                                                    {item.productName}
+                                                </p>
+                                                <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[13px] text-[#777777]">
+                                                    {item.selectedSize && (
+                                                        <span>Size: {item.selectedSize}</span>
+                                                    )}
+                                                    {item.selectedColor && (
+                                                        <span>Color: {item.selectedColor}</span>
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
 
                                         {/* Column 2: Price */}
                                         <div className="flex justify-between items-center md:block">
                                             <span className="text-[14px] text-[#9F9F9F] font-medium md:hidden">Price:</span>
                                             <p className="text-[16px] text-[#9F9F9F]">
-                                                Rs. {item.productPrice}.00
+                                                ${item.productPrice}.00
                                             </p>
                                         </div>
 
@@ -80,18 +105,34 @@ export default function CartPage() {
                                         <div className="flex justify-between items-center md:block md:text-right md:pr-4">
                                             <span className="text-[14px] text-[#9F9F9F] font-medium md:hidden">Subtotal:</span>
                                             <p className="text-[16px] font-normal text-black">
-                                                Rs. {(item.productPrice * item.productQuantity).toLocaleString()}.00
+                                                ${(item.productPrice * item.productQuantity).toLocaleString()}.00
                                             </p>
                                         </div>
 
                                         {/* Column 5: Actions */}
                                         <div className="flex justify-end md:justify-center mt-2 md:mt-0">
                                             <button
-                                                onClick={() => removeItem(item._id)}
-                                                aria-label={`Remove ${item.productName}`}
-                                                className="cursor-pointer text-[18px] text-[#B88E2F] transition hover:text-red-600 p-2"
+                                                onClick={() => {
+                                                    setRemovingItemId(item._id);
+                                                    removeFromCart(item._id, {
+                                                        onSuccess: () => {
+                                                            setRemovingItemId(null);
+                                                        toast.success("Item removed from cart");
+                                                        },
+                                                        onError: () => {
+                                                            setRemovingItemId(null);
+                                                        toast.error("Failed to remove item");
+                                                        },
+                                                    });
+                                                }}
+                                                disabled={isRemoving}
+                                                className="cursor-pointer p-2 text-[18px] text-[#B88E2F] transition hover:text-red-600"
                                             >
+                                                {isRemoving && removingItemId === item._id ? (
+                                                    <Loader2 className="h-5 w-5 animate-spin" />
+                                                ) : (
                                                 <FaTrash />
+                                                )}
                                             </button>
                                         </div>
                                     </div>
@@ -110,13 +151,13 @@ export default function CartPage() {
                             <div className="flex items-center justify-between">
                                 <span className="text-[16px] font-medium text-black">Subtotal</span>
                                 <span className="text-[16px] text-[#9F9F9F]">
-                                    Rs. {subtotal?.toLocaleString() || "0"}
+                                    ${subtotal?.toLocaleString() || "0"}
                                 </span>
                             </div>
                             <div className="flex items-center justify-between">
                                 <span className="text-[16px] font-medium text-black">Total</span>
                                 <span className="text-[20px] font-medium text-[#B88E2F]">
-                                    Rs. {subtotal?.toLocaleString() || "0"}
+                                    ${subtotal?.toLocaleString() || "0"}
                                 </span>
                             </div>
                         </div>
