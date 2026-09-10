@@ -8,10 +8,9 @@ type ProductTypes = {
     paragraph: string
     price: number
     Label?: string | StaticImageData
-    cutPrice?: string
 }
 
-export default function ProductCard({ id, Label, image, heading, paragraph, price, cutPrice }: ProductTypes) {
+export default function ProductCard({ id, Label, image, heading, paragraph, price }: ProductTypes) {
     return (
         <Link href={`/products/${id}`} >
             <div className="w-full max-w-[285px] bg-[#F4F5F7] rounded-sm overflow-hidden pb-4">
@@ -44,11 +43,7 @@ export default function ProductCard({ id, Label, image, heading, paragraph, pric
                         <span className="font-semibold font-poppins text-[20px] text-[#3A3A3A]">
                             ${price}
                         </span>
-                        {cutPrice && (
-                            <span className="font-normal font-poppins text-[16px] text-[#B0B0B0] line-through">
-                                ${cutPrice}
-                            </span>
-                        )}
+                       
                     </div>
                 </div>
 

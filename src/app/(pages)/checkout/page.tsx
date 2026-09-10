@@ -7,14 +7,21 @@ import shopPageBanner from '../../public/images/Shop-page-images/Rectangle 1(1).
 import { useCart } from '../../context/cartContext';
 import ReusableBanner from '../../Components/ReusableBanner';
 import UsableSkeleton from '../../Components/UsableSkeleton';
+import { useCartQuery } from '../../hooks/useCartQuery';
 
 
 
 type PaymentMethod = 'bank' | 'cod';
 
 export default function CheckoutPage() {
+    const { data: cart, isLoading, isError } = useCartQuery();
 
-    const { cart, subtotal, isInitialized } = useCart();
+
+    const { isInitialized } = useCart();
+    const subtotal = cart?.items.reduce(
+        (total, item) => total + item.productPrice * item.productQuantity,
+        0
+    ) ?? 0;
 
     const [paymentMethod, setPaymentMethod] =
         useState<PaymentMethod>('bank');
@@ -287,31 +294,31 @@ export default function CheckoutPage() {
                     {/* Products */}
 
                     {!isInitialized ? (
-<UsableSkeleton />
+                        <UsableSkeleton />
 
                     ) : (
 
                         <>
 
-                            {cart.map((item) => (
+                            {cart?.items?.map((item) => (
 
                                 <div
-                                    key={item.id}
+                                    key={item._id}
                                     className="flex justify-between items-center mb-4"
                                 >
 
                                     <span className="text-[#9F9F9F] text-[16px]">
 
-                                        {item.name}
+                                        {item.productName}
 
                                         <strong className="text-black font-medium ml-2">
-                                            × {item.quantity}
+                                            × {item.productQuantity}
                                         </strong>
 
                                     </span>
 
                                     <span className="font-light text-[16px]">
-                                        ${(item.price * item.quantity).toLocaleString()}
+                                        ${(item.productPrice * item.productQuantity).toLocaleString()}
                                     </span>
 
                                 </div>

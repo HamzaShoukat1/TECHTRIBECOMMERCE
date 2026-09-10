@@ -88,9 +88,7 @@ export default function CartPage() {
                                         {/* Column 2: Price */}
                                         <div className="flex justify-between items-center md:block">
                                             <span className="text-[14px] text-[#9F9F9F] font-medium md:hidden">Price:</span>
-                                            <p className="text-[16px] text-[#9F9F9F]">
-                                                ${item.productPrice}.00
-                                            </p>
+                                          
                                         </div>
 
                                         {/* Column 3: Quantity Field */}

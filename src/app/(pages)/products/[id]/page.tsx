@@ -3,11 +3,10 @@ import { notFound } from 'next/navigation'
 import { FaFacebook, FaLinkedin, FaTwitter } from 'react-icons/fa'
 import ProductInteractiveSection from '@/src/app/Components/ProductInteractivity'
 import ReusableBanner from '@/src/app/Components/ReusableBanner'
-import type { CartItem } from '@/src/app/context/cartContext'
 import { getSingleProduct } from '@/src/app/services/product.service'
 import { IPRODUCTDETAIL } from '@/src/app/utils/Types'
 
-
+import ProductReviewsTabs from '@/src/app/Components/ProductReviews'
 export default async function ProductDetailsPage({ params }: any) {
     const { id } = await params
 
@@ -117,8 +116,16 @@ export default async function ProductDetailsPage({ params }: any) {
                             </div>
                         </div>
                     </div>
+
+
+
+
                 </div>
+                {/* //  */}
+
             </div>
+
+            <ProductReviewsTabs />
         </>
     )
 }
