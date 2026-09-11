@@ -59,3 +59,27 @@ export type CartResponse = {
     items: CartItem[];
 };
 
+export type OrderItem = {
+    productId: string;
+    name: string;
+    unitPrice: number;
+    quantity: number;
+    size?: string;
+    color?: string;
+};
+
+export type Order = {
+    _id: string;
+    items: OrderItem[];
+    subtotal: number;
+    currency: string;
+    status: "PENDING" | "PAID" | "FAILED" | "CANCELLED";
+    customer: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        phone: string;
+    };
+    createdAt: string;
+};
+

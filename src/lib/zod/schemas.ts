@@ -36,7 +36,7 @@ export const signupSchema = z
 
 export const signInSchema = z
     .object({
-     
+
 
         email: z
             .string()
@@ -58,4 +58,17 @@ export const signInSchema = z
 
 export type SignupInput = z.infer<typeof signupSchema>;
 export type SigninInput = z.infer<typeof signInSchema>;
+
+export const checkoutSchema = z.object({
+    FirstName: z.string().trim().min(1, "First name is required"),
+    LastName: z.string().trim().min(1, "Last name is required"),
+    Country: z.string().min(1, "Country is required"),
+    StreetAddress: z.string().trim().min(1, "Street address is required"),
+    City: z.string().trim().min(1, "City is required"),
+    ZIPcode: z.string().trim().min(1, "ZIP code is required"),
+    Phone: z.string().trim().min(1, "Phone is required"),
+    Emailaddress: z.string().trim().min(1, "Email is required").email("Invalid email address format"),
+});
+
+export type CheckoutInput = z.infer<typeof checkoutSchema>;
 

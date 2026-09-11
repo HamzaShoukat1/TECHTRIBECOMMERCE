@@ -289,3 +289,24 @@ export const SHOP_IMAGE_DATA = [
 
   }
 ]
+
+
+
+export function formatDisplayDate(dateString: any) {
+  if (!dateString) return 'N/A';
+
+  const date = new Date(dateString);
+
+  if (isNaN(date.getTime())) return 'Invalid Date';
+
+  const options: any = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  };
+
+  return new Intl.DateTimeFormat('en-US', options).format(date)
+}
