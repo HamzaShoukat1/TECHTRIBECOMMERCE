@@ -1,34 +1,22 @@
-"use client"
+"use client";
 
-import { columns } from "./columns"
-import { UseGetAllOrders } from '../../hooks/UseGetAllOrders'
-import UsableSkeleton from '../../Components/UsableSkeleton'
-import { DataTable } from "./data-table"
+import { UseGetAllOrders } from "../../hooks/UseGetAllOrders";
+import UsableSkeleton from "../../Components/UsableSkeleton";
+import { OrdersTable } from "./orders-table";
 
-export default function page() {
-
-    const { data: AllOrder, isLoading, isError } = UseGetAllOrders()
-    console.log("sa",AllOrder)
-
-    {
-        isLoading ? (
-            <UsableSkeleton />
-        ) : isError ? (
-            <p className="px-6 py-16 text-center text-[#9F9F9F]">
-                Unable to load your cart.
-            </p>
-        ) : ""}
-
-
-
-
-
-
-
+export default function OrdersPage() {
+    const { data: orders, isLoading, isError } = UseGetAllOrders();
+console.log("OrdersPage -> orders", orders);
     return (
-        <div>
-
-            <DataTable columns={columns} data={AllOrder ?? []} />
+        <div className="min-h-screen px-4 py-12 sm:px-8 lg:px-16">
+            <div className="mx-auto max-w-6xl">
+                <h1 className="mb-8 text-3xl font-semibold">My orders</h1>
+                {isLoading ? <UsableSkeleton /> : isError ? (
+                    <p className="border border-red-200 bg-red-50 px-6 py-16 text-center text-red-700">
+                        Unable to load your orders.
+                    </p>
+                ) : <OrdersTable orders={orders ?? []} />}
+            </div>
         </div>
-    )
+    );
 }

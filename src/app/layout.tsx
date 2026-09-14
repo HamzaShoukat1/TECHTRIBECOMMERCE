@@ -3,11 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css"
 
 import { CartProvider } from "./context/cartContext";
-import CartSidebar from "./Components/CartSideBar";
-import Footer from "./Components/Footer";
-import Navbar from "./Components/Navbar";
 import { Toaster } from "sonner";
 import Providers from "./provider"; // Your TanStack Query Provider
+import { AppChrome } from "./AppChrome";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -34,12 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className="flex flex-col flex-1 min-h-screen">
                 <Providers>
                     <CartProvider>
-                        <Navbar />
-                        <main className="flex-1">
-                            {children}
-                        </main>
-                        <CartSidebar />
-                        <Footer />
+                        <AppChrome>{children}</AppChrome>
                     </CartProvider>
                 </Providers>
                 <Toaster position="bottom-right" />

@@ -29,6 +29,10 @@ export default function SigninForm() {
         mutationFn: loginUser,
         onSuccess: (response) => {
             queryClient.setQueryData(["currentUser"], response.user)
+            if (response.user?.role === "ADMIN") {
+                router.push("/admin")
+                return
+            }
             toast.success("Welcome back! Logged in successfully.")
             form.reset()
             router.push("/")

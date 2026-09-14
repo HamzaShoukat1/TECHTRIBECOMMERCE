@@ -310,3 +310,51 @@ export function formatDisplayDate(dateString: any) {
 
   return new Intl.DateTimeFormat('en-US', options).format(date)
 }
+
+export function colorClass(color?: string) {
+  if (!color) return "bg-gray-100 text-gray-700";
+
+  switch (color.toLowerCase()) {
+    case "black":
+      return "bg-black text-white";
+
+    case "white":
+      return "bg-white text-gray-700 border border-gray-300";
+
+    case "red":
+      return "bg-red-500 text-white";
+
+    case "blue":
+      return "bg-blue-500 text-white";
+
+    case "green":
+      return "bg-green-500 text-white";
+
+    case "yellow":
+      return "bg-yellow-400 text-black";
+
+    case "orange":
+      return "bg-orange-500 text-white";
+
+    case "purple":
+      return "bg-purple-500 text-white";
+
+    case "pink":
+      return "bg-pink-500 text-white";
+
+    case "brown":
+      return "bg-amber-800 text-white";
+
+    case "grey":
+      return "bg-gray-500 text-white";
+
+    case "navy":
+      return "bg-blue-950 text-white";
+
+    case "beige":
+      return "bg-[#F5F0E6] text-gray-700";
+
+    default:
+      return "bg-gray-100 text-gray-700";
+  }
+}

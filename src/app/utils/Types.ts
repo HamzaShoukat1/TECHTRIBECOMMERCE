@@ -2,13 +2,16 @@
 
 
 export type IProduct = {
-    _id: string;
-    productName: string;
-    productPrice: number;
+    productName: string,
+    productPrice: number,
     productImage: {
-        url: string;
-    };
-    productDescription: string;
+        url: string
+    },
+    productSizes: string[]
+
+    productColors: string[],
+    productDescription: string
+
 
 };
 
@@ -60,8 +63,11 @@ export type CartResponse = {
 };
 
 export type OrderItem = {
-    productId: string;
+    productId: string | { _id: string; productImage?: { url?: string } };
     name: string;
+    productImage?: string | { url?: string };
+    image?: string;
+    product?: { productImage?: { url?: string } };
     unitPrice: number;
     quantity: number;
     size?: string;
