@@ -1,4 +1,4 @@
-import { Button } from '@admin/components/ui/button'
+import { Button } from '../../components/ui/button'
 
 export function MaintenanceError() {
   return (

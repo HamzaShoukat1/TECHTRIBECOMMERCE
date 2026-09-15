@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -12,18 +13,30 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-
 } from "../../../../../src/admin/components/ui/sheet";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../../../../../src/admin/components/ui/form"
-import { Button } from "../../../../../src/admin/components/ui/button"
 
-import { colors, sizes } from "../../../../../src/admin/types"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../../../../../src/admin/components/ui/form";
+
+import { Button } from "../../../../../src/admin/components/ui/button";
+import { colors, sizes } from "../../../../../src/admin/types";
 import { Input } from "../../../../../src/admin/components/ui/input";
 import { Checkbox } from "../../../../../src/admin/components/ui/checkbox";
-import { useCreateProduct } from "../../../../../src/admin/hooks/use-create-product"
 
+import { useCreateProduct } from "../../../../../src/admin/hooks/use-create-product";
 
-import { Product, productSchema } from "../../products/data/schema";
+import {
+  Product,
+  productSchema,
+} from "../../products/data/schema";
+import { useUpdateProduct } from "@/src/admin/hooks/useUpdate-Product";
 
 type ProductMutateDrawerProps = {
   open: boolean;
@@ -41,53 +54,119 @@ export function ProductMutateDrawer({
   const form = useForm<Product>({
     resolver: zodResolver(productSchema),
 
-    defaultValues: currentRow ?? {
+    defaultValues: {
       productName: "",
       productDescription: "",
       productPrice: 0,
       productColors: [],
       productSizes: [],
       productImage: {
-        url: ""
-      }
+        url: "",
+      },
     },
   });
 
-  const { mutate: createProduct } = useCreateProduct();
+  const { mutate: createProduct, isPending: isCreating } =
+    useCreateProduct();
+
+  const { mutate: updateProduct, isPending: isUpdating } =
+    useUpdateProduct();
+
+  const isPending = isCreating || isUpdating;
+
+
+  useEffect(() => {
+    if (currentRow) {
+      form.reset({
+        _id: currentRow._id,
+        productName: currentRow.productName,
+        productDescription: currentRow.productDescription,
+        productPrice: currentRow.productPrice,
+        productColors: currentRow.productColors ?? [],
+        productSizes: currentRow.productSizes ?? [],
+        productImage: {
+          url: currentRow.productImage?.url ?? "",
+        },
+      });
+    } else {
+      form.reset({
+        productName: "",
+        productDescription: "",
+        productPrice: 0,
+        productColors: [],
+        productSizes: [],
+        productImage: {
+          url: "",
+        },
+      });
+    }
+  }, [currentRow, form]);
 
   const onSubmit = (data: Product) => {
-    console.log("Product data:", data);
-    createProduct(data)
+    if (isUpdate && currentRow?._id) {
+      updateProduct(
+        {
+          id: currentRow._id,
+          data,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Product updated successfully!", {
+              position: "top-left",
+            });
 
+            onOpenChange(false);
+            form.reset();
+          },
+          onError: () => {
+            toast.error("Failed to update product.", {
+              position: "top-left",
+            });
+          },
+        }
+      );
 
-    toast.success(
-      isUpdate
-        ? "Product updated successfully!"
-        : "Product created successfully!", {
-      position: "top-left"
-
+      return;
     }
-    );
 
-    onOpenChange(false);
-    form.reset();
-  };
-  const onError = (errors: unknown) => {
-    console.error("Form Validation Errors:", errors);
-    toast.error("Please fill in all required fields properly.", {
-      position: "top-left"
+    createProduct(data, {
+      onSuccess: () => {
+        toast.success("Product created successfully!", {
+          position: "top-left",
+        });
+
+        onOpenChange(false);
+        form.reset();
+      },
+      onError: () => {
+        toast.error("Failed to create product.", {
+          position: "top-left",
+        });
+      },
     });
   };
+
+  // const onError = (errors: unknown) => {
+  //   console.error("Form Validation Errors:", errors);
+
+  //   toast.error("Please fill in all required fields properly.", {
+  //     position: "top-left",
+  //   });
+  // };
 
   return (
     <Sheet
       open={open}
       onOpenChange={(value) => {
+        if (!value && isPending) return;
+
         onOpenChange(value);
-        form.reset();
+
+        if (!value) {
+          form.reset();
+        }
       }}
     >
-
       <SheetContent className="flex flex-col">
         <SheetHeader className="text-start">
           <SheetTitle>
@@ -105,9 +184,10 @@ export function ProductMutateDrawer({
           <form
             id="product-form"
             className="flex-1 space-y-8 overflow-y-auto px-4"
-            onSubmit={form.handleSubmit(onSubmit, onError)}
+            onSubmit={form.handleSubmit(onSubmit)}
           >
             {/* Product Name */}
+
             <FormField
               control={form.control}
               name="productName"
@@ -128,7 +208,8 @@ export function ProductMutateDrawer({
               )}
             />
 
-            {/* Product Description */}
+            {/* Description */}
+
             <FormField
               control={form.control}
               name="productDescription"
@@ -149,7 +230,8 @@ export function ProductMutateDrawer({
               )}
             />
 
-            {/* Product Price */}
+            {/* Price */}
+
             <FormField
               control={form.control}
               name="productPrice"
@@ -161,6 +243,7 @@ export function ProductMutateDrawer({
                     <Input
                       type="number"
                       {...field}
+                      value={field.value ?? ""}
                       onChange={(e) => {
                         const value = e.target.value;
 
@@ -168,7 +251,6 @@ export function ProductMutateDrawer({
                           value === "" ? "" : Number(value)
                         );
                       }}
-                      value={field.value ?? ""}
                     />
                   </FormControl>
 
@@ -181,7 +263,8 @@ export function ProductMutateDrawer({
               )}
             />
 
-            {/* Product Sizes */}
+            {/* Sizes */}
+
             <FormField
               control={form.control}
               name="productSizes"
@@ -200,7 +283,8 @@ export function ProductMutateDrawer({
                             id={`size-${size}`}
                             checked={field.value?.includes(size)}
                             onCheckedChange={(checked) => {
-                              const currentValues = field.value || [];
+                              const currentValues =
+                                field.value || [];
 
                               if (checked) {
                                 field.onChange([
@@ -229,7 +313,7 @@ export function ProductMutateDrawer({
                   </FormControl>
 
                   <FormDescription>
-                    Select the available sizes for the product.
+                    Select the available sizes.
                   </FormDescription>
 
                   <FormMessage />
@@ -237,7 +321,8 @@ export function ProductMutateDrawer({
               )}
             />
 
-            {/* Product Colors */}
+            {/* Colors */}
+
             <FormField
               control={form.control}
               name="productColors"
@@ -256,7 +341,8 @@ export function ProductMutateDrawer({
                             id={`color-${color}`}
                             checked={field.value?.includes(color)}
                             onCheckedChange={(checked) => {
-                              const currentValues = field.value || [];
+                              const currentValues =
+                                field.value || [];
 
                               if (checked) {
                                 field.onChange([
@@ -292,7 +378,7 @@ export function ProductMutateDrawer({
                   </FormControl>
 
                   <FormDescription>
-                    Select the available colors for the product.
+                    Select the available colors.
                   </FormDescription>
 
                   <FormMessage />
@@ -300,140 +386,119 @@ export function ProductMutateDrawer({
               )}
             />
 
-            {/* Product Images */}
+            {/* Image */}
+
             <FormField
               control={form.control}
               name="productImage"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Images</FormLabel>
+                  <FormLabel>Product Image</FormLabel>
 
                   <FormControl>
                     <div>
-                      {form
-                        .watch("productColors")
-                        ?.map((color: string) => (
-                          <div
-                            className="mb-4 flex items-center gap-4"
-                            key={color}
-                          >
-                            <div className="flex items-center gap-2">
-                              <div
-                                className="h-4 w-4 rounded-full border border-neutral-200"
-                                style={{
-                                  backgroundColor: color,
-                                }}
-                              />
+                      <input
+                        type="file"
+                        accept=".jpg, .jpeg, .png"
+                        className="text-sm"
+                        disabled={isPending}
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
 
-                              <span className="min-w-20 text-sm font-medium">
-                                {color}:
-                              </span>
-                            </div>
+                          if (!file) return;
 
-                            <input
-                              type="file"
-                              accept=".jpg, .jpeg"
+                          try {
+                            const formData = new FormData();
 
-                              className="text-sm"
+                            formData.append("file", file);
 
-                              onChange={async (e) => {
-                                const file = e.target.files?.[0];
+                            formData.append(
+                              "upload_preset",
+                              process.env
+                                .NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ||
+                                "ecommerce"
+                            );
 
-                                if (!file) return;
+                            const response = await fetch(
+                              `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+                              {
+                                method: "POST",
+                                body: formData,
+                              }
+                            );
 
-                                try {
-                                  const formData = new FormData();
+                            const data = await response.json();
 
-                                  formData.append("file", file);
+                            if (data.secure_url) {
+                              field.onChange({
+                                url: data.secure_url,
+                              });
 
-                                  formData.append(
-                                    "upload_preset",
-                                    process.env
-                                      .NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ||
-                                    "ecommerce"
-                                  );
-
-                                  const response = await fetch(
-                                    `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
-                                    {
-                                      method: "POST",
-                                      body: formData,
-                                    }
-                                  );
-
-                                  const data =
-                                    await response.json();
-                                  console.log('sa', data)
-
-                                  if (data.secure_url) {
-                                    const currentImages =
-                                      field.value || {};
-
-                                    field.onChange({
-                                      [color]: data.secure_url,
-                                    });
-
-                                    toast.success(
-                                      `Image for ${color} uploaded successfully!`, {
-                                      position: "top-left"
-                                    }
-                                    );
-                                  } else {
-                                    toast.error(
-                                      data.error?.message ||
-                                      `Failed to upload image for ${color}`, {
-                                      position: "top-left"
-
-                                    }
-                                    );
-                                  }
-                                } catch {
-                                  toast.error(
-                                    "Failed to upload image due to a network error", {
-                                    position: "top-left"
-
-                                  }
-                                  );
+                              toast.success(
+                                "Product image uploaded successfully!",
+                                {
+                                  position: "top-left",
                                 }
-                              }}
-                            />
+                              );
+                            } else {
+                              toast.error(
+                                data.error?.message ||
+                                  "Failed to upload image"
+                              );
+                            }
+                          } catch {
+                            toast.error(
+                              "Failed to upload image."
+                            );
+                          }
+                        }}
+                      />
 
-                            {field.value?.[
-                              color as keyof typeof field.value
-                            ] ? (
-                              <span className="text-sm font-medium text-green-600">
-                                ✓ Image is selected
-                              </span>
-                            ) : (
-                              <span className="text-sm font-medium text-red-600">
-                                ✗ Image is not selected
-                              </span>
-                            )}
-                          </div>
-                        ))}
+                      {field.value?.url ? (
+                        <span className="text-sm font-medium text-green-600">
+                          ✓ Image is selected
+                        </span>
+                      ) : (
+                        <span className="text-sm font-medium text-red-600">
+                          ✗ Image is not selected
+                        </span>
+                      )}
                     </div>
                   </FormControl>
 
                   <FormDescription>
-                    Upload an image for each selected color.
+                    Upload the product image.
                   </FormDescription>
 
                   <FormMessage />
                 </FormItem>
               )}
             />
-
-
           </form>
         </Form>
 
         <SheetFooter className="gap-2">
           <SheetClose asChild>
-            <Button variant="outline">Close</Button>
+            <Button
+              variant="outline"
+              disabled={isPending}
+            >
+              Close
+            </Button>
           </SheetClose>
 
-          <Button form="product-form" type="submit">
-            {isUpdate ? "Save changes" : "Create Product"}
+          <Button
+            form="product-form"
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending
+              ? isUpdate
+                ? "Updating..."
+                : "Creating..."
+              : isUpdate
+                ? "Save changes"
+                : "Create Product"}
           </Button>
         </SheetFooter>
       </SheetContent>

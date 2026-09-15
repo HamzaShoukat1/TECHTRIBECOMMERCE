@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const productSchema = z.object({
+    _id: z.string(),
     productName: z
         .string()
         .min(1, { message: "Product name is required" })
@@ -9,7 +10,8 @@ export const productSchema = z.object({
     productPrice: z
         .number()
         .positive({ message: "Price must be a positive number" }),
-    productImage: z.record(z.string(), z.string()),
+    // productImage: z.record(z.string(), z.string()),
+    productImage: z.object({ url: z.string().url({ message: "Invalid image URL", }), }),
 
 
     productSizes: z

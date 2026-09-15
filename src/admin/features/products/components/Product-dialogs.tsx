@@ -1,10 +1,10 @@
 import { showSubmittedData } from '@admin/lib/show-submitted-data'
 import { ConfirmDialog } from '@admin/components/confirm-dialog'
-import { TasksImportDialog } from './tasks-import-dialog'
-import { ProductMutateDrawer } from './tasks-mutate-drawer.test'
+import { TasksImportDialog } from './Product-import-dialog'
+import { ProductMutateDrawer } from './Product-mutate-drawer'
 import { useTasks } from './tasks-provider'
 
-export function TasksDialogs() {
+export function ProductDialogs() {
   const { open, setOpen, currentRow, setCurrentRow } = useTasks()
   return (
     <>
@@ -23,7 +23,7 @@ export function TasksDialogs() {
       {currentRow && (
         <>
           <ProductMutateDrawer
-            key={`task-update-${currentRow.id}`}
+            key={`task-update-${currentRow._id}`}
             open={open === 'update'}
             onOpenChange={() => {
               setOpen('update')
@@ -55,11 +55,11 @@ export function TasksDialogs() {
               )
             }}
             className='max-w-md'
-            title={`Delete this task: ${currentRow.id} ?`}
+            title={`Delete this task: ${currentRow._id} ?`}
             desc={
               <>
                 You are about to delete a task with the ID{' '}
-                <strong>{currentRow.id}</strong>. <br />
+                <strong>{currentRow._id}</strong>. <br />
                 This action cannot be undone.
               </>
             }

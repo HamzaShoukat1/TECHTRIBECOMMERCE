@@ -22,8 +22,9 @@ export function useCreateProduct() {
 
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ["create-product"],
+                queryKey: ["products-admin"],
             });
+
         },
     });
 }

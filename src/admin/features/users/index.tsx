@@ -8,7 +8,6 @@ import { Search } from '@admin/components/search'
 import { ThemeSwitch } from '@admin/components/theme-switch'
 import {  useAllUsers } from '@admin/hooks/use-All-Users'
 import { UsersDialogs } from './components/users-dialogs'
-import { UsersPrimaryButtons } from './components/users-primary-buttons'
 import { UsersProvider } from './components/users-provider'
 import { UsersTable } from './components/users-table'
 
@@ -32,7 +31,6 @@ export function Users() {
               Manage your users and their roles here.
             </p>
           </div>
-          <UsersPrimaryButtons />
         </div>
         <UsersTable data={users} isLoading={isLoading} isError={isError} />
       </Main>

@@ -19,10 +19,26 @@ export async function getAllProducts() {
         method: "GET",
     });
 }
-
+export async function getAllProductsForAdmin() {
+    const res = await ApiClient(`${BackenedUrl}/product/getAllProductsForAdmin`, {
+        method: "GET",
+    });
+    return res.AllProducts;
+}
 export async function getSingleProduct(id: string) {
     return ApiClient(`${BackenedUrl}/product/${id}`, {
         method: "GET",
+    });
+}
+export async function updateProduct(id: string, updateProductData: IProduct) {
+    return ApiClient(`${BackenedUrl}/product/update/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(updateProductData),
+    });
+}
+export async function deleteProduct(id: string) {
+    return ApiClient(`${BackenedUrl}/product/delete/${id}`, {
+        method: "DELETE",
     });
 }
 
