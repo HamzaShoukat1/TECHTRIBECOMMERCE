@@ -27,6 +27,8 @@ export const productSchema = z.object({
         .min(10, {
             message: "Description must be at least 10 characters long",
         }),
+        createdAt:z.string(),
+        updatedAt:z.string()
 });
 
 export type Product = z.infer<typeof productSchema>;

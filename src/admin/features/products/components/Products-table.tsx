@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
+import { formatDisplayDate } from "@/src/app/utils";
 
 import {
   columnFilteringFeature,
@@ -226,6 +227,27 @@ export function ProductsTable({
           </div>
         ),
       },
+      {
+        accessorKey:"createdAt",
+        header:"Created",
+         cell: ({ row }) => (
+          <div className="max-w-[300px] truncate">
+            {formatDisplayDate(row.original.createdAt)} 
+          </div>
+        ),
+        
+      },
+        {
+        accessorKey:"updatedAt",
+        header:"Updated",
+         cell: ({ row }) => (
+          <div className="max-w-[300px] truncate">
+            {formatDisplayDate(row.original.updatedAt)} 
+          </div>
+        ),
+        
+      },
+      
     ],
     []
   );

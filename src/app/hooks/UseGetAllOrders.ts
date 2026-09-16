@@ -3,8 +3,9 @@ import { getAllOrders } from "../services/Order.Service";
 import type { Order } from "../utils/Types";
 
 export function UseGetAllOrders() {
-    return useQuery<Order[]>({
+    const res = useQuery<Order[]>({
         queryKey: ["AllOrders"],
         queryFn: getAllOrders,
     });
+    return res
 }

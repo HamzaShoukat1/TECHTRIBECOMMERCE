@@ -36,11 +36,11 @@ export async function getAllOrdersForAdminTable() {
 };
 
 
-export async function changeOrderStatus(id: string, nextStatus: string) {
-    const res = await ApiClient(`${BackenedUrl}/order/${id}/status`, {
-        method: "PUT",
+export async function AddReview(reviewData: { orderId: string, rating: number, comment: string }) {
+    const res = await ApiClient(`${BackenedUrl}/review/create`, {
+        method: "POST",
 
-        body: JSON.stringify({ nextStatus })
+        body: JSON.stringify(reviewData)
     });
     return res
 }

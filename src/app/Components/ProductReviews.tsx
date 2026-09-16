@@ -15,6 +15,7 @@ export default function ProductReviewsTabs() {
     return (
         <div className="w-full max-w-4xl mx-auto p-6 font-sans">
             {/* Tab Header */}
+            {/* Tab Header */}
             <div className="flex justify-center space-x-8 border-b border-gray-200 pb-4 mb-6">
                 <button
                     onClick={() => setActiveTab('reviews')}

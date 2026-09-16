@@ -23,12 +23,13 @@ import {
   SheetTitle,
 } from '@admin/components/ui/sheet'
 import { SelectDropdown } from '@admin/components/select-dropdown'
-import { type Task } from '../data/schema'
+import { type  Order} from '../data/schema'
+
 
 type TaskMutateDrawerProps = {
   open: boolean
   onOpenChange: (open: boolean) => void
-  currentRow?: Task
+  currentRow?: Order
 }
 
 const formSchema = z.object({
