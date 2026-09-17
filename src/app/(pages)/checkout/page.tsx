@@ -20,7 +20,7 @@ import { createCheckoutSession } from "@/src/app/services/payment.service";
 
 export default function CheckoutPage() {
     const { data: cart } = useCartQuery();
-    const { isInitialized } = useCart();
+    // const { isInitialized } = useCart();
 
     const form = useForm<CheckoutInput>({
         resolver: zodResolver(checkoutSchema),
@@ -44,7 +44,9 @@ export default function CheckoutPage() {
                 return;
             }
 
-            toast.error("Unable to create checkout session");
+            toast.error("Unable to create checkout session",{
+                position:"top-left"
+            });
         },
         onError: (error) => {
             toast.error(
@@ -362,9 +364,9 @@ export default function CheckoutPage() {
                     </div>
 
                     {/* Products */}
-                    {!isInitialized ? (
+                    {/* {!isInitialized ? (
                         <UsableSkeleton />
-                    ) : (
+                    ) : ( */}
                         <>
                             {cart?.items?.map((item) => (
                                 <div
@@ -411,7 +413,6 @@ export default function CheckoutPage() {
                                 </span>
                             </div>
                         </>
-                    )}
 
                     {/* Payment Methods */}
                     <div className="flex flex-col gap-4 mb-6">

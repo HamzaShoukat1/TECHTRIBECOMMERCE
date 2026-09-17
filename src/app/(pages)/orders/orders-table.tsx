@@ -20,8 +20,8 @@ import { Label } from '@/components/ui/label';
 import { Rating } from '@/src/components/reui/rating';
 
 function statusClass(status: Order['status']) {
-    if (status === 'PAID') return 'bg-emerald-100 text-emerald-700';
-    if (status === 'FAILED' || status === 'CANCELLED') {
+    if (status === 'DELIVERED') return 'bg-emerald-100 text-emerald-700';
+    if (status === 'PENDING' || status === 'SHIPPED') {
         return 'bg-red-100 text-red-700';
     }
     return 'bg-amber-100 text-amber-700';
@@ -52,7 +52,7 @@ function ReviewModel({ orderId, onSuccess }: ReviewModelProps) {
     };
 
     return (
-        <Card className="mx-auto mt-4 w-full max-w-xs">
+        <Card className="mx-auto mt-4 w-full max-w-[500px]">
             <CardContent className="space-y-5 pt-6">
                 <div className="flex flex-col items-center gap-3">
                     <h3 className="text-sm font-semibold">Write a Review</h3>
@@ -199,17 +199,21 @@ export function OrdersTable({ orders }: { orders: Order[] }) {
                                     <TableCell className="px-5 py-4 text-xs text-muted-foreground">
                                         {formatDisplayDate(order.createdAt)}
                                     </TableCell>
-                                    <TableCell className="px-5 py-4">
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className={"cursor-pointer"}
-                                            onClick={() => setActiveReviewOrderId(order._id)}
-                                        >
-                                            <MessageSquarePlus className="mr-1 h-4 w-4" />
-                                            Review
-                                        </Button>
-                                    </TableCell>
+                                    {
+                                        order.status === "DELIVERED" && (
+                                            <TableCell className="px-5 py-4">
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className={"cursor-pointer"}
+                                                    onClick={() => setActiveReviewOrderId(order._id)}
+                                                >
+                                                    <MessageSquarePlus className="mr-1 h-4 w-4" />
+                                                    Review
+                                                </Button>
+                                            </TableCell>
+                                        )
+                                    }
                                 </TableRow>
                             ))
                         )}

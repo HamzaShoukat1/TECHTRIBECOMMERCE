@@ -47,7 +47,7 @@ export default async function ProductDetailsPage({ params }: any) {
                     breadcrumbPosition='start'
                     makeLineBigger='large'
                 />
-                <h1 className='absolute top-41 left-60'>
+                <h1 className='absolute top-40 left-60'>
                     {heading}
                 </h1>
             </div>
@@ -89,6 +89,10 @@ export default async function ProductDetailsPage({ params }: any) {
 
                     {/* Rating System Mock */}
                     <div className='flex items-center gap-4 mb-4 text-[13px] text-[#9F9F9F]'>
+                        <div className="flex text-yellow-400">
+                            {/* {"★".repeat(review.rating)}
+                                            {"☆".repeat(5 - review.rating)} */}
+                        </div>
                         <div className='text-[#FFC700] text-lg flex gap-1'>★★★★★</div>
                         <span className='border-l border-[#9F9F9F] h-4 pl-4 font-poppins'>5 Customer Reviews</span>
                     </div>
@@ -123,9 +127,10 @@ export default async function ProductDetailsPage({ params }: any) {
                 </div>
                 {/* //  */}
 
+
             </div>
 
-            <ProductReviewsTabs />
+            <ProductReviewsTabs productId={id} />
         </>
     )
 }

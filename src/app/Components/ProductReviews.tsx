@@ -1,49 +1,79 @@
-"use client"
-import { useState } from 'react';
+"use client";
 
-const MOCK_REVIEWS = [
-    { id: 1, user: "Alex M.", rating: 5, date: "2026-02-14", comment: "The sound quality is unreal for a portable speaker. Absolute rock 'n' roll machine!" },
-    { id: 2, user: "Sarah K.", rating: 4, date: "2026-03-01", comment: "Love the analog knobs and the vintage design. A bit heavy, but the leather strap helps." },
-    { id: 3, user: "David L.", rating: 5, date: "2026-03-15", comment: "Loudest speaker in its class hands down. Midrange is incredibly clear." },
-    { id: 4, user: "Emma W.", rating: 4, date: "2026-04-10", comment: "Great battery life and classic Marshall look. Travels everywhere with me." },
-    { id: 5, user: "James P.", rating: 5, date: "2026-05-02", comment: "The tactile knobs make fine-tuning audio so satisfying. Best purchase this year." }
-];
+import { useState } from "react";
+import { useGetReviews } from "../hooks/UseReview";
+import { formatDisplayDate } from "../utils";
 
-export default function ProductReviewsTabs() {
+interface ReviewUser {
+    _id: string;
+    FirstName: string;
+    email: string;
+}
+
+interface Review {
+    _id: string;
+    // products: string;
+    orderId: string;
+    userId: ReviewUser;
+    rating: number;
+    comment: string;
+    createdAt: string;
+    updatedAt: string;
+}
+export default function ProductReviewsTabs({ productId }: { productId: string }) {
     const [activeTab, setActiveTab] = useState("reviews");
+    const { data: response, isLoading, isError } = useGetReviews(productId);
+
+
+    const reviews: Review[] = Array.isArray(response)
+        ? response
+        : response?.data ?? [];
 
     return (
         <div className="w-full max-w-4xl mx-auto p-6 font-sans">
             {/* Tab Header */}
-            {/* Tab Header */}
             <div className="flex justify-center space-x-8 border-b border-gray-200 pb-4 mb-6">
                 <button
-                    onClick={() => setActiveTab('reviews')}
-                    className={`text-lg font-medium cursor-pointer transition-colors ${activeTab === 'reviews' ? 'text-black font-semibold border-b-2 border-black -mb-[18px]' : 'text-gray-400 hover:text-gray-600'
+                    onClick={() => setActiveTab("reviews")}
+                    className={`text-lg font-medium cursor-pointer transition-colors ${activeTab === "reviews"
+                        ? "text-black font-semibold border-b-2 border-black -mb-[18px]"
+                        : "text-gray-400 hover:text-gray-600"
                         }`}
                 >
-                    Reviews [{MOCK_REVIEWS.length}]
+                    Reviews [{isLoading ? "..." : reviews.length}]
                 </button>
             </div>
 
             {/* Tab Content */}
-            {activeTab === 'reviews' && (
+            {activeTab === "reviews" && (
                 <div className="space-y-6">
-                    {MOCK_REVIEWS.map((review) => (
-                        <div key={review.id} className="border-b border-gray-100 pb-6 last:border-0">
-                            <div className="flex items-center justify-between mb-2">
-                                <div className="flex items-center space-x-3">
-                                    <span className="font-semibold text-gray-900">{review.user}</span>
-                                    <div className="flex text-yellow-400">
-                                        {"★".repeat(review.rating)}
-                                        {"☆".repeat(5 - review.rating)}
+                    {isLoading && <p className="text-center text-gray-500">Loading reviews...</p>}
+                    {isError && <p className="text-center text-red-500">Failed to load reviews.</p>}
+                    {!isLoading && !isError && reviews.length === 0 && (
+                        <p className="text-center text-gray-500">No reviews yet for this product.</p>
+                    )}
+
+                    {!isLoading &&
+                        !isError &&
+                        reviews.map((review) => (
+                            <div key={review._id} className="border-b border-gray-100 pb-6 last:border-0">
+                                <div className="flex items-center justify-between mb-2">
+                                    <div className="flex items-center space-x-3">
+                                        <span className="font-semibold text-gray-900">
+                                            {review.userId?.FirstName || "Anonymous"}
+                                        </span>
+                                        <div className="flex text-yellow-400">
+                                            {"★".repeat(review.rating)}
+                                            {"☆".repeat(5 - review.rating)}
+                                        </div>
                                     </div>
+                                    <span className="text-sm text-gray-400">
+                                        {formatDisplayDate(review.createdAt)}
+                                    </span>
                                 </div>
-                                <span className="text-sm text-gray-400">{review.date}</span>
+                                <p className="text-gray-600 leading-relaxed">{review.comment}</p>
                             </div>
-                            <p className="text-gray-600 leading-relaxed">{review.comment}</p>
-                        </div>
-                    ))}
+                        ))}
                 </div>
             )}
         </div>

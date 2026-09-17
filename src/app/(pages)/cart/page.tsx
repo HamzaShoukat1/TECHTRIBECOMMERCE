@@ -88,7 +88,7 @@ export default function CartPage() {
                                         {/* Column 2: Price */}
                                         <div className="flex justify-between items-center md:block">
                                             <span className="text-[14px] text-[#9F9F9F] font-medium md:hidden">Price:</span>
-                                          
+
                                         </div>
 
                                         {/* Column 3: Quantity Field */}
@@ -115,11 +115,15 @@ export default function CartPage() {
                                                     removeFromCart(item._id, {
                                                         onSuccess: () => {
                                                             setRemovingItemId(null);
-                                                        toast.success("Item removed from cart");
+                                                            toast.success("Item removed from cart", {
+                                                                position: "top-left"
+                                                            });
                                                         },
                                                         onError: () => {
                                                             setRemovingItemId(null);
-                                                        toast.error("Failed to remove item");
+                                                            toast.error("Failed to remove item", {
+                                                                position: "top-left"
+                                                            });
                                                         },
                                                     });
                                                 }}
@@ -129,7 +133,7 @@ export default function CartPage() {
                                                 {isRemoving && removingItemId === item._id ? (
                                                     <Loader2 className="h-5 w-5 animate-spin" />
                                                 ) : (
-                                                <FaTrash />
+                                                    <FaTrash />
                                                 )}
                                             </button>
                                         </div>

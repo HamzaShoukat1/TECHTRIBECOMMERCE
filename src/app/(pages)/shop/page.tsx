@@ -27,58 +27,6 @@ export default async function page() {
 
       {/* FilterBar  */}
 
-      <div className="  w-full  ">
-        <div className=" flex mx-auto  bg-[#F9F1E7] py-6 px-4 md:px-80  flex-col sm:flex-row gap-4  flex justify-between items-center ">
-
-          {/* Left Controls */}
-          <div className="flex items-center gap-6 text-black flex-wrap justify-center sm:justify-start">
-            {/* Filter Button */}
-            <button className="flex items-center gap-2 hover:opacity-70 transition">
-              <SlidersHorizontal className="w-5 h-5" />
-              <span className="text-xl font-normal">Filter</span>
-            </button>
-
-            <div className="flex items-center gap-4">
-              <button className="hover:opacity-70 transition">
-                <LayoutGrid className="w-5 h-5 fill-black" />
-              </button>
-              <button className="hover:opacity-70 transition">
-                <Rows3 className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="hidden sm:block h-8 w-[2px] bg-[#9F9F9F]" />
-
-            <p className="text-base font-normal font-sans">
-              Showing 1–16 of 32 results
-            </p>
-          </div>
-
-          {/* Right Controls */}
-          <div className="flex items-center gap-6 text-black flex-wrap justify-center sm:justify-end">
-            {/* Show Count Input */}
-            <div className="flex items-center gap-4">
-              <span className="text-xl font-normal">Show</span>
-              <input
-                type="text"
-                defaultValue="16"
-                className="w-[55px] h-[55px] bg-white text-[#9F9F9F] text-xl font-normal text-center focus:outline-none rounded-none"
-              />
-            </div>
-
-            {/* Sort By Input */}
-            <div className="flex items-center gap-4">
-              <span className="text-xl font-normal">Short by</span>
-              <input
-                type="text"
-                defaultValue="Default"
-                className="w-[188px] h-[55px] bg-white text-[#9F9F9F] text-xl font-normal pl-6 focus:outline-none rounded-none"
-              />
-            </div>
-          </div>
-        </div>
-
-      </div>
 
       <section className="w-full max-w-[1440px] mx-auto  items-center  py-12 justify-center flex  space-y-[32px]">
         <div className="grid grid-cols-1 gap-[32px] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  ">
@@ -96,6 +44,25 @@ export default async function page() {
       </section>
 
       {/* //  */}
+      <div className="flex items-center  justify-center  m-12 gap-5  font-sans text-sm font-medium selection:bg-transparent">
+        <button className="flex h-15 w-15 items-center justify-center cursor-pointer rounded-lg bg-[#b68c2d] text-white transition-colors duration-200">
+          1
+        </button>
+
+        <button className="flex  h-15 w-15 items-center justify-center cursor-pointer rounded-lg bg-[#faf4ec] text-[#2c2419] transition-colors duration-200 hover:bg-[#f3e9da]">
+          2
+        </button>
+
+        <button className="flex  h-15 w-15 items-center justify-center cursor-pointer rounded-lg bg-[#faf4ec] text-[#2c2419] transition-colors duration-200 hover:bg-[#f3e9da]">
+          3
+        </button>
+
+        <button className="flex items-center   h-15 w-15 justify-center  cursor-pointer rounded-lg bg-[#faf4ec] px-5 text-[#2c2419] transition-colors duration-200 hover:bg-[#f3e9da]">
+          Next
+        </button>
+      </div>
+
+
 
       {/* banner  */}
       <div className='w-full   '>

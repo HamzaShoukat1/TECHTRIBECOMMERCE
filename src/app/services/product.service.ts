@@ -2,6 +2,7 @@ import "dotenv/config"
 
 import { IProduct } from "../utils/Types";
 import { ApiClient } from "../hooks/ApiClient";
+// import { ProductCreate } from "@/src/admin/hooks/use-create-product";
 
 const BackenedUrl = process.env.EXPRESS_BACKENED_URL || "http://localhost:8000";
 

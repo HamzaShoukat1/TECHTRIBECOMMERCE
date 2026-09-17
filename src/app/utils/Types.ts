@@ -2,6 +2,7 @@
 
 
 export type IProduct = {
+    _id:string
     productName: string,
     productPrice: number,
     productImage: {
@@ -79,7 +80,7 @@ export type Order = {
     items: OrderItem[];
     subtotal: number;
     currency: string;
-    status: "PENDING" | "PAID" | "FAILED" | "CANCELLED";
+    status: "PENDING" | "SHIPPED" | "DELIVERED"
     customer: {
         firstName: string;
         lastName: string;

@@ -57,9 +57,11 @@ export default async function Page() {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.
             </p>
 
+        <Link href={"/shop"}>
             <button className="bg-[#B88E2F] w-full sm:w-fit cursor-pointer hover:bg-[#a07b27] transition-all px-12 py-4  font-poppins font-bold text-white text-sm uppercase tracking-wider rounded-sm">
               BUY NOW
             </button>
+        </Link>
           </div>
         </div>
       </section>

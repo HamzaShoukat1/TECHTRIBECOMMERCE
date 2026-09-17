@@ -33,7 +33,9 @@ export default function SigninForm() {
                 router.push("/admin")
                 return
             }
-            toast.success("Welcome back! Logged in successfully.")
+            toast.success("Welcome back! Logged in successfully.", {
+                position: "top-left"
+            })
             form.reset()
             router.push("/")
         },

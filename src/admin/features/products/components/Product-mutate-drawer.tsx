@@ -103,6 +103,7 @@ export function ProductMutateDrawer({
   }, [currentRow, form]);
 
   const onSubmit = (data: Product) => {
+    console.log('asza',data)
     if (isUpdate && currentRow?._id) {
       updateProduct(
         {
@@ -130,7 +131,8 @@ export function ProductMutateDrawer({
     }
 
     createProduct(data, {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        console.log("asasa",data)
         toast.success("Product created successfully!", {
           position: "top-left",
         });
@@ -146,13 +148,11 @@ export function ProductMutateDrawer({
     });
   };
 
-  // const onError = (errors: unknown) => {
-  //   console.error("Form Validation Errors:", errors);
+  const onError = (errors: unknown) => {
+    console.error("Form Validation Errors:", errors);
 
-  //   toast.error("Please fill in all required fields properly.", {
-  //     position: "top-left",
-  //   });
-  // };
+  
+  };
 
   return (
     <Sheet
@@ -184,7 +184,7 @@ export function ProductMutateDrawer({
           <form
             id="product-form"
             className="flex-1 space-y-8 overflow-y-auto px-4"
-            onSubmit={form.handleSubmit(onSubmit)}
+            onSubmit={form.handleSubmit(onSubmit,onError)}
           >
             {/* Product Name */}
 

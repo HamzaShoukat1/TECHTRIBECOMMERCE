@@ -74,15 +74,7 @@ export function ProductsTable({
 }: ProductsTableProps) {
   const [globalFilter, setGlobalFilter] = useState("");
 
-  /*
-   * Selected row IDs
-   *
-   * Example:
-   * {
-   *   "66f123...": true,
-   *   "66f456...": true
-   * }
-   */
+ 
   const [rowSelection, setRowSelection] =
     useState<RowSelectionState>({});
 
@@ -123,7 +115,7 @@ export function ProductsTable({
           />
         ),
 
-        cell: ({ row }) => (
+        cell: ({ row, }) => (
           <input
             type="checkbox"
             checked={row.getIsSelected()}
@@ -228,26 +220,26 @@ export function ProductsTable({
         ),
       },
       {
-        accessorKey:"createdAt",
-        header:"Created",
-         cell: ({ row }) => (
+        accessorKey: "createdAt",
+        header: "Created",
+        cell: ({ row }) => (
           <div className="max-w-[300px] truncate">
-            {formatDisplayDate(row.original.createdAt)} 
+            {formatDisplayDate(row.original.createdAt)}
           </div>
         ),
-        
+
       },
-        {
-        accessorKey:"updatedAt",
-        header:"Updated",
-         cell: ({ row }) => (
+      {
+        accessorKey: "updatedAt",
+        header: "Updated",
+        cell: ({ row }) => (
           <div className="max-w-[300px] truncate">
-            {formatDisplayDate(row.original.updatedAt)} 
+            {formatDisplayDate(row.original.updatedAt)}
           </div>
         ),
-        
+
       },
-      
+
     ],
     []
   );

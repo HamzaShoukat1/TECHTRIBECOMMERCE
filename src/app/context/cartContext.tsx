@@ -27,19 +27,19 @@ type CartContextType = {
     isOpen: boolean;
     setIsOpen: (open: boolean) => void;
 
-    cart: CartItem[];
+    // cart: CartItem[];
 
-    addToItem: (item: CartItem) => void;
+    // addToItem: (item: CartItem) => void;
 
-    removeItem: (id: string) => void;
+    // removeItem: (id: string) => void;
 
-    increaseQuantity: (id: string) => void;
+    // increaseQuantity: (id: string) => void;
 
-    decreaseQuantity: (id: string) => void;
+    // decreaseQuantity: (id: string) => void;
 
-    subtotal: number;
+    // subtotal: number;
 
-    isInitialized: boolean;
+    // isInitialized: boolean;
 };
 
 const CartContext = createContext<CartContextType>({
@@ -47,19 +47,19 @@ const CartContext = createContext<CartContextType>({
 
     setIsOpen: () => { },
 
-    cart: [],
+    // cart: [],
 
-    addToItem: () => { },
+    // addToItem: () => { },
 
-    removeItem: () => { },
+    // removeItem: () => { },
 
-    increaseQuantity: () => { },
+    // increaseQuantity: () => { },
 
-    decreaseQuantity: () => { },
+    // decreaseQuantity: () => { },
 
-    subtotal: 0,
+    // subtotal: 0,
 
-    isInitialized: false,
+    // isInitialized: false,
 });
 
 export const CartProvider = ({
@@ -74,75 +74,75 @@ export const CartProvider = ({
         []
     );
 
-    const addToItem = (item: CartItem) => {
-        setCart((prev) => {
+    // const addToItem = (item: CartItem) => {
+    //     setCart((prev) => {
 
-            const existing = prev.find(
-                (i) =>
-                    i._id === item._id &&
-                    i.selectedSize === item.selectedSize &&
-                    i.selectedColor === item.selectedColor
-            );
+    //         const existing = prev.find(
+    //             (i) =>
+    //                 i._id === item._id &&
+    //                 i.selectedSize === item.selectedSize &&
+    //                 i.selectedColor === item.selectedColor
+    //         );
 
-            if (existing) {
-                return prev.map((i) =>
-                    i._id === item._id &&
-                        i.selectedSize === item.selectedSize &&
-                        i.selectedColor === item.selectedColor
-                        ? {
-                            ...i,
-                            productQuantity:
-                                i.productQuantity + item.productQuantity,
-                        }
-                        : i
-                );
-            }
+    //         if (existing) {
+    //             return prev.map((i) =>
+    //                 i._id === item._id &&
+    //                     i.selectedSize === item.selectedSize &&
+    //                     i.selectedColor === item.selectedColor
+    //                     ? {
+    //                         ...i,
+    //                         productQuantity:
+    //                             i.productQuantity + item.productQuantity,
+    //                     }
+    //                     : i
+    //             );
+    //         }
 
-            return [
-                ...prev,
-                {
-                    ...item,
-                },
-            ];
-        });
+    //         return [
+    //             ...prev,
+    //             {
+    //                 ...item,
+    //             },
+    //         ];
+    //     });
 
-        setIsOpen(true);
-    };
+    //     setIsOpen(true);
+    // };
 
-    const removeItem = (id: string) => {
-        setCart((prev) =>
-            prev.filter((item) => item._id !== id)
-        );
-    };
+    // const removeItem = (id: string) => {
+    //     setCart((prev) =>
+    //         prev.filter((item) => item._id !== id)
+    //     );
+    // };
 
-    const increaseQuantity = (id: string) => {
-        setCart((prev) =>
-            prev.map((item) =>
-                item._id === id
-                    ? {
-                        ...item,
-                        productQuantity: item.productQuantity + 1,
-                    }
-                    : item
-            )
-        );
-    };
+    // const increaseQuantity = (id: string) => {
+    //     setCart((prev) =>
+    //         prev.map((item) =>
+    //             item._id === id
+    //                 ? {
+    //                     ...item,
+    //                     productQuantity: item.productQuantity + 1,
+    //                 }
+    //                 : item
+    //         )
+    //     );
+    // };
 
-    const decreaseQuantity = (id: string) => {
-        setCart((prev) =>
-            prev
-                .map((item) =>
-                    item._id === id
-                        ? {
-                            ...item,
-                            productQuantity:
-                                item.productQuantity - 1,
-                        }
-                        : item
-                )
-                .filter((item) => item.productQuantity > 0)
-        );
-    };
+    // const decreaseQuantity = (id: string) => {
+    //     setCart((prev) =>
+    //         prev
+    //             .map((item) =>
+    //                 item._id === id
+    //                     ? {
+    //                         ...item,
+    //                         productQuantity:
+    //                             item.productQuantity - 1,
+    //                     }
+    //                     : item
+    //             )
+    //             .filter((item) => item.productQuantity > 0)
+    //     );
+    // };
 
     const subtotal = cart.reduce(
         (total, item) =>
@@ -155,13 +155,13 @@ export const CartProvider = ({
             value={{
                 isOpen,
                 setIsOpen,
-                cart,
-                addToItem,
-                removeItem,
-                increaseQuantity,
-                decreaseQuantity,
-                subtotal,
-                isInitialized,
+                // cart,
+                // addToItem,
+                // removeItem,
+                // increaseQuantity,
+                // decreaseQuantity,
+                // subtotal,
+                // isInitialized,
             }}
         >
             {children}

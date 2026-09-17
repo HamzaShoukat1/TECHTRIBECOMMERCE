@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const productSchema = z.object({
-    _id: z.string(),
+    _id: z.string().optional(),
     productName: z
         .string()
         .min(1, { message: "Product name is required" })
@@ -27,8 +27,8 @@ export const productSchema = z.object({
         .min(10, {
             message: "Description must be at least 10 characters long",
         }),
-        createdAt:z.string(),
-        updatedAt:z.string()
+        createdAt:z.string().optional(),
+        updatedAt:z.string().optional()
 });
 
 export type Product = z.infer<typeof productSchema>;
