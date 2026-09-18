@@ -1,3 +1,6 @@
+export const dynamic = 'force-dynamic';
+
+
 import Image from 'next/image'
 import sectionImage from "../../public/images/scandinavian-interior-mockup-wall-decal-background 1.png"
 
