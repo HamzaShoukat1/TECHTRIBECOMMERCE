@@ -8,14 +8,14 @@ import { UsePayemntDetailsforCurrentUser } from "../../hooks/UsePaymentDetail";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/src/components/ui/card";
 import { useSearchParams } from "next/navigation";
 import { formatDisplayDate } from "../../utils";
+import { Suspense } from "react";
 
-
-
-export default function PaymentSuccess() {
-    const searchParams = useSearchParams()
-    const sessionId = searchParams.get("session_id")
+// 1. This inner component safely consumes the search parameters inside the Suspense boundary
+function PaymentSuccessContent() {
+    const searchParams = useSearchParams();
+    const sessionId = searchParams.get("session_id");
     const { data: paymentdetails, isLoading, isError } = UsePayemntDetailsforCurrentUser(sessionId);
-    console.log("dataaa", paymentdetails)
+    console.log("dataaa", paymentdetails);
 
     // Handle loading state
     if (isLoading) {
@@ -31,11 +31,10 @@ export default function PaymentSuccess() {
         console.error("Failed to fetch payment details, falling back to defaults.");
     }
 
-
-    const displayAmount = ( "$" +(paymentdetails?.amount?.$numberDecimal))
+    const displayAmount = ( "$" +(paymentdetails?.amount?.$numberDecimal));
     const displayOrderId = paymentdetails?.orderId;
-    const displayDate = formatDisplayDate(paymentdetails?.createdAt)
-    const displayProduct = paymentdetails?.productName
+    const displayDate = formatDisplayDate(paymentdetails?.createdAt);
+    const displayProduct = paymentdetails?.productName;
 
     return (
         <div className="flex min-h-[60vh] items-center justify-center p-4 font-poppins">
@@ -51,12 +50,11 @@ export default function PaymentSuccess() {
                     <p className="text-sm text-muted-foreground mt-1">
                         Thank you for your purchase. Your order has been processed.
                     </p>
-                   
                 </CardHeader>
 
                 <CardContent className="space-y-4">
                     {/* Product Summary */}
-                    <div className="rounded-lg bg-muted/40 p-4 border border-muted/40 flex  items-center justify-center">
+                    <div className="rounded-lg bg-muted/40 p-4 border border-muted/40 flex items-center justify-center">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-3">
                                 <div className="p-2 bg-background rounded-md border border-muted/60">
@@ -64,10 +62,9 @@ export default function PaymentSuccess() {
                                 </div>
                                 <div>
                                     <p className="text-sm font-medium text-foreground">{displayProduct}</p>
-                                    <p className="text-xs text-muted-foreground flex  items-center justify-center">Order ID: {displayOrderId}</p>
+                                    <p className="text-xs text-muted-foreground flex items-center justify-center">Order ID: {displayOrderId}</p>
                                 </div>
                             </div>
-                            {/* <span className="text-base font-semibold text-foreground">{displayAmount}</span> */}
                         </div>
                     </div>
 
@@ -79,8 +76,6 @@ export default function PaymentSuccess() {
                         </div>
 
                         <Separator className="bg-muted/60 my-2" />
-
-
                         <Separator className="bg-muted/60 my-2" />
 
                         <div className="flex justify-between text-sm">
@@ -91,12 +86,26 @@ export default function PaymentSuccess() {
                 </CardContent>
 
                 <CardFooter className="flex flex-col gap-2 pt-2">
-                    <Button  className="w-full ">
+                    <Button className="w-full">
                         <Link href="/orders"> My Orders</Link>
                     </Button>
-                  
                 </CardFooter>
             </Card>
         </div>
+    );
+}
+
+// 2. The main page default export that wraps the content component in a Suspense loader
+export default function PaymentSuccess() {
+    return (
+        <Suspense 
+            fallback={
+                <div className="flex min-h-[60vh] items-center justify-center p-4 font-poppins">
+                    <p className="text-muted-foreground animate-pulse">Loading payment details...</p>
+                </div>
+            }
+        >
+            <PaymentSuccessContent />
+        </Suspense>
     );
 }

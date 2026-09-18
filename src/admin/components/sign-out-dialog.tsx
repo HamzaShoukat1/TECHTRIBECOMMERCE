@@ -1,10 +1,6 @@
-import { usePathname, useRouter } from 'next/navigation'
 import { useAuthStore } from '@admin/stores/auth-store'
 import { ConfirmDialog } from '@admin/components/confirm-dialog'
-import { useLogout, UseLogout } from '../hooks/Use-Logout'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { logoutUser } from '@/src/app/services/product.service'
-import { toast } from 'sonner'
+import { useLogout } from '../hooks/Use-Logout'
 
 interface SignOutDialogProps {
   open: boolean
@@ -27,8 +23,6 @@ export function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {
   //       }
   //   })
 
-  const router = useRouter()
-  const pathname = usePathname()
   const { auth } = useAuthStore()
 
 

@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
+
 import { useForm } from "react-hook-form";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { toast } from "sonner";
 
 import {
@@ -26,8 +29,11 @@ import {
 } from "../../../../../src/admin/components/ui/form";
 
 import { Button } from "../../../../../src/admin/components/ui/button";
+
 import { colors, sizes } from "../../../../../src/admin/types";
+
 import { Input } from "../../../../../src/admin/components/ui/input";
+
 import { Checkbox } from "../../../../../src/admin/components/ui/checkbox";
 
 import { useCreateProduct } from "../../../../../src/admin/hooks/use-create-product";
@@ -36,7 +42,10 @@ import {
   Product,
   productSchema,
 } from "../../products/data/schema";
+
 import { useUpdateProduct } from "@/src/admin/hooks/useUpdate-Product";
+import { useUploadImage } from "@/src/admin/hooks/use-upload";
+
 
 type ProductMutateDrawerProps = {
   open: boolean;
@@ -72,8 +81,16 @@ export function ProductMutateDrawer({
   const { mutate: updateProduct, isPending: isUpdating } =
     useUpdateProduct();
 
-  const isPending = isCreating || isUpdating;
+  // Image upload hook
+  const {
+    mutateAsync: uploadImage,
+    isPending: isUploading,
+  } = useUploadImage();
 
+  const isPending =
+    isCreating ||
+    isUpdating ||
+    isUploading;
 
   useEffect(() => {
     if (currentRow) {
@@ -102,8 +119,9 @@ export function ProductMutateDrawer({
     }
   }, [currentRow, form]);
 
-  const onSubmit = (data: Product) => {
-    console.log('asza',data)
+  const onSubmit = (data: any) => {
+    console.log("asza", data);
+
     if (isUpdate && currentRow?._id) {
       updateProduct(
         {
@@ -119,6 +137,7 @@ export function ProductMutateDrawer({
             onOpenChange(false);
             form.reset();
           },
+
           onError: () => {
             toast.error("Failed to update product.", {
               position: "top-left",
@@ -132,7 +151,8 @@ export function ProductMutateDrawer({
 
     createProduct(data, {
       onSuccess: (data) => {
-        console.log("asasa",data)
+        console.log("asasa", data);
+
         toast.success("Product created successfully!", {
           position: "top-left",
         });
@@ -140,6 +160,7 @@ export function ProductMutateDrawer({
         onOpenChange(false);
         form.reset();
       },
+
       onError: () => {
         toast.error("Failed to create product.", {
           position: "top-left",
@@ -150,8 +171,6 @@ export function ProductMutateDrawer({
 
   const onError = (errors: unknown) => {
     console.error("Form Validation Errors:", errors);
-
-  
   };
 
   return (
@@ -184,10 +203,9 @@ export function ProductMutateDrawer({
           <form
             id="product-form"
             className="flex-1 space-y-8 overflow-y-auto px-4"
-            onSubmit={form.handleSubmit(onSubmit,onError)}
+            onSubmit={form.handleSubmit(onSubmit, onError)}
           >
             {/* Product Name */}
-
             <FormField
               control={form.control}
               name="productName"
@@ -209,7 +227,6 @@ export function ProductMutateDrawer({
             />
 
             {/* Description */}
-
             <FormField
               control={form.control}
               name="productDescription"
@@ -231,7 +248,6 @@ export function ProductMutateDrawer({
             />
 
             {/* Price */}
-
             <FormField
               control={form.control}
               name="productPrice"
@@ -264,7 +280,6 @@ export function ProductMutateDrawer({
             />
 
             {/* Sizes */}
-
             <FormField
               control={form.control}
               name="productSizes"
@@ -322,7 +337,6 @@ export function ProductMutateDrawer({
             />
 
             {/* Colors */}
-
             <FormField
               control={form.control}
               name="productColors"
@@ -387,7 +401,6 @@ export function ProductMutateDrawer({
             />
 
             {/* Image */}
-
             <FormField
               control={form.control}
               name="productImage"
@@ -399,7 +412,7 @@ export function ProductMutateDrawer({
                     <div>
                       <input
                         type="file"
-                        accept=".jpg, .jpeg, .png"
+                        accept=".jpg, .jpeg, .png, .webp"
                         className="text-sm"
                         disabled={isPending}
                         onChange={async (e) => {
@@ -408,53 +421,47 @@ export function ProductMutateDrawer({
                           if (!file) return;
 
                           try {
-                            const formData = new FormData();
+                            const response =
+                              await uploadImage(file);
 
-                            formData.append("file", file);
+                            // console.log(
+                            //   "Image upload response:",
+                            //   response
+                            // );
 
-                            formData.append(
-                              "upload_preset",
-                              process.env
-                                .NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET ||
-                                "ecommerce"
-                            );
+                            field.onChange({
+                              url: response.url,
+                            });
 
-                            const response = await fetch(
-                              `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+                            toast.success(
+                              "Product image uploaded successfully!",
                               {
-                                method: "POST",
-                                body: formData,
+                                position: "top-left",
                               }
                             );
+                          } catch (error) {
+                            console.error(
+                              "Image upload error:",
+                              error
+                            );
 
-                            const data = await response.json();
-
-                            if (data.secure_url) {
-                              field.onChange({
-                                url: data.secure_url,
-                              });
-
-                              toast.success(
-                                "Product image uploaded successfully!",
-                                {
-                                  position: "top-left",
-                                }
-                              );
-                            } else {
-                              toast.error(
-                                data.error?.message ||
-                                  "Failed to upload image"
-                              );
-                            }
-                          } catch {
                             toast.error(
-                              "Failed to upload image."
+                              error instanceof Error
+                                ? error.message
+                                : "Failed to upload image.",
+                              {
+                                position: "top-left",
+                              }
                             );
                           }
                         }}
                       />
 
-                      {field.value?.url ? (
+                      {isUploading ? (
+                        <span className="text-sm font-medium text-yellow-600">
+                          Uploading image...
+                        </span>
+                      ) : field.value?.url ? (
                         <span className="text-sm font-medium text-green-600">
                           ✓ Image is selected
                         </span>

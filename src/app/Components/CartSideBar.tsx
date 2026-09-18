@@ -92,7 +92,7 @@ export default function CartSidebar() {
                                             <span>{item.productQuantity}</span>
                                             <span>x</span>
                                             <span className="text-[#D49A20] font-poppins">
-                                                \${(item.productPrice * item.productQuantity).toLocaleString()}
+                                                ${(item.productPrice * item.productQuantity).toLocaleString()}
                                             </span>
                                         </div>
                                     </div>
@@ -133,7 +133,7 @@ export default function CartSidebar() {
                             <div className="w-full max-w-[250px] flex items-center justify-between text-[18px] text-[#111111]">
                                 <span className="font-medium font-poppins tracking-normal">Subtotal</span>
                                 <span className="font-semibold text-[#D49A20] tracking-normal font-poppins">
-                                    \${subtotal.toLocaleString()}
+                                    ${subtotal.toLocaleString()}
                                 </span>
                             </div>
                         </div>

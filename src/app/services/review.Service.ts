@@ -3,7 +3,6 @@
 import "dotenv/config";
 
 import { ApiClient } from "../hooks/ApiClient";
-import type { Order } from "../utils/Types";
 
 const BackenedUrl = process.env.EXPRESS_BACKENED_URL || "http://localhost:8000";
 
@@ -23,9 +22,9 @@ export async function getReviewForspecificProducts(id: string) {
 
     console.log("Response:", res);
 
-    const eral =  res 
+    const eral = res
     return eral
-    
+
 }
 
 export async function AddReview(reviewData: { orderId: string, rating: number, comment: string }) {

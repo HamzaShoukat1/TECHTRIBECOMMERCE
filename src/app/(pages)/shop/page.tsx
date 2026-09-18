@@ -1,36 +1,57 @@
+'use client' // [1] Convert to Client Component for state and interactivity
+
+import { useState, useEffect } from 'react'
 import shopPageBanner from "../../public/images/Shop-page-images/Rectangle 1(1).png"
 import Image from 'next/image'
-import { SlidersHorizontal, LayoutGrid, Rows3 } from 'lucide-react'
 import ShopBanner from "../../public/images/Shop-page-images/Frame 161.png"
 import ReusableBanner from "../../Components/ReusableBanner"
 import { getAllProducts } from "../../services/product.service"
 import { IProduct, IProductResponse } from "../../utils/Types"
 import ProductCard from "../../Components/ProductCard"
 
-export default async function page() {
-
-  const ALLPRODUCTS: IProductResponse = await getAllProducts()
-  console.log("sa", ALLPRODUCTS)
+export default function Page() {
 
 
-  const productsArray = ALLPRODUCTS?.AllProducts || [];
+  const [productsArray, setProductsArray] = useState<IProduct[]>([])
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const productsPerPage = 4
 
+  useEffect(() => {
+    async function fetchData() {
+      const ALLPRODUCTS: IProductResponse = await getAllProducts()
+      setProductsArray(ALLPRODUCTS?.AllProducts || [])
+    }
+    fetchData()
+  }, [])
 
-  console.log("real data", productsArray);
+  // [3] Calculate pagination indexes
+  const indexOfLastProduct = currentPage * productsPerPage
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+  const currentProducts = productsArray.slice(indexOfFirstProduct, indexOfLastProduct)
 
+  // Calculate total pages
+  const totalPages = Math.ceil(productsArray.length / productsPerPage)
 
+  // Navigation handlers
+  const handlePageClick = (pageNumber: number) => {
+    setCurrentPage(pageNumber)
+  }
+
+  const handleNextClick = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1)
+    }
+  }
 
   return (
     <>
-
       <ReusableBanner title={"SHOP"} image={shopPageBanner} />
 
-      {/* FilterBar  */}
-
-
-      <section className="w-full max-w-[1440px] mx-auto  items-center  py-12 justify-center flex  space-y-[32px]">
-        <div className="grid grid-cols-1 gap-[32px] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  ">
-          {productsArray.map((product: IProduct) => (
+      {/* FilterBar */}
+      <section className="w-full max-w-[1440px] mx-auto items-center py-12 justify-center flex space-y-[32px]">
+        <div className="grid grid-cols-1 gap-[32px] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {/* [4] Map over currentProducts instead of productsArray */}
+          {currentProducts.map((product: IProduct) => (
             <ProductCard
               id={product._id}
               key={product._id}
@@ -40,39 +61,49 @@ export default async function page() {
               price={product.productPrice}
             />
           ))}
-        </div>
-      </section>
+        </div>       </section>
 
-      {/* //  */}
-      <div className="flex items-center  justify-center  m-12 gap-5  font-sans text-sm font-medium selection:bg-transparent">
-        <button className="flex h-15 w-15 items-center justify-center cursor-pointer rounded-lg bg-[#b68c2d] text-white transition-colors duration-200">
-          1
-        </button>
+      {/* Pagination Buttons */}
+      <div className="flex items-center justify-center m-12 gap-5 font-sans text-sm font-medium selection:bg-transparent">
 
-        <button className="flex  h-15 w-15 items-center justify-center cursor-pointer rounded-lg bg-[#faf4ec] text-[#2c2419] transition-colors duration-200 hover:bg-[#f3e9da]">
-          2
-        </button>
+        {/* Dynamic page numbers based on actual product count */}
+        {Array.from({ length: totalPages }, (_, index) => {
+          const pageNum = index + 1
+          const isActive = currentPage === pageNum
 
-        <button className="flex  h-15 w-15 items-center justify-center cursor-pointer rounded-lg bg-[#faf4ec] text-[#2c2419] transition-colors duration-200 hover:bg-[#f3e9da]">
-          3
-        </button>
+          return (
+            <button
+              key={pageNum}
+              onClick={() => handlePageClick(pageNum)}
+              className={`flex h-15 w-15 items-center justify-center cursor-pointer rounded-lg transition-colors duration-200 ${isActive
+                ? "bg-[#b68c2d] text-white"
+                : "bg-[#faf4ec] text-[#2c2419] hover:bg-[#f3e9da]"
+                }`}
+            >
+              {pageNum}
+            </button>
+          )
+        })}
 
-        <button className="flex items-center   h-15 w-15 justify-center  cursor-pointer rounded-lg bg-[#faf4ec] px-5 text-[#2c2419] transition-colors duration-200 hover:bg-[#f3e9da]">
+        {/* Next Button */}
+        <button
+          onClick={handleNextClick}
+          disabled={currentPage === totalPages}
+          className={`flex items-center h-15 w-15 justify-center cursor-pointer rounded-lg px-5 transition-colors duration-200 ${currentPage === totalPages
+            ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+            : "bg-[#faf4ec] text-[#2c2419] hover:bg-[#f3e9da]"
+            }`}
+        >
           Next
         </button>
       </div>
 
-
-
-      {/* banner  */}
-      <div className='w-full   '>
-        <div className='w-full  flex justify-center  mx-auto  bg-[#F9F1E7] py-6 px-4 md:px-12   flex-col sm:flex-row gap-4 '>
-
+      {/* Banner */}
+      <div className='w-full'>
+        <div className='w-full flex justify-center mx-auto bg-[#F9F1E7] py-6 px-4 md:px-12 flex-col sm:flex-row gap-4'>
           <Image src={ShopBanner} alt='banner' />
         </div>
-
       </div>
-
     </>
   )
 }

@@ -1,13 +1,14 @@
-import { changeOrderStatus, getAllOrdersForAdmin, getAllOrdersForAdminTable } from "@/src/app/services/Order.Service";
+import { changeOrderStatus, getOrderDetail, getAllOrdersForAdminTable } from "@/src/app/services/Order.Service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
-export function useAllOrdersAdmin() {
-    return useQuery({
-        queryKey: ['admin-orders'],
-        queryFn: getAllOrdersForAdmin,
-        staleTime: 1000 * 60,
-    })
+export function UseOrderDetail(id: string) {
+  return useQuery({
+    queryKey: ['order', id],
+    queryFn: () => getOrderDetail(id),
+    staleTime: 1000 * 60,
+    enabled: Boolean(id), 
+  });
 }
 export function useAllOrdersForTable() {
     return useQuery({

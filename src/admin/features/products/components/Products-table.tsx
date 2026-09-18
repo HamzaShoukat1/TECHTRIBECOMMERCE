@@ -38,7 +38,6 @@ import { ProductsMultiDeleteDialog } from "./Product-multi-delete-dialog";
 
 import type { Product } from "../data/schema";
 import { toast } from "sonner";
-import { set } from "zod";
 import ProductMutateDrawer from "./Product-mutate-drawer";
 
 /* -------------------------------------------------------
@@ -256,7 +255,7 @@ export function ProductsTable({
     columns,
 
 
-    getRowId: (row) => row._id,
+    getRowId: (row) => row._id as any,
 
     enableRowSelection: true,
 

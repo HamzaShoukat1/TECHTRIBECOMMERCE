@@ -1,5 +1,4 @@
 
-import Link from 'next/link'
 import useDialogState from '@admin/hooks/use-dialog-state'
 import { Avatar, AvatarFallback, AvatarImage } from '@admin/components/ui/avatar'
 import { Button } from '@admin/components/ui/button'
@@ -14,18 +13,17 @@ import {
   DropdownMenuTrigger,
 } from '@admin/components/ui/dropdown-menu'
 import { SignOutDialog } from '@admin/components/sign-out-dialog'
-import { UseLogout } from '../hooks/Use-Logout'
 import { useQuery } from '@tanstack/react-query'
 import { getCurrentUser } from '@/src/app/services/user.service'
 
 export function ProfileDropdown() {
   const [open, setOpen] = useDialogState()
 
-    const { data: user, isLoading } = useQuery({
-        queryKey: ["currentUser"],
-        queryFn: getCurrentUser,
-        retry: false,
-    })
+  const { data: user } = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: getCurrentUser,
+    retry: false,
+  })
 
   return (
     <>
@@ -50,9 +48,9 @@ export function ProfileDropdown() {
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-        
-            
-           
+
+
+
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem variant='destructive' onClick={() => setOpen(true)}>

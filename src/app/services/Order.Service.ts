@@ -22,10 +22,10 @@ export async function getAllOrders(): Promise<Order[]> {
         method: "GET",
     }) as Promise<Order[]>;
 }
-export async function getAllOrdersForAdmin(): Promise<Order[]> {
-    return ApiClient(`${BackenedUrl}/AllOrders/ForAdminOrders`, {
+export async function getOrderDetail(id: string) {
+    return ApiClient(`${BackenedUrl}/order/${id}`, {
         method: "GET",
-    }) as Promise<Order[]>;
+    });
 }
 export async function getAllOrdersForAdminTable() {
     const res = await ApiClient(`${BackenedUrl}/AllOrders/ForAdminOrdersTable`, {

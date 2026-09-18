@@ -7,9 +7,7 @@ import { toast } from "sonner";
 
 import shopPageBanner from "../../public/images/Shop-page-images/Rectangle 1(1).png";
 
-import { useCart } from "../../context/cartContext";
 import ReusableBanner from "../../Components/ReusableBanner";
-import UsableSkeleton from "../../Components/UsableSkeleton";
 import { useCartQuery } from "../../hooks/useCartQuery";
 
 import {

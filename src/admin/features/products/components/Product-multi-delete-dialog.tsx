@@ -33,8 +33,8 @@ export function ProductsMultiDeleteDialog({
   onDeleted,
 }: ProductsMultiDeleteDialogProps) {
   const [value, setValue] = useState("");
-const normalizeValue = value.trim().toUpperCase()
-const inConfirmed = normalizeValue === CONFIRM_WORD
+  const normalizeValue = value.trim().toUpperCase()
+  const inConfirmed = normalizeValue === CONFIRM_WORD
 
 
   const queryClient = useQueryClient();
@@ -48,8 +48,8 @@ const inConfirmed = normalizeValue === CONFIRM_WORD
 
   const handleDelete = async () => {
     if (!inConfirmed) {
-      toast.error(`Please type "${CONFIRM_WORD}" to confirm.`,{
-        position:"top-left"
+      toast.error(`Please type "${CONFIRM_WORD}" to confirm.`, {
+        position: "top-left"
       });
       return;
     }
@@ -74,7 +74,7 @@ const inConfirmed = normalizeValue === CONFIRM_WORD
     try {
       await Promise.all(
         products.map((product) =>
-          deleteProduct(product._id)
+          deleteProduct(product._id ?? "")
         )
       );
 
@@ -84,8 +84,7 @@ const inConfirmed = normalizeValue === CONFIRM_WORD
       });
 
       toast.success(
-        `${products.length} product${
-          products.length > 1 ? "s" : ""
+        `${products.length} product${products.length > 1 ? "s" : ""
         } deleted successfully.`
       );
 
@@ -172,7 +171,7 @@ const inConfirmed = normalizeValue === CONFIRM_WORD
             <Input
               value={value}
               onChange={(e) => setValue(e.target.value)}
-                placeholder='Type DELETE to confirm'
+              placeholder='Type DELETE to confirm'
               autoFocus
               disabled={isPending}
             />

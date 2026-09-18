@@ -1,6 +1,5 @@
 "use client";
 
-import { toast } from "sonner";
 import { useCart } from "../context/cartContext";
 import { useAddToCart } from "../hooks/useAddtoCart";
 import { CartItem } from "../utils/Types";

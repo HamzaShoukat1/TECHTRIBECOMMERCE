@@ -14,24 +14,25 @@ import { TasksProvider } from './components/tasks-provider'
 import { useAllOrdersForTable } from '../../hooks/use-all-Order'
 import { OrdersTable } from './components/Order-Table.'
 
+// const reviews: Review[] = Array.isArray(response)
+//     ? response
+//     : response?.data ?? [];
 export function Orders() {
   const {
-    data :orders ,
+    data: orders,
     isLoading,
     isError,
   } = useAllOrdersForTable()
-console.log("asaz",orders)
-  // console.log("sa", data)
 
   if (isLoading) {
-    return <div>Loading orders...</div>
+    return <div className='   flex justify-center items-center h-full'>Loading orders...</div>
   }
 
   if (isError) {
-    return <div>Failed to load orders.</div>
+    return <div className='flex justify-center items-center h-full'>Failed to load orders.</div>
   }
 
-  
+
 
   return (
     <TasksProvider>
@@ -53,8 +54,8 @@ console.log("asaz",orders)
             </h2>
 
             <p className='text-muted-foreground'>
-                Manage your products and inventory here.
-              </p>
+              Manage your products and inventory here.
+            </p>
           </div>
 
           {/* <TasksPrimaryButtons /> */}
@@ -62,7 +63,7 @@ console.log("asaz",orders)
 
         <OrdersTable
           data={orders}
-   
+
         />
       </Main>
 

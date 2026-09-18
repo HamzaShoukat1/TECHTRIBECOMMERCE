@@ -2,7 +2,6 @@
 "use client";
 
 import { createContext, useContext, useState } from "react";
-import { useLocalStorage } from "../hooks/Uselocalstorage";
 
 export type CartItem = {
     _id: string;
@@ -69,10 +68,10 @@ export const CartProvider = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const [cart, setCart, isInitialized] = useLocalStorage<CartItem[]>(
-        "shopping_cart",
-        []
-    );
+    // const [cart, setCart, isInitialized] = useLocalStorage<CartItem[]>(
+    //     "shopping_cart",
+    //     []
+    // );
 
     // const addToItem = (item: CartItem) => {
     //     setCart((prev) => {
@@ -144,11 +143,11 @@ export const CartProvider = ({
     //     );
     // };
 
-    const subtotal = cart.reduce(
-        (total, item) =>
-            total + item.productPrice * item.productQuantity,
-        0
-    );
+    // const subtotal = cart.reduce(
+    //     (total, item) =>
+    //         total + item.productPrice * item.productQuantity,
+    //     0
+    // );
 
     return (
         <CartContext.Provider

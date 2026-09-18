@@ -14,7 +14,7 @@ export function useUpdateProduct() {
     }: {
       id: string;
       data: Product;
-    }) => updateProduct(id, data),
+    }) => updateProduct(id, data as any),
 
     onSuccess: () => {
       queryClient.invalidateQueries({

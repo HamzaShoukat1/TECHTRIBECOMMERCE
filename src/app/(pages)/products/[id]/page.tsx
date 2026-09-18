@@ -93,8 +93,6 @@ export default async function ProductDetailsPage({ params }: any) {
                             {/* {"★".repeat(review.rating)}
                                             {"☆".repeat(5 - review.rating)} */}
                         </div>
-                        <div className='text-[#FFC700] text-lg flex gap-1'>★★★★★</div>
-                        <span className='border-l border-[#9F9F9F] h-4 pl-4 font-poppins'>5 Customer Reviews</span>
                     </div>
 
                     <p className='text-[13px] font-poppins leading-[20px] text-black font-normal pr-6 mb-6'>{description}</p>
@@ -103,14 +101,8 @@ export default async function ProductDetailsPage({ params }: any) {
 
                     {/* Metadata Dividers */}
                     <div className="border-t border-[#D9D9D9] pt-8 mt-6 flex flex-col gap-3 text-[16px] text-[#9F9F9F]">
-                        <div className="flex gap-4">
-                            <span className="w-20">SKU</span>
-                            <span>: SS001</span>
-                        </div>
-                        <div className="flex gap-4">
-                            <span className="w-20">Category</span>
-                            <span>: Sofas</span>
-                        </div>
+
+
                         <div className="flex gap-4">
                             <span className="w-20">Share</span>
                             <div className="flex items-center gap-3 text-black">

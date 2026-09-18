@@ -36,7 +36,6 @@ function ReviewModel({ orderId, onSuccess }: ReviewModelProps) {
     const { mutateAsync: createReview, isPending } = UseReview();
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
-    const [onClose, setonClose] = useState(false)
 
     const handleSubmit = async () => {
         if (!orderId) return;
