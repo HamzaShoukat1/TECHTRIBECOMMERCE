@@ -4,7 +4,7 @@ import { IProduct } from "../utils/Types";
 import { ApiClient } from "../hooks/ApiClient";
 // import { ProductCreate } from "@/src/admin/hooks/use-create-product";
 
-const BackenedUrl = process.env.EXPRESS_BACKENED_URL || "http://localhost:8000";
+const BackenedUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 export async function createProduct(createProductData: IProduct) {
     return ApiClient(`${BackenedUrl}/product/create`, {
