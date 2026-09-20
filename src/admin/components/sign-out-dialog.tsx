@@ -1,4 +1,3 @@
-import { useAuthStore } from '@admin/stores/auth-store'
 import { ConfirmDialog } from '@admin/components/confirm-dialog'
 import { useLogout } from '../hooks/Use-Logout'
 import { useRouter } from 'next/navigation'
