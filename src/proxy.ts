@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import path from 'path';
 
 // Next.js expects this function to be named exactly 'middleware'
 export function proxy(request: NextRequest) {
@@ -14,6 +15,9 @@ export function proxy(request: NextRequest) {
         pathname === '/' ||
         pathname === '/shop' ||
         pathname === '/contact' ||
+        pathname === '/cart' ||
+        pathname === '/checkout' ||
+        pathname === '/orders' ||
         pathname.startsWith('/products/');
 
 
