@@ -29,9 +29,9 @@ export default function SignupForm() {
   const { mutate, isPending } = useMutation({
     mutationFn: createUser,
     onSuccess: (response) => {
+      router.push("/login")
       toast.success("Account created successfully!")
 
-      router.push("/login")
     },
     onError: (error: any) => {
       const errorMsg = error?.response?.data?.message || "Something went wrong. Please try again."

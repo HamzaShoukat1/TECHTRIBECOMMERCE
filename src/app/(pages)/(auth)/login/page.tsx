@@ -33,10 +33,10 @@ export default function SigninForm() {
                 router.push("/admin")
                 return
             }
+            router.push("/")
             toast.success("Welcome back! Logged in successfully.", {
                 position: "top-left"
             })
-            router.push("/")
         },
         onError: (error: any) => {
             const errorMsg = error?.response?.data?.message || "Invalid credentials. Please try again."
