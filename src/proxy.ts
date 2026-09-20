@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import path from 'path';
 
 // Next.js expects this function to be named exactly 'middleware'
 export function proxy(request: NextRequest) {
