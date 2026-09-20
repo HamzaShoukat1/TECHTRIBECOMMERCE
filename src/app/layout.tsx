@@ -6,7 +6,7 @@ import { CartProvider } from "./context/cartContext";
 import { Toaster } from "sonner";
 import Providers from "./provider"; // Your TanStack Query Provider
 import { AppChrome } from "./AppChrome";
-
+import OfflineGuard from "./Components/OfflineGuard";
 const geistSans = Geist({
     variable: "--font-geist-sans",
     subsets: ["latin"],
@@ -30,11 +30,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
         >
             <body className="flex flex-col flex-1 min-h-screen">
+                <OfflineGuard>
+
                 <Providers>
                     <CartProvider>
                         <AppChrome>{children}</AppChrome>
                     </CartProvider>
                 </Providers>
+                </OfflineGuard>
                 <Toaster position="bottom-right" />
             </body>
         </html>

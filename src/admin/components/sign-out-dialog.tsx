@@ -1,6 +1,7 @@
 import { useAuthStore } from '@admin/stores/auth-store'
 import { ConfirmDialog } from '@admin/components/confirm-dialog'
 import { useLogout } from '../hooks/Use-Logout'
+import { useRouter } from 'next/navigation'
 
 interface SignOutDialogProps {
   open: boolean
@@ -8,6 +9,7 @@ interface SignOutDialogProps {
 }
 
 export function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {
+  const router = useRouter()
   const { logout } = useLogout();
   // const queryClient = useQueryClient()
   // // const { mutateAsync: logout } = UseLogout()
@@ -23,11 +25,12 @@ export function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {
   //       }
   //   })
 
-  const { auth } = useAuthStore()
+  // const { auth } = useAuthStore()
 
 
   const handleSignOut = () => {
-    auth.reset()
+    // auth.reset()
+    router.refresh()
     // Preserve current location for redirect after sign-in
     logout()
     // router.replace(`/admin/sign-in?redirect=${encodeURIComponent(pathname)}`)

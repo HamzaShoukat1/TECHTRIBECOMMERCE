@@ -13,7 +13,9 @@ export function proxy(request: NextRequest) {
     const isPublicPage =
         pathname === '/' ||
         pathname === '/shop' ||
+        pathname === '/contact' ||
         pathname.startsWith('/products/');
+
 
     // 3. If user is NOT logged in and path is neither an auth page nor a public page, redirect to login
     if (!token && !isAuthPath && !isPublicPage) {
