@@ -1,4 +1,5 @@
 "use client";
+
 import Image from "next/image";
 import { useCart } from "../context/cartContext";
 import grouppng from "../public/images/Group.png";
@@ -15,22 +16,30 @@ import { getCurrentUser } from "../services/user.service";
 export default function CartSidebar() {
     const { isOpen, setIsOpen } = useCart();
 
-    // 1. Check current logged-in user state
-    const { data: user, isLoading: isUserLoading } = useQuery({
+    // 1. Fetch authenticated user state
+    const { 
+        data: user, 
+        isLoading: isUserLoading, 
+        isError: isUserError 
+    } = useQuery({
         queryKey: ["currentUser"],
         queryFn: getCurrentUser,
         retry: false,
+        staleTime: 1000 * 60 * 5, 
     });
 
-    // 2. Fetch cart data
-    const { data: cart, isLoading: isCartLoading, isError } = useCartQuery();
+    const { 
+        data: cart, 
+        isLoading: isCartLoading, 
+        isError: isCartError 
+    } = useCartQuery();
 
     const { mutate: removeFromCart, isPending: isRemoving } = useRemoveCart();
     const [removingItemId, setRemovingItemId] = useState<string | null>(null);
 
     const subtotal =
-        cart?.items.reduce(
-            (total, item) => total + item.productPrice * item.productQuantity,
+        cart?.items?.reduce(
+            (total: number, item: CartItem) => total + item.productPrice * item.productQuantity,
             0
         ) ?? 0;
 
@@ -40,14 +49,14 @@ export default function CartSidebar() {
 
     return (
         <div className="fixed inset-0 z-50 flex w-full justify-end bg-black/30">
-            {/* Clickable Backdrop Overlay */}
+            {/* Clickable Backdrop */}
             <div
                 className="absolute inset-0 cursor-pointer"
                 onClick={() => setIsOpen(false)}
                 aria-hidden="true"
             />
 
-            {/* Cart Sidebar Panel */}
+            {/* Cart Panel */}
             <div className="relative z-10 flex h-full w-full max-w-[417px] flex-col bg-white shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
 
                 {/* Header */}
@@ -64,14 +73,14 @@ export default function CartSidebar() {
                     </button>
                 </div>
 
-                {/* Cart Body Contents */}
+                {/* Cart Body */}
                 <div className="flex-1 overflow-y-auto px-[26px] py-6">
                     {isUserLoading ? (
                         <div className="flex h-full items-center justify-center">
                             <Loader2 className="h-6 w-6 animate-spin text-gray-500" />
                         </div>
-                    ) : !user ? (
-                        /* SHOW SIGN IN PROMPT IF NOT LOGGED IN */
+                    ) : !user || isUserError ? (
+                        /* Unauthenticated / Logged Out State */
                         <div className="flex h-full flex-col items-center justify-center px-4 text-center">
                             <p className="mb-4 font-poppins text-[16px] font-medium text-[#717171]">
                                 Please sign in to view your shopping cart
@@ -85,12 +94,13 @@ export default function CartSidebar() {
                             </Link>
                         </div>
                     ) : isCartLoading ? (
-                        <div className="flex h-full items-center justify-center">
-                            <p className="text-sm text-[#7A7A7A]">Loading your cart...</p>
+                        <div className="flex h-full items-center justify-center gap-2">
+                            <Loader2 className="h-5 w-5 animate-spin text-[#B88E2F]" />
+                            <p className="text-sm font-poppins text-[#7A7A7A]">Loading your cart...</p>
                         </div>
-                    ) : isError ? (
-                        <div className="flex h-full items-center justify-center">
-                            <p className="text-sm text-[#7A7A7A]">Error loading cart.</p>
+                    ) : isCartError ? (
+                        <div className="flex h-full flex-col items-center justify-center text-center">
+                            <p className="font-poppins text-sm text-red-500">Error loading cart.</p>
                         </div>
                     ) : isCartEmpty ? (
                         <div className="flex h-full flex-col items-center justify-center text-center">
@@ -99,7 +109,7 @@ export default function CartSidebar() {
                             </p>
                         </div>
                     ) : (
-                        /* Render Authenticated Items List */
+                        /* Authenticated Items List */
                         <div className="flex w-full flex-col gap-6">
                             {cart?.items?.map((item: CartItem) => (
                                 <div key={item._id} className="flex items-center gap-5">
@@ -159,8 +169,8 @@ export default function CartSidebar() {
                     )}
                 </div>
 
-                {/* Footer: Subtotal and Action Buttons */}
-                {user && !isCartEmpty && !isCartLoading && !isError && (
+                {/* Footer Subtotal & Actions */}
+                {user && !isCartEmpty && !isCartLoading && !isCartError && (
                     <div className="shrink-0 border-t border-[#E5E5E5] px-[26px] py-6">
                         <div className="mb-5 flex items-center justify-between text-[18px] text-[#111111]">
                             <span className="font-poppins font-medium">Subtotal</span>

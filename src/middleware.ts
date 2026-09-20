@@ -1,31 +1,33 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-// Next.js expects this function to be named exactly 'middleware'
-export function proxy(request: NextRequest) {
-    const token = request.cookies.get('accessToken')?.value;
+export function middleware(request: NextRequest) {
+    // Check for Railway token OR Vercel domain session cookie
+    const token =
+        request.cookies.get('accessToken')?.value ||
+        request.cookies.get('logged_in')?.value;
+
     const { pathname } = request.nextUrl;
 
-    // 1. Define authentication-only auth pages
+    // 1. Auth paths
     const isAuthPath = pathname === '/login' || pathname === '/signup';
 
-    // 2. Define pages that are accessible to everyone
+    // 2. Public paths
     const isPublicPage =
         pathname === '/' ||
         pathname === '/shop' ||
         pathname === '/contact' ||
         pathname === '/cart' ||
-        pathname === '/checkout' ||
-        pathname === '/orders' ||
         pathname.startsWith('/products/');
 
-
-    // 3. If user is NOT logged in and path is neither an auth page nor a public page, redirect to login
+    // 3. Unauthenticated user accessing protected route (/orders, /profile, etc.)
     if (!token && !isAuthPath && !isPublicPage) {
-        return NextResponse.redirect(new URL('/login', request.url));
+        const loginUrl = new URL('/login', request.url);
+        loginUrl.searchParams.set('callbackUrl', pathname);
+        return NextResponse.redirect(loginUrl);
     }
 
-    // 4. If logged in and trying to access login/signup, redirect to home
+    // 4. Authenticated user accessing /login or /signup
     if (token && isAuthPath) {
         return NextResponse.redirect(new URL('/', request.url));
     }
