@@ -1,34 +1,34 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+// Next.js expects this function to be named exactly 'middleware'
 export function proxy(request: NextRequest) {
-    // 1. Retrieve the authentication token
     const token = request.cookies.get('accessToken')?.value;
     const { pathname } = request.nextUrl;
 
-    // 2. Define public paths that don't require authentication
-    const isPublicPath = pathname === '/login' || pathname === '/signup';
+    // 1. Define authentication-only auth pages
+    const isAuthPath = pathname === '/login' || pathname === '/signup';
 
-    // 3. If the user is NOT logged in and tries to access a protected page, redirect to login
-    if (!token && !isPublicPath) {
+    // 2. Define pages that are accessible to everyone
+    const isPublicPage =
+        pathname === '/' ||
+        pathname === '/shop' ||
+        pathname.startsWith('/products/');
+
+    // 3. If user is NOT logged in and path is neither an auth page nor a public page, redirect to login
+    if (!token && !isAuthPath && !isPublicPage) {
         return NextResponse.redirect(new URL('/login', request.url));
     }
 
-    // 4. If the user IS logged in and tries to access login/register, redirect them to home
-    if (token && isPublicPath) {
+    // 4. If logged in and trying to access login/signup, redirect to home
+    if (token && isAuthPath) {
         return NextResponse.redirect(new URL('/', request.url));
     }
 
     return NextResponse.next();
 }
 
-// 5. Corrected Matcher Configuration
 export const config = {
-    /*
-     * Matches ALL routes except static files, images, API routes, and metadata.
-     * This automatically protects '/orders', '/payment-success', etc., 
-     * without needing to list them individually.
-     */
     matcher: [
         '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
     ],

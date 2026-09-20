@@ -110,7 +110,7 @@ export default function Navbar() {
                 onClick={() => setIsOpen(true)} 
                 className="p-2 text-gray-600 hover:text-gray-900 transition-colors rounded-full hover:bg-gray-50 relative"
               >
-                <ShoppingCart className="w-5 h-5" />
+                <ShoppingCart className="w-5 h-5 cursor-pointer" />
                 {totalItems > 0 && (
                   <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-amber-600 text-[10px] font-medium text-white ring-2 ring-white">
                     {totalItems}

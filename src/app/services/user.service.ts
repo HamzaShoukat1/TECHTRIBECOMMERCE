@@ -30,6 +30,6 @@ export async function getCurrentUser() {
 export async function logoutUser() {
     return ApiClient(`${BackenedUrl}/auth/logout`, {
         method: "POST",
-        
+
     });
 }

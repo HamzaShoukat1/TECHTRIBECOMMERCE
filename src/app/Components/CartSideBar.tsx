@@ -9,16 +9,30 @@ import { useRemoveCart } from "../hooks/UseRemoveCart";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getCurrentUser } from "../services/user.service";
 
 export default function CartSidebar() {
     const { isOpen, setIsOpen } = useCart();
-    const { data: cart, isLoading, isError, } = useCartQuery()
-    const { mutate: removeFromCart, isPending: isRemoving } = useRemoveCart()
+
+    // 1. Check current logged-in user state
+    const { data: user, isLoading: isUserLoading } = useQuery({
+        queryKey: ["currentUser"],
+        queryFn: getCurrentUser,
+        retry: false,
+    });
+
+    // 2. Fetch cart data
+    const { data: cart, isLoading: isCartLoading, isError } = useCartQuery();
+
+    const { mutate: removeFromCart, isPending: isRemoving } = useRemoveCart();
     const [removingItemId, setRemovingItemId] = useState<string | null>(null);
 
-    const subtotal = cart?.items.reduce(
-        (total, item) => total + item.productPrice * item.productQuantity,
-        0     ) ?? 0;
+    const subtotal =
+        cart?.items.reduce(
+            (total, item) => total + item.productPrice * item.productQuantity,
+            0
+        ) ?? 0;
 
     const isCartEmpty = !cart?.items || cart.items.length === 0;
 
@@ -33,7 +47,7 @@ export default function CartSidebar() {
                 aria-hidden="true"
             />
 
-            {/* Cart Sidebar */}
+            {/* Cart Sidebar Panel */}
             <div className="relative z-10 flex h-full w-full max-w-[417px] flex-col bg-white shadow-[0_24px_80px_rgba(0,0,0,0.18)]">
 
                 {/* Header */}
@@ -44,22 +58,40 @@ export default function CartSidebar() {
                     <button
                         onClick={() => setIsOpen(false)}
                         aria-label="Close cart"
-                        className="flex items-center cursor-pointer justify-center border-[#C9C9C9] text-[#999999] transition hover:border-black hover:text-black"
+                        className="flex cursor-pointer items-center justify-center transition hover:opacity-75"
                     >
-                        <Image
-                            src={grouppng}
-                            alt="Close"
-                            width={16}
-                        />
+                        <Image src={grouppng} alt="Close" width={16} height={16} />
                     </button>
                 </div>
 
-                {/* Cart Items */}
-                <div className="flex-1 overflow-y-auto px-[26px] py-10">
-                    {isLoading ? (
-                        <p className="text-sm text-[#7A7A7A]">Loading...</p>
+                {/* Cart Body Contents */}
+                <div className="flex-1 overflow-y-auto px-[26px] py-6">
+                    {isUserLoading ? (
+                        <div className="flex h-full items-center justify-center">
+                            <Loader2 className="h-6 w-6 animate-spin text-gray-500" />
+                        </div>
+                    ) : !user ? (
+                        /* SHOW SIGN IN PROMPT IF NOT LOGGED IN */
+                        <div className="flex h-full flex-col items-center justify-center px-4 text-center">
+                            <p className="mb-4 font-poppins text-[16px] font-medium text-[#717171]">
+                                Please sign in to view your shopping cart
+                            </p>
+                            <Link
+                                href="/login"
+                                onClick={() => setIsOpen(false)}
+                                className="inline-flex items-center justify-center rounded-[10px] bg-black px-6 py-3 font-poppins text-[16px] text-white transition hover:bg-neutral-800"
+                            >
+                                Sign In
+                            </Link>
+                        </div>
+                    ) : isCartLoading ? (
+                        <div className="flex h-full items-center justify-center">
+                            <p className="text-sm text-[#7A7A7A]">Loading your cart...</p>
+                        </div>
                     ) : isError ? (
-                        <p className="text-sm text-[#7A7A7A]">Error loading cart.</p>
+                        <div className="flex h-full items-center justify-center">
+                            <p className="text-sm text-[#7A7A7A]">Error loading cart.</p>
+                        </div>
                     ) : isCartEmpty ? (
                         <div className="flex h-full flex-col items-center justify-center text-center">
                             <p className="font-poppins text-[16px] font-medium text-[#717171]">
@@ -67,17 +99,17 @@ export default function CartSidebar() {
                             </p>
                         </div>
                     ) : (
-                        <div className="flex w-full flex-col gap-4">
+                        /* Render Authenticated Items List */
+                        <div className="flex w-full flex-col gap-6">
                             {cart?.items?.map((item: CartItem) => (
-                                <div key={item._id} className="flex items-center gap-7">
-                                    {/* Product Image */}
-                                    <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-[16px] bg-[#F4EEDF]">
+                                <div key={item._id} className="flex items-center gap-5">
+                                    <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-[16px] bg-[#F4EEDF]">
                                         {item.productImage?.url ? (
                                             <Image
                                                 src={item.productImage.url}
                                                 alt={item.productName}
-                                                width={96}
-                                                height={96}
+                                                width={80}
+                                                height={80}
                                                 className="h-full w-full object-cover"
                                             />
                                         ) : (
@@ -86,12 +118,14 @@ export default function CartSidebar() {
                                             </div>
                                         )}
                                     </div>
-                                    {/* Product Details */}
-                                    <div className="min-w-0 flex-1 ">
-                                        <div className="mt-2 flex items-center gap-3 text-[16px]  text-[#717171]">
+                                    <div className="min-w-0 flex-1">
+                                        <p className="truncate font-poppins text-sm font-medium text-black">
+                                            {item.productName}
+                                        </p>
+                                        <div className="mt-1 flex items-center gap-2 font-poppins text-[15px] text-[#717171]">
                                             <span>{item.productQuantity}</span>
                                             <span>x</span>
-                                            <span className="text-[#D49A20] font-poppins">
+                                            <span className="font-medium text-[#D49A20]">
                                                 ${(item.productPrice * item.productQuantity).toLocaleString()}
                                             </span>
                                         </div>
@@ -111,13 +145,13 @@ export default function CartSidebar() {
                                             });
                                         }}
                                         disabled={isRemoving}
-                                        aria-label={`Remove ${item.productName}`}
-                                        className="flex w-full max-w-[20px] h-5 cursor-pointer shrink-0 items-center justify-center rounded-full bg-[#A7A7A7] text-sm font-semibold text-white transition hover:bg-[#111111]"
+                                        className="flex h-5 w-5 shrink-0 cursor-pointer items-center justify-center rounded-full bg-[#A7A7A7] text-xs font-semibold text-white transition hover:bg-[#111111]"
                                     >
                                         {isRemoving && removingItemId === item._id ? (
-                                            <Loader2 className="h-5 w-5 animate-spin" />
+                                            <Loader2 className="h-3 w-3 animate-spin" />
                                         ) : (
-                                            "×"                                         )}
+                                            "×"
+                                        )}
                                     </button>
                                 </div>
                             ))}
@@ -125,35 +159,33 @@ export default function CartSidebar() {
                     )}
                 </div>
 
-                {/* Subtotal and Checkout Buttons (Only visible if cart has items) */}
-                {!isCartEmpty && !isLoading && !isError && (
-                    <>
-                        {/* Subtotal */}
-                        <div className="border-t border-[#E5E5E5] px-[32px] py-6">
-                            <div className="w-full max-w-[250px] flex items-center justify-between text-[18px] text-[#111111]">
-                                <span className="font-medium font-poppins tracking-normal">Subtotal</span>
-                                <span className="font-semibold text-[#D49A20] tracking-normal font-poppins">
-                                    ${subtotal.toLocaleString()}
-                                </span>
-                            </div>
+                {/* Footer: Subtotal and Action Buttons */}
+                {user && !isCartEmpty && !isCartLoading && !isError && (
+                    <div className="shrink-0 border-t border-[#E5E5E5] px-[26px] py-6">
+                        <div className="mb-5 flex items-center justify-between text-[18px] text-[#111111]">
+                            <span className="font-poppins font-medium">Subtotal</span>
+                            <span className="font-poppins font-semibold text-[#D49A20]">
+                                ${subtotal.toLocaleString()}
+                            </span>
                         </div>
 
-                        {/* Bottom Buttons */}
-                        <div className="border-t border-[#E5E5E5] px-[26px] py-6 font-poppins cursor-pointer">
-                            <div className="flex items-center py-2 cursor-pointer justify-start gap-[14px]">
-                                <Link href="/cart" onClick={() => setIsOpen(false)}>
-                                    <button className="w-full cursor-pointer max-w-[87px] rounded-full border border-[#111111] px-4 py-2 text-[14px] text-[#111111] transition hover:bg-[#111111] hover:text-white">
-                                        Cart
-                                    </button>
-                                </Link>
-                                <Link href={"/checkout"} onClick={() => setIsOpen(false)}>
-                                    <button className="w-full cursor-pointer max-w-[118px] rounded-full border border-[#111111] px-4 py-2 text-[14px] text-[#111111] transition hover:bg-[#111111] hover:text-white">
-                                        Checkout
-                                    </button>
-                                </Link>
-                            </div>
+                        <div className="flex flex-col gap-3">
+                            <Link
+                                href="/cart"
+                                onClick={() => setIsOpen(false)}
+                                className="flex h-[45px] w-full items-center justify-center rounded-[10px] border border-black font-poppins text-[14px] font-medium text-black transition hover:bg-neutral-50"
+                            >
+                                View Cart
+                            </Link>
+                            <Link
+                                href="/checkout"
+                                onClick={() => setIsOpen(false)}
+                                className="flex h-[45px] w-full items-center justify-center rounded-[10px] bg-black font-poppins text-[14px] font-medium text-white transition hover:bg-neutral-800"
+                            >
+                                Checkout
+                            </Link>
                         </div>
-                    </>
+                    </div>
                 )}
             </div>
         </div>

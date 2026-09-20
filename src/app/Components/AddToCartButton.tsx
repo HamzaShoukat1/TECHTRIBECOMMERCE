@@ -1,8 +1,11 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { useCart } from "../context/cartContext";
 import { useAddToCart } from "../hooks/useAddtoCart";
 import { CartItem } from "../utils/Types";
+import { getCurrentUser } from "../services/user.service";
+import { useRouter } from "next/navigation";
 
 type ProductProps = {
     product: CartItem
@@ -21,8 +24,20 @@ export default function AddToCartButton({
 
     const { mutate, isPending } = useAddToCart()
     const { setIsOpen } = useCart();
+    const router = useRouter()
+    const { data: user } = useQuery({
+        queryKey: ["currentUser"],
+        queryFn: getCurrentUser,
+        retry: false,
+    })
 
     const handleClick = async () => {
+
+        if (!user) {
+            router.push("/login")
+
+            return
+        }
         mutate({
             productId: product._id,
             quantity,
