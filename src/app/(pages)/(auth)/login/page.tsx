@@ -36,7 +36,6 @@ export default function SigninForm() {
             toast.success("Welcome back! Logged in successfully.", {
                 position: "top-left"
             })
-            form.reset()
             router.push("/")
         },
         onError: (error: any) => {
