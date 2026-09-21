@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // 1. Check for the authentication token in cookies
-    const hasToken = request.cookies.has("accessToken")?.valueOf()
+    const hasToken = request.cookies.has("accessToken")
 
     const isAuthPage =
         pathname === "/login" ||
