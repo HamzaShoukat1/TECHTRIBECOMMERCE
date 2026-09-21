@@ -19,7 +19,7 @@ export default async function ProductDetailsPage({ params }: any) {
         notFound()
     }
 
-    const heading = singleProduct.productName || "Asgaard sofa"
+    const heading = singleProduct.productName || ""
     const price = singleProduct.productPrice
     const description = singleProduct.productDescription
     const image = singleProduct.productImage?.url || ""

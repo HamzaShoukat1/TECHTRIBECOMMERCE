@@ -92,15 +92,15 @@ export default async function Page() {
       </section>
 
       {/* Products Section */}
-      <section className="w-full max-w-[1236px] mx-auto items-center space-y-[32px]">
-        <h2 className="font-bold text-[40px] flex justify-center pb-3">Our Products</h2>
+      <section className="w-full max-w-[1236px] mx-auto justify-center  items-center space-y-[32px]">
+        <h2 className="font-bold text-[40px] flex justify-center pb-3 font-poppins">Our Products</h2>
 
         {products.length === 0 ? (
           <p className="text-center font-poppins text-gray-500 py-8">
             Unable to load products right now. Please try again later.
           </p>
         ) : (
-          <div className="grid grid-cols-1 gap-[32px] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center mx-auto">
+          <div className="grid grid-cols-1 gap-[32px] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  ">
             {products.map((product: IProduct) => (
               <ProductCard
                 id={product._id}

@@ -1,24 +1,19 @@
 "use client"
-
+import { useState } from 'react' // Added useState for managing the hamburger menu toggle
 import Link from 'next/link'
 import Image from "next/image"
 import { useQuery } from "@tanstack/react-query"
 import { usePathname } from "next/navigation"
-import { ShoppingCart, Search, ShoppingBag } from 'lucide-react'
+import { ShoppingCart, Search, ShoppingBag, Menu, X } from 'lucide-react' // Added Menu and X icons
 
 // Local image imports
 import logo from "../public/images/Meubel House_Logos-05.png"
 import logoName from "../public/images/SkinClinic.png"
-import { UserIcon } from 'lucide-react'
 import { getCurrentUser } from '../services/user.service'
 import { useCart } from '../context/cartContext'
 import { useCartQuery } from '../hooks/useCartQuery'
 import { useLogout } from '@/src/admin/hooks/Use-Logout'
 import { UseGetAllOrders } from '../hooks/UseGetAllOrders'
-
-
-
-
 
 const navItems = [
   { name: "Home", route: "/" },
@@ -27,10 +22,11 @@ const navItems = [
 ]
 
 export default function Navbar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathName = usePathname()
   const { setIsOpen } = useCart()
   const { data: cart } = useCartQuery()
-  const { data: user } = useQuery({ queryKey: ["currentUser"], queryFn: getCurrentUser, retry: false, });
+  const { data: user } = useQuery({ queryKey: ["currentUser"], queryFn: getCurrentUser, retry: false });
   // Fetch orders data using the hook
   const { data: orders } = UseGetAllOrders()
   const orderCount = orders?.length ?? 0
@@ -43,20 +39,18 @@ export default function Navbar() {
     0
   ) ?? 0
 
-
   const { logout } = useLogout();
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/90 backdrop-blur-md px-6 sm:px-10 py-4 shadow-sm transition-all">
       <div className="mx-auto flex max-w-7xl items-center justify-between">
 
-        {/* Brand Logo Section */}
-        <Link href="/" className="flex items-center gap-2 group transition-transform active:scale-95">
-          <Image src={logo} alt="Furniro Logo" width={40} height={40} className="w-9 h-auto object-contain" />
-          <Image src={logoName} alt="Furniro" width={100} height={40} className="w-24 h-auto object-contain hidden sm:block" />
-        </Link>
+                 <Link href="/" className="flex items-center gap-2 group transition-transform active:scale-95">
+            <Image src={logo} alt="Furniro Logo" width={40} height={40} className="w-9 h-auto object-contain" />
+            <Image src={logoName} alt="Furniro" width={100} height={40} className="w-24 h-auto object-contain hidden sm:block" />
+          </Link>
 
-        {/* Navigation Links */}
+        {/* Navigation Links (Desktop) */}
         {!isAuthPage && (
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => {
@@ -83,8 +77,6 @@ export default function Navbar() {
                 <Search className="w-5 h-5" />
               </button>
 
-              {/* Orders Counter Icon */}
-              {/* Orders Counter Icon */}
               {/* Orders Icon - Only show when signed in */}
               {user && (
                 <Link
@@ -125,22 +117,74 @@ export default function Navbar() {
               </div>
               <button
                 onClick={() => logout()}
-                className="text-xs font-medium text-gray-500 cursor-pointer hover:text-red-600 transition-colors py-1.5 px-3 rounded-md hover:bg-red-50 border border-gray-100"
+                className="text-xs font-medium text-gray-500 cursor-pointer hover:text-red-600 transition-colors py-1.5 px-3 rounded-md hover:bg-red-50 border border-gray-500"
               >
                 Logout
               </button>
             </div>
           ) : (
-            <Link
-              href="/login"
-              className="p-2 text-gray-600 hover:text-gray-900 transition-colors rounded-full hover:bg-gray-50"
-            >
-              <UserIcon className="w-5 h-5" />
-            </Link>
+            <div className="flex gap-2">
+              <Link
+                href="/login"
+                className="text-gray-600 hover:text-gray-900 transition-colors"
+              >
+                <button className="text-xs font-medium text-gray-500 cursor-pointer bg-white py-1.5 px-3 rounded-md border border-gray-500 hover:bg-gray-50 transition-colors">
+                  Signin
+                </button>
+              </Link>
+              <Link
+                href="/signup"
+                className="text-gray-800 hover:text-gray-900 transition-colors"
+              >
+                <button className="text-xs font-medium text-gray-500 cursor-pointer bg-white py-1.5 px-3 rounded-md border border-gray-500 hover:bg-gray-50 transition-colors">
+                  Signup
+                </button>
+              </Link>
+            </div>
           )}
         </div>
+         {/* Left Side: Hamburger & Brand Logo Section */}
+        <div className="flex items-center gap-4">
+          {/* Hamburger Menu Icon - Hidden on md and up */}
+          {!isAuthPage && (
+            <>
 
+
+            <button
+            
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="p-2 text-gray-600 cursor-pointer hover:text-gray-900 transition-colors  duration-500 rounded-full hover:bg-gray-50 md:hidden"
+            aria-label="Toggle Menu"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+              </>
+
+          )}
+
+        </div>
       </div>
+      
+
+      {/* Mobile Drawer Overlay Links */}
+      {!isAuthPage && isMenuOpen && (
+        <div className="md:hidden mt-4 pt-4 border-t border-gray-100 flex flex-col gap-4 animate-in fade-in slide-in-from-top-2 duration-500">
+          {navItems.map((item) => {
+            const isActive = pathName === item.route
+            return (
+              <Link
+                key={item.route}
+                href={item.route}
+                onClick={() => setIsMenuOpen(false)} // Close drawer on route click
+                className={`text-sm font-medium transition-colors px-2 py-1.5 rounded-md ${isActive ? "text-amber-600 bg-amber-50/50" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                  }`}
+              >
+                {item.name}
+              </Link>
+            )
+          })}
+        </div>
+      )}
     </nav>
   )
 }
