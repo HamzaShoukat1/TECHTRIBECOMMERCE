@@ -13,8 +13,8 @@ export function proxy(request: NextRequest) {
 
     const isProtectedPage =
         pathname === "/checkout" ||
-        // pathname === "/orders" ||
-        // pathname === "/shop" ||
+        pathname === "/orders" ||
+        pathname === "/shop" ||
         pathname === "/cart" ||
         pathname.startsWith("/admin");
 
