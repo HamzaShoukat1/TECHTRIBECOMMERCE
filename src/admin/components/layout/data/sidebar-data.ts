@@ -6,7 +6,6 @@ import {
   Command,
   GalleryVerticalEnd,
   Plus,
-  Users
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
