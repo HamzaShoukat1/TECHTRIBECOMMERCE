@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
     // 1. Check for the authentication token in cookies
@@ -14,7 +14,8 @@ export function middleware(request: NextRequest) {
     const isProtectedPage =
         pathname === "/checkout" ||
         pathname.startsWith("/orders") ||
-        pathname.startsWith("/cart")
+        pathname.startsWith("/shop")
+    pathname.startsWith("/cart")
     pathname.startsWith("/admin");
 
     // 2. If trying to access a protected page without being logged in -> redirect to /login
