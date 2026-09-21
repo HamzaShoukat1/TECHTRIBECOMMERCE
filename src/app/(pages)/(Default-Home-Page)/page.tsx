@@ -16,7 +16,6 @@ import Link from 'next/link';
 export default async function Page() {
   let products: IProduct[] = [];
 
-  // Wrap fetch in try...catch to prevent Vercel 500 server crashes
   try {
     const productsResponse: IProductResponse = await getAllProducts();
     products = productsResponse?.AllProducts?.slice(0, 8) ?? [];
@@ -72,7 +71,7 @@ export default async function Page() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full p-4">
           {IMAGES_DATA.map((item) => (
             <div key={item.id} className="flex flex-col items-center gap-4 group cursor-pointer">
               <div className="relative w-full aspect-[4/5] rounded-lg">
@@ -115,7 +114,7 @@ export default async function Page() {
         )}
 
         <Link href={"/shop"}>
-          <button className="text-[#B88E2F] w-full sm:w-fit cursor-pointer border-[#B88E2F] border-[1px] flex justify-center mx-auto items-center transition-all px-12 py-4 font-poppins font-bold text-sm uppercase tracking-wider rounded-sm">
+          <button className="text-[#B88E2F]  cursor-pointer border-[#B88E2F] border-[1px] flex justify-center mx-auto items-center transition-all px-12 py-4 font-poppins font-bold text-sm uppercase tracking-wider rounded-sm">
             Show More
           </button>
         </Link>
@@ -153,7 +152,7 @@ export default async function Page() {
           </h1>
         </div>
 
-        <div className="grid grid-cols-12 gap-4 auto-rows-[140px] md:auto-rows-[180px] lg:auto-rows-[220px]">
+        <div className="grid grid-cols-12 gap-4 auto-rows-[120px] md:auto-rows-[180px] lg:auto-rows-[220px]">
           <div className="col-span-2 row-span-2">
             <Image src={rect36} alt="Furniture setup" className="w-full h-full object-cover rounded-sm" />
           </div>

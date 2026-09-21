@@ -13,7 +13,7 @@ type ProductTypes = {
 export default function ProductCard({ id, Label, image, heading, paragraph, price }: ProductTypes) {
     return (
         <Link href={`/products/${id}`} >
-            <div className="w-full max-w-[285px] bg-[#F4F5F7] mx-auto rounded-sm overflow-hidden pb-4 h-full max-h-[450px]">
+            <div className="w-full max-w-[285px]  mx-auto rounded-sm overflow-hidden pb-4 h-full max-h-[450px]">
                 <div className="relative w-full h-[301px]">
                     <Image
                         src={image}
@@ -31,7 +31,7 @@ export default function ProductCard({ id, Label, image, heading, paragraph, pric
                 </div>
 
                 {/* Product Details Content */}
-                <div className="p-4 flex flex-col gap-[6px] w-full max-w-[285px]">
+                <div className="p-4 flex flex-col gap-[6px] bg-white w-full max-w-[285px]">
                     <h3 className="font-semibold font-poppins text-[24px] leading-tight text-[#3A3A3A]">
                         {heading}
                     </h3>

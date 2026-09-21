@@ -1,10 +1,10 @@
 "use client"
-import { useState } from 'react' // Added useState for managing the hamburger menu toggle
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from "next/image"
 import { useQuery } from "@tanstack/react-query"
 import { usePathname } from "next/navigation"
-import { ShoppingCart, Search, ShoppingBag, Menu, X } from 'lucide-react' // Added Menu and X icons
+import { ShoppingCart, Search, ShoppingBag, Menu, X } from 'lucide-react' 
 
 // Local image imports
 import logo from "../public/images/Meubel House_Logos-05.png"
@@ -44,11 +44,25 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/90 backdrop-blur-md px-6 sm:px-10 py-4 shadow-sm transition-all">
       <div className="mx-auto flex max-w-7xl items-center justify-between">
+        
+        {/* Left Side: Hamburger & Brand Logo Section */}
+        <div className="flex items-center gap-4">
+          {/* Hamburger Menu Icon - Hidden on md and up */}
+          {!isAuthPage && (
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="p-2 text-gray-600 cursor-pointer hover:text-gray-900 transition-colors duration-500 rounded-full hover:bg-gray-50 md:hidden"
+              aria-label="Toggle Menu"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          )}
 
-                 <Link href="/" className="flex items-center gap-2 group transition-transform active:scale-95">
+          <Link href="/" className="flex items-center gap-2 group transition-transform active:scale-95">
             <Image src={logo} alt="Furniro Logo" width={40} height={40} className="w-9 h-auto object-contain" />
             <Image src={logoName} alt="Furniro" width={100} height={40} className="w-24 h-auto object-contain hidden sm:block" />
           </Link>
+        </div>
 
         {/* Navigation Links (Desktop) */}
         {!isAuthPage && (
@@ -123,7 +137,7 @@ export default function Navbar() {
               </button>
             </div>
           ) : (
-            <div className="flex gap-2">
+            <div className="flex gap-2 justify-center">
               <Link
                 href="/login"
                 className="text-gray-600 hover:text-gray-900 transition-colors"
@@ -143,28 +157,8 @@ export default function Navbar() {
             </div>
           )}
         </div>
-         {/* Left Side: Hamburger & Brand Logo Section */}
-        <div className="flex items-center gap-4">
-          {/* Hamburger Menu Icon - Hidden on md and up */}
-          {!isAuthPage && (
-            <>
 
-
-            <button
-            
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="p-2 text-gray-600 cursor-pointer hover:text-gray-900 transition-colors  duration-500 rounded-full hover:bg-gray-50 md:hidden"
-            aria-label="Toggle Menu"
-            >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-              </>
-
-          )}
-
-        </div>
       </div>
-      
 
       {/* Mobile Drawer Overlay Links */}
       {!isAuthPage && isMenuOpen && (

@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { WifiOff } from "lucide-react"; // Optional: icon library of your choice
+import { WifiOff } from "lucide-react"; 
 
 export default function OfflineGuard({ children }: { children: React.ReactNode }) {
     const [isOnline, setIsOnline] = useState(true);
 
     useEffect(() => {
-        // 1. Set the initial state once on the client side
         setIsOnline(navigator.onLine);
 
         // 2. Event handlers for network changes
@@ -17,14 +16,12 @@ export default function OfflineGuard({ children }: { children: React.ReactNode }
         window.addEventListener("online", handleOnline);
         window.addEventListener("offline", handleOffline);
 
-        // 3. Clean up event listeners on unmount
         return () => {
             window.removeEventListener("online", handleOnline);
             window.removeEventListener("offline", handleOffline);
         };
     }, []);
 
-    // If offline, block the app content and show the restriction screen
     if (!isOnline) {
         return (
             <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-white p-6 text-center select-none animate-fadeIn">

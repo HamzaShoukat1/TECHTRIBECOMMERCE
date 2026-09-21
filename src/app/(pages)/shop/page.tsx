@@ -1,4 +1,4 @@
-'use client' // [1] Convert to Client Component for state and interactivity  
+'use client' 
 import { useState, useEffect } from 'react'
 import shopPageBanner from "../../public/images/Shop-page-images/Rectangle 1(1).png"
 import Image from 'next/image'

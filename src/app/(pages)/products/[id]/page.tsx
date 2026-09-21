@@ -52,7 +52,7 @@ export default async function ProductDetailsPage({ params }: any) {
                 </h1>
             </div>
 
-            <div className='w-full flex max-w-[1440px] mx-auto bg-white py-10 px-8 gap-12 font-poppins'>
+            <div className='w-full flex flex-col md:flex-row  max-w-[1440px]  mx-auto bg-white py-10 px-8 gap-12 font-poppins'>
 
                 {/* LEFT SIDE: Image Gallery Panel */}
                 <div className='flex gap-4 items-start'>
