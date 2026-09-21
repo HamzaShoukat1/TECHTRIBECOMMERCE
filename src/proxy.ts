@@ -13,10 +13,10 @@ export function proxy(request: NextRequest) {
 
     const isProtectedPage =
         pathname === "/checkout" ||
-        pathname.startsWith("/orders") ||
-        pathname.startsWith("/shop")
-    pathname.startsWith("/cart")
-    pathname.startsWith("/admin");
+        pathname === "/orders" ||
+        pathname === "/shop" ||
+        pathname === "/cart" ||
+        pathname.startsWith("/admin");
 
     // 2. If trying to access a protected page without being logged in -> redirect to /login
     if (isProtectedPage && !hasToken) {
