@@ -1,7 +1,7 @@
 
 "use client";
 
-import { Suspense } from "react"; 
+import { Suspense } from "react";
 import { CheckCircle2, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@base-ui/react/separator";
@@ -79,8 +79,8 @@ function PaymentSuccessContent() {
                     </div>
                 </CardContent>
 
-                <CardFooter className="flex flex-col gap-2 pt-2">
-                    <Button className="w-full">
+                <CardFooter className="flex flex-col gap-2 pt-2 cursor-pointer">
+                    <Button className="w-full cursor-pointer">
                         <Link href="/orders"> My Orders</Link>
                     </Button>
                 </CardFooter>

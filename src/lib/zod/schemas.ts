@@ -66,7 +66,8 @@ export const checkoutSchema = z.object({
     StreetAddress: z.string().trim().min(1, "Street address is required"),
     City: z.string().trim().min(1, "City is required"),
     ZIPcode: z.string().trim().min(1, "ZIP code is required"),
-    Phone: z.string().trim().min(1, "Phone is required"),
+    Phone: z.string().trim().min(1, "Phone number is required").regex(/^\d+$/, "Only numbers are allowed"),
+
     Emailaddress: z.string().trim().min(1, "Email is required").email("Invalid email address format"),
 });
 
