@@ -40,7 +40,9 @@ export default function SigninForm() {
         },
         onError: (error: any) => {
             const errorMsg = error?.response?.data?.message || "Invalid credentials. Please try again."
-            toast.error(errorMsg)
+            toast.error(errorMsg, {
+                position: "top-left"
+            })
         }
     })
 

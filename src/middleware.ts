@@ -14,8 +14,7 @@ export function middleware(request: NextRequest) {
     const isProtectedPage =
         pathname === "/checkout" ||
         pathname.startsWith("/orders") ||
-        pathname.startsWith("/shop")
-    pathname.startsWith("/cart")
+        pathname.startsWith("/cart")
     pathname.startsWith("/admin");
 
     // 2. If trying to access a protected page without being logged in -> redirect to /login
