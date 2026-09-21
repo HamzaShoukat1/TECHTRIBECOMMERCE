@@ -1,5 +1,4 @@
 import { ApiClient } from '../../app/hooks/ApiClient'
-import type { User } from '../features/users/data/schema'
 
 const BackenedUrl = process.env.EXPRESS_BACKENED_URL || 'http://localhost:8000'
 
@@ -14,7 +13,7 @@ type BackendUser = {
     updatedAt?: string
 }
 
-function normalizeUser(user: BackendUser): User {
+function normalizeUser(user: BackendUser): any {
     const firstName = user.FirstName ?? user.FirstName ?? ''
     const lastName = user.LastName ?? ''
     const email = user.email ?? ''
@@ -31,7 +30,7 @@ function normalizeUser(user: BackendUser): User {
     }
 }
 
-export async function getAllUsers(): Promise<User[]> {
+export async function getAllUsers(): Promise<any[]> {
     const users = await ApiClient(`${BackenedUrl}/auth/all-users`, {
         method: 'GET',
     }) as BackendUser[]
