@@ -1,5 +1,7 @@
+
 "use client";
 
+import { Suspense } from "react"; 
 import { CheckCircle2, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@base-ui/react/separator";
@@ -9,13 +11,11 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/src/comp
 import { useSearchParams } from "next/navigation";
 import { formatDisplayDate } from "../../utils";
 
-export default function PaymentSuccess() {
+function PaymentSuccessContent() {
     const searchParams = useSearchParams();
     const sessionId = searchParams.get("session_id");
     const { data: paymentdetails, isLoading, isError } = UsePayemntDetailsforCurrentUser(sessionId);
-    console.log("dataaa", paymentdetails);
 
-    // Handle loading state
     if (isLoading) {
         return (
             <div className="flex min-h-[60vh] items-center justify-center p-4 font-poppins">
@@ -24,12 +24,11 @@ export default function PaymentSuccess() {
         );
     }
 
-    // Optionally handle error state
     if (isError) {
         console.error("Failed to fetch payment details, falling back to defaults.");
     }
 
-    const displayAmount = ( "$" +(paymentdetails?.amount?.$numberDecimal));
+    const displayAmount = ("$" + (paymentdetails?.amount?.$numberDecimal));
     const displayOrderId = paymentdetails?.orderId;
     const displayDate = formatDisplayDate(paymentdetails?.createdAt);
     const displayProduct = paymentdetails?.productName;
@@ -38,7 +37,6 @@ export default function PaymentSuccess() {
         <div className="flex min-h-[60vh] items-center justify-center p-4 font-poppins">
             <Card className="w-full max-w-md animate-in fade-in zoom-in-95 duration-300 border-muted/60 shadow-lg">
                 <CardHeader className="text-center pb-4">
-                    {/* Success Icon */}
                     <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-950/30 dark:text-emerald-400">
                         <CheckCircle2 className="h-7 w-7" />
                     </div>
@@ -51,7 +49,6 @@ export default function PaymentSuccess() {
                 </CardHeader>
 
                 <CardContent className="space-y-4">
-                    {/* Product Summary */}
                     <div className="rounded-lg bg-muted/40 p-4 border border-muted/40 flex items-center justify-center">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-3">
@@ -66,7 +63,6 @@ export default function PaymentSuccess() {
                         </div>
                     </div>
 
-                    {/* Payment Metadata Details */}
                     <div className="space-y-2.5 px-1">
                         <div className="flex justify-between text-sm">
                             <span className="text-muted-foreground">Date & Time</span>
@@ -90,5 +86,17 @@ export default function PaymentSuccess() {
                 </CardFooter>
             </Card>
         </div>
+    );
+}
+
+export default function PaymentSuccess() {
+    return (
+        <Suspense fallback={
+            <div className="flex min-h-[60vh] items-center justify-center p-4 font-poppins">
+                <p className="text-muted-foreground animate-pulse">Loading Order details...</p>
+            </div>
+        }>
+            <PaymentSuccessContent />
+        </Suspense>
     );
 }
