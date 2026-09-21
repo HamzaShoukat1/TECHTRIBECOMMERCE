@@ -1,54 +1,42 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    const token = request.cookies.get("accessToken")?.value;
-    const hasToken = Boolean(token && token.trim().length > 0);
+    // 1. Check for the authentication token in cookies
+    const hasToken = request.cookies.has("accessToken")
 
     const isAuthPage =
         pathname === "/login" ||
         pathname === "/signup";
 
     const isProtectedPage =
-        pathname.startsWith("/admin");
-    // pathname.startsWith("/checkout");
-    // pathname.startsWith("/orders");
-    // pathname.startsWith("/shop");
-    // pathname.startsWith("/cart");
+        pathname === "/checkout" ||
+        pathname.startsWith("/orders") ||
+        pathname.startsWith("/shop")
+    pathname.startsWith("/cart")
+    pathname.startsWith("/admin");
 
-
-
-
-
-
-
-    // 1. If trying to access a protected page without a token -> login
+    // 2. If trying to access a protected page without being logged in -> redirect to /login
     if (isProtectedPage && !hasToken) {
         const loginUrl = new URL("/login", request.url);
+        // Optional: Pass the original URL so you can redirect back after login
         loginUrl.searchParams.set("callbackUrl", pathname);
         return NextResponse.redirect(loginUrl);
     }
 
-    // 2. If already logged in and hitting an auth page -> home
+    // 3. If already logged in and trying to access /login or /signup -> redirect to home or profile
     if (isAuthPage && hasToken) {
         return NextResponse.redirect(new URL("/", request.url));
     }
 
-    // Allow everything else to pass through smoothly
+    // Allow public pages and all other allowed conditions to pass through
     return NextResponse.next();
 }
 
 export const config = {
     matcher: [
-        /*
-         * Match all request paths except for the ones starting with:
-         * - api (API routes)
-         * - _next/static (static files)
-         * - _next/image (image optimization files)
-         * - favicon.ico, sitemap.xml, robots.txt (metadata files)
-         */
         "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
     ],
 };
