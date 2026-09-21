@@ -8,10 +8,8 @@ import { UsePayemntDetailsforCurrentUser } from "../../hooks/UsePaymentDetail";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/src/components/ui/card";
 import { useSearchParams } from "next/navigation";
 import { formatDisplayDate } from "../../utils";
-import { Suspense } from "react";
 
-// 1. This inner component safely consumes the search parameters inside the Suspense boundary
-function PaymentSuccessContent() {
+export default function PaymentSuccess() {
     const searchParams = useSearchParams();
     const sessionId = searchParams.get("session_id");
     const { data: paymentdetails, isLoading, isError } = UsePayemntDetailsforCurrentUser(sessionId);
@@ -92,20 +90,5 @@ function PaymentSuccessContent() {
                 </CardFooter>
             </Card>
         </div>
-    );
-}
-
-// 2. The main page default export that wraps the content component in a Suspense loader
-export default function PaymentSuccess() {
-    return (
-        <Suspense 
-            fallback={
-                <div className="flex min-h-[60vh] items-center justify-center p-4 font-poppins">
-                    <p className="text-muted-foreground animate-pulse">Loading payment details...</p>
-                </div>
-            }
-        >
-            <PaymentSuccessContent />
-        </Suspense>
     );
 }
