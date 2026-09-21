@@ -44,14 +44,13 @@ function ReviewModel({ orderId, onSuccess }: ReviewModelProps) {
             setRating(0);
             setComment('');
             onSuccess();
-            // setonClose(true)
         } catch (error) {
             console.error('Failed to submit review', error);
         }
     };
 
     return (
-        <Card className="mx-auto mt-4 w-full max-w-[500px]">
+        <Card className="mx-auto mt-4 w-full max-w-[700px] h-full ">
             <CardContent className="space-y-5 pt-6">
                 <div className="flex flex-col items-center gap-3">
                     <h3 className="text-sm font-semibold">Write a Review</h3>

@@ -6,7 +6,6 @@ import { OrdersTable } from "./orders-table";
 
 export default function OrdersPage() {
     const { data: orders, isLoading, isError } = UseGetAllOrders();
-    console.log("OrdersPage -> orders", orders);
     return (
         <div className="min-h-screen px-4 py-12 sm:px-8 lg:px-16">
             <div className="mx-auto max-w-6xl">

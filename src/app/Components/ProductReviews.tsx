@@ -12,7 +12,6 @@ interface ReviewUser {
 
 interface Review {
     _id: string;
-    // products: string;
     orderId: string;
     userId: ReviewUser;
     rating: number;
