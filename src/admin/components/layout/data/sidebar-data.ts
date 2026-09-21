@@ -49,11 +49,11 @@ export const sidebarData: SidebarData = {
         },
      
        
-        {
-          title: 'Users',
-          url: '/admin/users',
-          icon: Users,
-        },
+        // {
+        //   title: 'Users',
+        //   url: '/admin/users',
+        //   icon: Users,
+        // },
 
         {
           title: 'Products',
