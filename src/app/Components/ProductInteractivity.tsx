@@ -103,7 +103,8 @@ export default function ProductInteractiveSection({
 
                     <button
                         onClick={increaseQuantity}
-                        className="text-black hover:text-[#B88E2F] cursor-pointer"
+                        disabled={quantity >= 3}
+                        className={`text-black hover:text-[#B88E2F] ${quantity >= 3 ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
                     >
                         +
                     </button>

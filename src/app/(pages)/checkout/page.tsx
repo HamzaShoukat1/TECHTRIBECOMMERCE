@@ -42,8 +42,8 @@ export default function CheckoutPage() {
                 return;
             }
 
-            toast.error("Unable to create checkout session",{
-                position:"top-left"
+            toast.error("Unable to create checkout session", {
+                position: "top-left"
             });
         },
         onError: (error) => {
@@ -300,6 +300,11 @@ export default function CheckoutPage() {
 
                                 <input
                                     {...field}
+                                    maxLength={13}
+                                    onChange={(e) => {
+                                        const Values = e.target.value.slice(0, 13);
+                                        field.onChange(Values);
+                                    }}
                                     id="checkout-phone"
                                     type="tel"
                                     aria-invalid={fieldState.invalid}
@@ -365,52 +370,52 @@ export default function CheckoutPage() {
                     {/* {!isInitialized ? (
                         <UsableSkeleton />
                     ) : ( */}
-                        <>
-                            {cart?.items?.map((item) => (
-                                <div
-                                    key={item._id}
-                                    className="flex justify-between items-center mb-4"
-                                >
-                                    <span className="text-[#9F9F9F] text-[16px]">
-                                        {item.productName}
+                    <>
+                        {cart?.items?.map((item) => (
+                            <div
+                                key={item._id}
+                                className="flex justify-between items-center mb-4"
+                            >
+                                <span className="text-[#9F9F9F] text-[16px]">
+                                    {item.productName}
 
-                                        <strong className="text-black font-medium ml-2">
-                                            × {item.productQuantity}
-                                        </strong>
-                                    </span>
-
-                                    <span className="font-light text-[16px]">
-                                        $
-                                        {(
-                                            item.productPrice *
-                                            item.productQuantity
-                                        ).toLocaleString()}
-                                    </span>
-                                </div>
-                            ))}
-
-                            {/* Subtotal */}
-                            <div className="flex justify-between items-center mb-4">
-                                <span className="text-[16px] font-normal">
-                                    Subtotal
+                                    <strong className="text-black font-medium ml-2">
+                                        × {item.productQuantity}
+                                    </strong>
                                 </span>
 
                                 <span className="font-light text-[16px]">
-                                    ${subtotal.toLocaleString()}
+                                    $
+                                    {(
+                                        item.productPrice *
+                                        item.productQuantity
+                                    ).toLocaleString()}
                                 </span>
                             </div>
+                        ))}
 
-                            {/* Total */}
-                            <div className="flex justify-between items-center pb-8 border-b border-[#D9D9D9] mb-8">
-                                <span className="text-[16px] font-normal">
-                                    Total
-                                </span>
+                        {/* Subtotal */}
+                        <div className="flex justify-between items-center mb-4">
+                            <span className="text-[16px] font-normal">
+                                Subtotal
+                            </span>
 
-                                <span className="text-[24px] font-bold text-[#B88E2F]">
-                                    ${subtotal.toLocaleString()}
-                                </span>
-                            </div>
-                        </>
+                            <span className="font-light text-[16px]">
+                                ${subtotal.toLocaleString()}
+                            </span>
+                        </div>
+
+                        {/* Total */}
+                        <div className="flex justify-between items-center pb-8 border-b border-[#D9D9D9] mb-8">
+                            <span className="text-[16px] font-normal">
+                                Total
+                            </span>
+
+                            <span className="text-[24px] font-bold text-[#B88E2F]">
+                                ${subtotal.toLocaleString()}
+                            </span>
+                        </div>
+                    </>
 
                     {/* Payment Methods */}
                     <div className="flex flex-col gap-4 mb-6">

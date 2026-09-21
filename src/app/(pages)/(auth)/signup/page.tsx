@@ -61,7 +61,7 @@ export default function SignupForm() {
         </CardHeader>
         <CardContent>
           <form id="form-rhf-signup" onSubmit={form.handleSubmit(onSubmit)}>
-            <FieldGroup className="space-y-4">
+            <FieldGroup className="">
 
               {/* First Name Field */}
               <Controller

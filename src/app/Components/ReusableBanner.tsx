@@ -18,7 +18,7 @@ interface ReusableBannerProps {
 
 export default function ReusableBanner({ title, image, parents = [], breadcrumbPosition = "center", makeLineBigger = "small" }: ReusableBannerProps) {
     return (
-        <div className="w-full  mx-auto">
+        <div className="w-full  mx-auto items-center flex">
 
             <div className={`relative w-full ${image ? "h-auto" : "h-[170px]"}`}>
                 {image && (
@@ -31,12 +31,12 @@ export default function ReusableBanner({ title, image, parents = [], breadcrumbP
                 )}
 
                 <div
-                    className={`absolute top-1/2 -translate-y-1/2 flex flex-col gap-2 w-full px-4 ${breadcrumbPosition === "start"
-                        ? "left-0 items-start mt-2 text-left px-[60px] "
+                    className={`absolute top-1/2 -translate-y-1/2 flex flex-col  gap-2 w-full px-4 ${breadcrumbPosition === "start"
+                        ? "left-0 items-start mt-2 text-left  mx-[29px] "
                         : "left-1/2 -translate-x-1/2 items-center text-center"
                         }`}
                 >
-                    <h1 className='font-poppins font-bold tracking-normal text-3xl md:text-5xl text-black'>
+                    <h1 className='font-poppins mb-2 font-bold tracking-normal text-3xl md:text-5xl text-black'>
                         {title}
                     </h1>
 

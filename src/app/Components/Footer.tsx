@@ -45,7 +45,7 @@ export default function Footer() {
             />
             <Link href={"/contact"}>
               <button
-                className="border-b border-black pb-1 text-xs font-bold tracking-wider text-black uppercase transition-opacity hover:opacity-70"
+                className="border-b border-black pb-1 text-xs cursor-pointer font-bold tracking-wider text-black uppercase transition-opacity hover:opacity-70"
               >
                 Subscribe
               </button>

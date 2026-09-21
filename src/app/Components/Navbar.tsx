@@ -137,13 +137,13 @@ export default function Navbar() {
               </button>
             </div>
           ) : (
-            <div className="flex gap-2 justify-center">
+            <div className="flex gap-4 justify-center">
               <Link
                 href="/login"
                 className="text-gray-600 hover:text-gray-900 transition-colors"
               >
                 <button className="text-xs font-medium text-gray-500 cursor-pointer bg-white py-1.5 px-3 rounded-md border border-gray-500 hover:bg-gray-50 transition-colors">
-                  Signin
+                  Sign In
                 </button>
               </Link>
               <Link
@@ -151,7 +151,7 @@ export default function Navbar() {
                 className="text-gray-800 hover:text-gray-900 transition-colors"
               >
                 <button className="text-xs font-medium text-gray-500 cursor-pointer bg-white py-1.5 px-3 rounded-md border border-gray-500 hover:bg-gray-50 transition-colors">
-                  Signup
+                  Sign Up
                 </button>
               </Link>
             </div>
