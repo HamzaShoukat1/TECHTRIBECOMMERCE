@@ -76,7 +76,7 @@ export default function SigninForm() {
                                             {...field}
                                             id="signin-identifier"
                                             aria-invalid={fieldState.invalid}
-                                            placeholder="name@example.com or username"
+                                            placeholder="name@example.com"
                                             disabled={isPending}
                                             autoComplete="username"
                                             className="h-11"

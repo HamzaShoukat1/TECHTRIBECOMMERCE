@@ -56,7 +56,7 @@ export default function SignupForm() {
         <CardHeader>
           <CardTitle className="text-2xl font-bold tracking-tight text-center">Create an account</CardTitle>
           <CardDescription className="text-center">
-            Enter your details below to create your Techtribe account.
+            Enter your details below to create your  account.
           </CardDescription>
         </CardHeader>
         <CardContent>
