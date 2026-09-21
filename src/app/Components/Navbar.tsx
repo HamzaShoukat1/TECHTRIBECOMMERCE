@@ -32,7 +32,7 @@ export default function Navbar() {
   const { data: cart } = useCartQuery()
   const { data: user } = useQuery({ queryKey: ["currentUser"], queryFn: getCurrentUser, retry: false, });
   // Fetch orders data using the hook
-  const { data: orders } = UseGetAllOrders(!!user)
+  const { data: orders } = UseGetAllOrders()
   const orderCount = orders?.length ?? 0
 
   const isAuthPage = pathName === "/login" || pathName === "/signup"
