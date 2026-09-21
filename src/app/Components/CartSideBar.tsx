@@ -17,21 +17,21 @@ export default function CartSidebar() {
     const { isOpen, setIsOpen } = useCart();
 
     // 1. Fetch authenticated user state
-    const { 
-        data: user, 
-        isLoading: isUserLoading, 
-        isError: isUserError 
+    const {
+        data: user,
+        isLoading: isUserLoading,
+        isError: isUserError
     } = useQuery({
         queryKey: ["currentUser"],
         queryFn: getCurrentUser,
         retry: false,
-        staleTime: 1000 * 60 * 5, 
+        staleTime: 1000 * 60 * 5,
     });
 
-    const { 
-        data: cart, 
-        isLoading: isCartLoading, 
-        isError: isCartError 
+    const {
+        data: cart,
+        isLoading: isCartLoading,
+        isError: isCartError
     } = useCartQuery();
 
     const { mutate: removeFromCart, isPending: isRemoving } = useRemoveCart();
@@ -97,10 +97,6 @@ export default function CartSidebar() {
                         <div className="flex h-full items-center justify-center gap-2">
                             <Loader2 className="h-5 w-5 animate-spin text-[#B88E2F]" />
                             <p className="text-sm font-poppins text-[#7A7A7A]">Loading your cart...</p>
-                        </div>
-                    ) : isCartError ? (
-                        <div className="flex h-full flex-col items-center justify-center text-center">
-                            <p className="font-poppins text-sm text-red-500">Error loading cart.</p>
                         </div>
                     ) : isCartEmpty ? (
                         <div className="flex h-full flex-col items-center justify-center text-center">
