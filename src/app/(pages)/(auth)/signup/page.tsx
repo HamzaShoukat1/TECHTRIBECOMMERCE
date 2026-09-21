@@ -30,12 +30,16 @@ export default function SignupForm() {
     mutationFn: createUser,
     onSuccess: (response) => {
       router.push("/login")
-      toast.success("Account created successfully!")
+      toast.success("Account created successfully!",{
+        position:"top-left"
+      })
 
     },
     onError: (error: any) => {
       const errorMsg = error?.response?.data?.message || "Something went wrong. Please try again."
-      toast.error(errorMsg)
+      toast.error(errorMsg,{
+        position:"top-left"
+      })
     }
   })
 
@@ -52,7 +56,7 @@ export default function SignupForm() {
     // 1. Wrap the entire card component inside this parent div to center it vertically and horizontally
     <div className="min-h-screen flex items-center justify-center p-4 bg-background font-poppins">
 
-      <Card className="w-full sm:max-w-md shadow-lg">
+      <Card className="w-full max-w-sm shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl font-bold tracking-tight text-center">Create an account</CardTitle>
           <CardDescription className="text-center">

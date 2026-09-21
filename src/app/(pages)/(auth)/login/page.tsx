@@ -54,7 +54,7 @@ export default function SigninForm() {
     return (
         <div className="min-h-screen flex items-center justify-center p-4 bg-background font-poppins">
 
-            <Card className="w-full sm:max-w-md shadow-lg">
+            <Card className=" w-full max-w-sm shadow-lg">
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold tracking-tight text-center">Sign In</CardTitle>
                     <CardDescription className="text-center">
