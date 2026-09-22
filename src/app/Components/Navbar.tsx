@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from "next/image"
 import { useQuery } from "@tanstack/react-query"
 import { usePathname } from "next/navigation"
-import { ShoppingCart, Search, ShoppingBag, Menu, X, Package, ListOrdered } from 'lucide-react'
+import { ShoppingCart, Search, Menu, X } from 'lucide-react'
 
 // Local image imports
 import logo from "../public/images/Meubel House_Logos-05.png"
