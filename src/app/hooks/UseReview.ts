@@ -17,8 +17,11 @@ export function UseReview() {
         },
         onError: (err) => {
             if (err instanceof Error) {
-                if (err.message.includes("You have already reviewed this product")) {
+                if (err.message?.includes("You have already reviewed this product")) {
                     toast.error("You have already reviewed this product", { position: "top-left" });
+                }
+                if(err.message?.includes("Order ID, rating, and comment are all required")){
+                    toast.error("kindly also write review we need your support to improve our products")
                 }
 
             } else {
