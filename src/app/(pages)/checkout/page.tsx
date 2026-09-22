@@ -272,6 +272,7 @@ export default function CheckoutPage() {
                                     {...field}
                                     id="checkout-zip-code"
                                     type="text"
+                                    maxLength={10}
                                     aria-invalid={fieldState.invalid}
                                     className="w-full h-[60px] border border-[#9F9F9F] rounded-[10px] px-4 outline-none focus:border-black transition"
                                 />
