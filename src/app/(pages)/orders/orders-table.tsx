@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { MessageSquarePlus, ChevronDown, ChevronUp } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { MessageSquarePlus, ChevronDown, ChevronUp,X } from 'lucide-react';
 import type { Order } from '../../utils/Types';
 import { colorClass, formatDisplayDate } from '../../utils';
 import { UseReview } from '../../hooks/UseReview';
@@ -27,77 +27,96 @@ function statusClass(status: Order['status']) {
     return 'bg-amber-100 text-amber-700';
 }
 
+
 interface ReviewModelProps {
-    orderId: string;
-    onSuccess: () => void;
-    onClose: () => void;
+  orderId: string;
+  onSuccess: () => void;
+  onClose: () => void;
 }
 
 function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
-    const { mutateAsync: createReview, isPending } = UseReview();
-    const [rating, setRating] = useState(0);
-    const [comment, setComment] = useState('');
+  const { mutateAsync: createReview, isPending } = UseReview(); 
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState('');
 
-    const handleSubmit = async () => {
-        if (!orderId) return;
-        try {
-            await createReview({ orderId, rating, comment });
-            setRating(0);
-            setComment('');
-            onSuccess();
-        } catch (error) {
-            console.error('Failed to submit review', error);
-        }
-    };
+  useEffect(() => { 
+    document.body.classList.add('overflow-hidden'); 
+    return () => { 
+      document.body.classList.remove('overflow-hidden'); 
+    }; 
+  }, []); 
 
-    return (
-        <div
-            className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-10 backdrop-blur-xs"
-            onClick={onClose}
+  const handleSubmit = async () => {
+    if (!orderId) return;
+    try {
+      await createReview({ orderId, rating, comment });
+      setRating(0);
+      setComment('');
+      onSuccess();
+    } catch (error) {
+      console.error('Failed to submit review', error);
+    }
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-10 backdrop-blur-xs"
+      onClick={onClose}
+    >
+      <Card
+        className="absolute top-[360px] left-1/2 -translate-x-1/2 w-full max-w-[400px] h-auto z-50"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Cross Close Button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="absolute right-4 top-4 h-8 w-8 rounded-md cursor-pointer text-muted-foreground hover:text-foreground"
+          onClick={onClose}
+          aria-label="Close review dialog"
         >
-            <Card
-                className="absolute top-90 left-1/2 -translate-x-1/2 w-full max-w-[600px] h-auto z-50"
-                onClick={(e) => e.stopPropagation()}
-            >
-                <CardContent className="space-y-5 pt-6">
-                    <div className="flex flex-col items-center gap-3">
-                        <h3 className="text-sm font-semibold">Write a Review</h3>
-                        <Rating rating={rating} onRatingChange={setRating} editable />
-                        {rating > 0 && (
-                            <p className="text-center text-xs text-muted-foreground">
-                                {rating <= 2
-                                    ? "We're sorry to hear that"
-                                    : rating <= 3
-                                    ? 'Thanks for your feedback'
-                                    : 'Glad you enjoyed it!'}
-                            </p>
-                        )}
-                    </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="review-text" className="text-sm">
-                            Your review
-                        </Label>
-                        <Textarea
-                            id="review-text"
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                            placeholder="Tell us what you think..."
-                            rows={3}
-                        />
-                    </div>
-                    <Button
-                        disabled={rating === 0 || isPending}
-                        onClick={handleSubmit}
-                        size="sm"
-                        className="w-full cursor-pointer"
-                    >
-                        {isPending ? 'Submitting...' : 'Submit Review'}
-                    </Button>
-                </CardContent>
-            </Card>
-        </div>
-    );
+          <X className="h-4 w-4" />
+        </Button>
+
+        <CardContent className="space-y-5 pt-6">
+          <div className="flex flex-col items-center gap-3">
+            <h3 className="text-sm font-semibold">Write a Review</h3>
+            <Rating rating={rating} onRatingChange={setRating} editable />
+            {rating > 0 && (
+              <p className="text-center text-xs text-muted-foreground">
+                {rating <= 2 ? "We're sorry to hear that" : rating <= 3 ? 'Thanks for your feedback' : 'Glad you enjoyed it!'}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="review-text" className="text-sm">
+              Your review
+            </Label>
+            <Textarea
+              id="review-text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Tell us what you think..."
+              rows={3}
+            />
+          </div>
+
+          <Button
+            disabled={rating === 0 || isPending}
+            onClick={handleSubmit}
+            size="sm"
+            className="w-full cursor-pointer"
+          >
+            {isPending ? 'Submitting...' : 'Submit Review'}
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
 }
+
+
 
 function OrderItemList({ order }: { order: Order }) {
     const [showAll, setShowAll] = useState(false)
@@ -198,8 +217,8 @@ export function OrdersTable({ orders }: { orders: Order[] }) {
     );
 
     return (
-        <div className="space-y-6">
-            <div className="overflow-hidden rounded-sm border border-[#EEE3D0]">
+        <div className="space-y-6 ">
+            <div className="overflow-hidden  rounded-sm border border-[#EEE3D0]">
                 <Table>
                     <TableHeader className="bg-[#F9F1E7]">
                         <TableRow>
@@ -254,7 +273,7 @@ export function OrdersTable({ orders }: { orders: Order[] }) {
                                             <Button
                                                 variant="ghost"
                                                 size="sm"
-                                                className={`cursor-pointer ${order.status === "DELIVERED" && "cursor-not-allowed"}`}
+                                                className={'cursor-pointer'}
                                                 onClick={() =>
                                                     setActiveReviewOrderId(order._id)
                                                 }
