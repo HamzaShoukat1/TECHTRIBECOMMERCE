@@ -1,19 +1,24 @@
-
 "use client";
-
-import { Suspense } from "react";
+import { useEffect, useState } from "react";
 import { CheckCircle2, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@base-ui/react/separator";
 import Link from "next/link";
 import { UsePayemntDetailsforCurrentUser } from "../../hooks/UsePaymentDetail";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/src/components/ui/card";
-import { useSearchParams } from "next/navigation";
 import { formatDisplayDate } from "../../utils";
 
-function PaymentSuccessContent() {
-    const searchParams = useSearchParams();
-    const sessionId = searchParams.get("session_id");
+export default function PaymentSuccess() {
+    const [sessionId, setSessionId] = useState<string | null>(null);
+
+    // Parse the query string safely on the client to avoid triggering a Next.js Suspense layout bail-out
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const params = new URLSearchParams(window.location.search);
+            setSessionId(params.get("session_id"));
+        }
+    }, []);
+
     const { data: paymentdetails, isLoading, isError } = UsePayemntDetailsforCurrentUser(sessionId);
 
     if (isLoading) {
@@ -80,23 +85,11 @@ function PaymentSuccessContent() {
                 </CardContent>
 
                 <CardFooter className="flex flex-col gap-2 pt-2 cursor-pointer">
-                    <Button className="w-full cursor-pointer">
+                    <Button className="w-full cursor-pointer" >
                         <Link href="/orders"> My Orders</Link>
                     </Button>
                 </CardFooter>
             </Card>
         </div>
-    );
-}
-
-export default function PaymentSuccess() {
-    return (
-        <Suspense fallback={
-            <div className="flex min-h-[60vh] items-center justify-center p-4 font-poppins">
-                <p className="text-muted-foreground animate-pulse">Loading Order details...</p>
-            </div>
-        }>
-            <PaymentSuccessContent />
-        </Suspense>
     );
 }
