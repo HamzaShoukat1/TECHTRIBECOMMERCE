@@ -11,7 +11,6 @@ import { formatDisplayDate } from "../../utils";
 export default function PaymentSuccess() {
     const [sessionId, setSessionId] = useState<string | null>(null);
 
-    // Parse the query string safely on the client to avoid triggering a Next.js Suspense layout bail-out
     useEffect(() => {
         if (typeof window !== "undefined") {
             const params = new URLSearchParams(window.location.search);
@@ -20,6 +19,7 @@ export default function PaymentSuccess() {
     }, []);
 
     const { data: paymentdetails, isLoading, isError } = UsePayemntDetailsforCurrentUser(sessionId);
+    console.log("sasz",isError)
 
     if (isLoading) {
         return (
