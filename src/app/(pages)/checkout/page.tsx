@@ -297,19 +297,22 @@ export default function CheckoutPage() {
                                 >
                                     Phone
                                 </label>
-
                                 <input
                                     {...field}
                                     maxLength={13}
                                     onChange={(e) => {
-                                        const Values = e.target.value.slice(0, 13);
-                                        field.onChange(Values);
+                                        const cleanValue = e.target.value.replace(/[^0-9]/g, '');
+
+                                        const finalValue = cleanValue.slice(0, 13);
+
+                                        field.onChange(finalValue);
                                     }}
                                     id="checkout-phone"
                                     type="tel"
                                     aria-invalid={fieldState.invalid}
                                     className="w-full h-[60px] border border-[#9F9F9F] rounded-[10px] px-4 outline-none focus:border-black transition"
                                 />
+
 
                                 {fieldState.error && (
                                     <p className="text-sm text-red-600">

@@ -1,6 +1,8 @@
 import React from 'react'
 import Image from 'next/image'
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@/src/components/ui/breadcrumb';
+import logo from "../public/images/Meubel House_Logos-05.png"
+
 
 
 interface BreadcrumbParent {
@@ -36,6 +38,8 @@ export default function ReusableBanner({ title, image, parents = [], breadcrumbP
                         : "left-1/2 -translate-x-1/2 items-center text-center"
                         }`}
                 >
+                    <Image src={logo} alt="Furniro Logo" width={40} height={40} className="w-9 h-auto object-contain" />
+
                     <h1 className='font-poppins mb-2 font-bold tracking-normal text-3xl md:text-5xl text-black'>
                         {title}
                     </h1>

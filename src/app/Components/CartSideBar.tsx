@@ -74,7 +74,7 @@ export default function CartSidebar() {
                 </div>
 
                 {/* Cart Body */}
-                <div className="flex-1 overflow-y-auto px-[26px] py-6">
+                <div className="flex-1 overflow-y-auto px-[26px] py-6 overflow-y-auto">
                     {isUserLoading ? (
                         <div className="flex h-full items-center justify-center">
                             <Loader2 className="h-6 w-6 animate-spin text-gray-500" />

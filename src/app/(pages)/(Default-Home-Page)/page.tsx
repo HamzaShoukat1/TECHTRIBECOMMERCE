@@ -114,9 +114,10 @@ export default async function Page() {
         )}
 
         <Link href={"/shop"}>
-          <button className="text-[#B88E2F]  cursor-pointer border-[#B88E2F] border-[1px] flex justify-center mx-auto items-center transition-all px-12 py-4 font-poppins font-bold text-sm uppercase tracking-wider rounded-sm">
+          <button className="text-[#B88E2F] hover:text-white hover:bg-[#B88E2F] cursor-pointer border-[#B88E2F] border-[1px] flex justify-center mx-auto items-center transition-all duration-300 px-12 py-4 font-poppins font-bold text-sm uppercase tracking-wider rounded-sm">
             Show More
           </button>
+
         </Link>
       </section>
 

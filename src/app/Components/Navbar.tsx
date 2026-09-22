@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from "next/image"
 import { useQuery } from "@tanstack/react-query"
 import { usePathname } from "next/navigation"
-import { ShoppingCart, Search, ShoppingBag, Menu, X } from 'lucide-react' 
+import { ShoppingCart, Search, ShoppingBag, Menu, X, Package, ListOrdered } from 'lucide-react'
 
 // Local image imports
 import logo from "../public/images/Meubel House_Logos-05.png"
@@ -13,7 +13,6 @@ import { getCurrentUser } from '../services/user.service'
 import { useCart } from '../context/cartContext'
 import { useCartQuery } from '../hooks/useCartQuery'
 import { useLogout } from '@/src/admin/hooks/Use-Logout'
-import { UseGetAllOrders } from '../hooks/UseGetAllOrders'
 
 const navItems = [
   { name: "Home", route: "/" },
@@ -28,8 +27,6 @@ export default function Navbar() {
   const { data: cart } = useCartQuery()
   const { data: user } = useQuery({ queryKey: ["currentUser"], queryFn: getCurrentUser, retry: false });
   // Fetch orders data using the hook
-  const { data: orders } = UseGetAllOrders()
-  const orderCount = orders?.length ?? 0
 
   const isAuthPage = pathName === "/login" || pathName === "/signup"
 
@@ -44,7 +41,7 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/90 backdrop-blur-md px-6 sm:px-10 py-4 shadow-sm transition-all">
       <div className="mx-auto flex max-w-7xl items-center justify-between">
-        
+
         {/* Left Side: Hamburger & Brand Logo Section */}
         <div className="flex items-center gap-4">
           {/* Hamburger Menu Icon - Hidden on md and up */}
@@ -95,17 +92,17 @@ export default function Navbar() {
               {user && (
                 <Link
                   href="/orders"
-                  className="p-2 text-gray-600 hover:text-gray-900 transition-colors rounded-full hover:bg-gray-50 relative"
                 >
-                  <ShoppingBag className="w-5 h-5" />
 
-                  {orderCount > 0 && (
-                    <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-amber-600 text-[10px] font-medium text-white ring-2 ring-white">
-                      {orderCount}
-                    </span>
-                  )}
+                  {/* Clean, medium-weight text label */}
+                  <button className="text-xs font-medium text-gray-500 cursor-pointer hover:text-yellow-600 transition-colors py-1.5 px-3 rounded-md hover:bg-red-50 border border-gray-500">
+                    My Orders
+                  </button>
+
+
                 </Link>
               )}
+
 
               {/* Cart Icon trigger */}
               <button

@@ -1,4 +1,3 @@
-// app/payment-success/PaymentSuccessClientView.tsx
 "use client";
 import { CheckCircle2, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -78,10 +77,12 @@ export default function PaymentSuccessClientView({ sessionId }: ClientViewProps)
                     </div>
                 </CardContent>
 
-                <CardFooter className="flex flex-col gap-2 pt-2">
-                    <Button className="w-full cursor-pointer" >
-                        <Link href="/orders"> My Orders</Link>
-                    </Button>
+                <CardFooter className="flex  w-full  flex-col gap-2 pt-2">
+                    <Link href="/orders" className="w-full">
+                        <Button className="w-full cursor-pointer" >
+                            <h1>My Orders</h1>
+                        </Button>
+                    </Link>
                 </CardFooter>
             </Card>
         </div>

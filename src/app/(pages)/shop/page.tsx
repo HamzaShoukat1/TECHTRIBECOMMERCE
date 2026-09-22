@@ -1,12 +1,22 @@
-'use client' 
+'use client'
 import { useState, useEffect } from 'react'
 import shopPageBanner from "../../public/images/Shop-page-images/Rectangle 1(1).png"
-import Image from 'next/image'
-import ShopBanner from "../../public/images/Shop-page-images/Frame 161.png"
 import ReusableBanner from "../../Components/ReusableBanner"
 import { getAllProducts } from "../../services/product.service"
 import { IProduct, IProductResponse } from "../../utils/Types"
 import ProductCard from "../../Components/ProductCard"
+import trophy from "../../public/images/trophy 1.png";
+import guarentee from "../../public/images/guarantee.png";
+import Shipping from "../../public/images/shipping.png";
+import CustomerSupport from "../../public/images/customer-support.png";
+import Image from 'next/image'
+export {
+  trophy,
+  guarentee,
+  Shipping,
+  CustomerSupport
+}
+
 
 export default function Page() {
   const [productsArray, setProductsArray] = useState<IProduct[]>([])
@@ -53,7 +63,7 @@ export default function Page() {
       <ReusableBanner title={"SHOP"} image={shopPageBanner} />
 
       {/* FilterBar & Products Section */}
-      <section className="w-full max-w-[1440px] mx-auto items-center py-12 justify-center flex flex-col space-y-[32px]">
+      <section className="w-full max-w-[1440px] mx-auto items-center py-12 justify-center flex text-center md:text-start  flex-col space-y-[32px]">
 
         {loading ? (
           /* Tailored Tailwind CSS Spinner Loader */
@@ -68,7 +78,7 @@ export default function Page() {
           </div>
         ) : (
           /* Products Grid */
-          <div className="grid grid-cols-1 gap-[32px] sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full px-4">
+          <div className="grid grid-cols-1 gap-[32px] sm:grid-cols-2 md:grid-cols-3  lg:grid-cols-4 w-full px-4">
             {currentProducts.map((product: IProduct) => (
               <ProductCard
                 id={product._id}
@@ -118,12 +128,48 @@ export default function Page() {
         </div>
       )}
 
-      {/* Banner */}
-      <div className='w-full'>
-        <div className='w-full flex justify-center mx-auto bg-[#F9F1E7] py-6 px-4 md:px-12 flex-col sm:flex-row gap-4'>
-          <Image src={ShopBanner} alt='banner' />
-        </div>
+    {/* Banner */}
+<div className=" bg-[#FAF4ED]  font-poppins mx-auto py-[100px]  flex justify-center items-center">
+  <div className="w-full max-w-[1400px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-[30px] justify-items-center">
+
+    {/* High Quality */}
+    <div className="flex items-center gap-[10px] w-full max-w-[337px]">
+      <Image src={trophy} alt="High Quality" className="w-[60px] h-[60px] object-contain flex-shrink-0" />
+      <div className="flex flex-col justify-center">
+        <h4 className="font-semibold text-[20px] md:text-[25px] text-[#242424] leading-tight">High Quality</h4>
+        <p className="text-[14px] md:text-[16px] text-[#898989] font-medium leading-normal mt-1 font-semibold">crafted from top materials</p>
       </div>
+    </div>
+
+    {/* Warranty Protection */}
+    <div className="flex items-center gap-[10px] w-full max-w-[328px]">
+      <Image src={guarentee} alt="Warranty Protection" className="w-[60px] h-[60px] object-contain flex-shrink-0" />
+      <div className="flex flex-col justify-center">
+        <h4 className="font-semibold text-[20px] md:text-[25px] text-[#242424] leading-tight">Warranty Protection</h4>
+        <p className="text-[14px] md:text-[16px] text-[#898989] font-medium leading-normal mt-1 font-semibold">Over 2 years</p>
+      </div>
+    </div>
+
+    {/* Free Shipping */}
+    <div className="flex items-center gap-[10px] w-full max-w-[300px]">
+      <Image src={Shipping} alt="Free Shipping" className="w-[60px] h-[60px] object-contain flex-shrink-0" />
+      <div className="flex flex-col justify-center">
+        <h4 className="font-semibold text-[20px] md:text-[25px] text-[#242424] leading-tight">Free Shipping</h4>
+        <p className="text-[14px] md:text-[16px] text-[#898989] font-medium leading-normal mt-1 font-semibold">Order over 150 $</p>
+      </div>
+    </div>
+    {/* 24 / 7 Support */}
+    <div className="flex items-center gap-[10px] w-full max-w-[259px]">
+      <Image src={CustomerSupport} alt="24/7 Support" className="w-[60px] h-[60px] object-contain flex-shrink-0" />
+      <div className="flex flex-col justify-center">
+        <h4 className="font-semibold text-[20px] md:text-[25px] text-[#242424] leading-tight">24 / 7 Support</h4>
+        <p className="text-[14px] md:text-[16px] text-[#898989] font-medium leading-normal mt-1 font-semibold">Dedicated support</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
     </>
   )
 }

@@ -12,6 +12,16 @@ import { useRemoveCart } from "../../hooks/UseRemoveCart";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
+
+
+
+
+
+
+
+
+
+
 export default function CartPage() {
     const { data: cart, isLoading, isError } = useCartQuery();
     const { mutate: removeFromCart, isPending: isRemoving } = useRemoveCart();
