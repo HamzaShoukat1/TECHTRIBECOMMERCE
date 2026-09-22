@@ -34,7 +34,7 @@ export default function SigninForm() {
                 return
             }
             router.push("/")
-            toast.success("Welcome back! Logged in successfully.", {
+            toast.success("Logged in successfully.", {
                 position: "top-left"
             })
         },
