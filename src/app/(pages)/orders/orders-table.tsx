@@ -254,7 +254,7 @@ export function OrdersTable({ orders }: { orders: Order[] }) {
                                             <Button
                                                 variant="ghost"
                                                 size="sm"
-                                                className={'cursor-pointer'}
+                                                className={`cursor-pointer ${order.status === "DELIVERED" && "cursor-not-allowed"}`}
                                                 onClick={() =>
                                                     setActiveReviewOrderId(order._id)
                                                 }
