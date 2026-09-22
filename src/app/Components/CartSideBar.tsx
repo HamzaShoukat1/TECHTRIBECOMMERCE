@@ -43,7 +43,7 @@ export default function CartSidebar() {
             0
         ) ?? 0;
 
-    const isCartEmpty = !cart?.items || cart.items.length === 0;
+    const isCartEmpty =  cart?.items.length === 0;
 
     if (!isOpen) return null;
 
