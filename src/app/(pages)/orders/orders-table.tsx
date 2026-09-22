@@ -109,7 +109,7 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
                         size="lg"
                         className="w-full cursor-pointer"
                     >
-                        {isPending ? 'Submitting...' : 'Submit Review'}
+                        {isPending ? 'Submitting...' : 'Submit Reviews'}
                     </Button>
                 </CardContent>
             </Card>
