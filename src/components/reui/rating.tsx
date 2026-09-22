@@ -117,7 +117,7 @@ function Rating({
       stars.push(
         <div
           key={i}
-          className={cn("relative", editable && "cursor-pointer")}
+          className={cn("relative w-7 h-7", editable && "cursor-pointer")}
           onClick={() => handleStarClick(i)}
           onMouseEnter={() => handleStarMouseEnter(i)}
           onMouseLeave={handleStarMouseLeave}
@@ -127,7 +127,7 @@ function Rating({
 
           {/* Filled star */}
           <div
-            className="absolute inset-0 overflow-hidden"
+            className="absolute inset-0  overflow-hidden"
             style={{
               width: filled ? "100%" : `${fillPercentage}%`,
             }}

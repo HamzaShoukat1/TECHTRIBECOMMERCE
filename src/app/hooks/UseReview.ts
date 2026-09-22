@@ -11,7 +11,7 @@ export function UseReview() {
             toast.success("review added SuccessFully", {
                 position: "top-left"
             })
-             queryClient.invalidateQueries({
+            queryClient.invalidateQueries({
                 queryKey: ["review"],
             });
         },
@@ -20,6 +20,7 @@ export function UseReview() {
                 if (err.message.includes("You have already reviewed this product")) {
                     toast.error("You have already reviewed this product", { position: "top-left" });
                 }
+
             } else {
                 toast.error("An unexpected error occurred", { position: "top-left" });
             }
@@ -30,7 +31,7 @@ export function UseReview() {
 export function useGetReviews(id: string) {
     return useQuery({
         queryKey: ["review", id],
-        queryFn: () => getReviewForspecificProducts(id), 
+        queryFn: () => getReviewForspecificProducts(id),
         enabled: !!id
     });
 }

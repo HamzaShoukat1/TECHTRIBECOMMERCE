@@ -64,7 +64,7 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
       onClick={onClose}
     >
       <Card
-        className="absolute top-[360px] left-1/2 -translate-x-1/2 w-full max-w-[450px]  z-50"
+        className="absolute top-[360px] left-1/2 -translate-x-1/2 w-full max-w-[500px]  z-50"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Cross Close Button */}
@@ -79,11 +79,11 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
         </Button>
 
         <CardContent className="space-y-5 pt-6">
-          <div className="flex flex-col items-center gap-3">
-            <h3 className="text-sm font-semibold">Write a Review</h3>
-            <Rating rating={rating} onRatingChange={setRating} editable />
+          <div className="flex flex-col  gap-3">
+            <h3 className="  text-2xl font-semibold">Write a Review</h3>
+            <Rating rating={rating}   onRatingChange={setRating} editable />
             {rating > 0 && (
-              <p className="text-center text-xs text-muted-foreground">
+              <p className=" text-xs text-muted-foreground ">
                 {rating <= 2 ? "We're sorry to hear that" : rating <= 3 ? 'Thanks for your feedback' : 'Glad you enjoyed it!'}
               </p>
             )}
@@ -106,7 +106,7 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
           <Button
             disabled={rating === 0 || isPending}
             onClick={handleSubmit}
-            size="sm"
+            size="lg"
             className="w-full cursor-pointer"
           >
             {isPending ? 'Submitting...' : 'Submit Review'}
