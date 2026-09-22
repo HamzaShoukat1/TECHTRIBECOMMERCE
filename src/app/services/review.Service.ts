@@ -27,7 +27,7 @@ export async function getReviewForspecificProducts(id: string) {
 
 }
 
-export async function AddReview(reviewData: { orderId: string, rating: number, comment: string }) {
+export async function AddReview(reviewData: { orderId: string, rating: number, comment?: string }) {
     const res = await ApiClient(`${BackenedUrl}/review/create`, {
         method: "POST",
 

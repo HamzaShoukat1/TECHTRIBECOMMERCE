@@ -53,6 +53,7 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
             setRating(0);
             setComment('');
             onSuccess();
+
         } catch (error) {
             console.error('Failed to submit review', error);
         }
@@ -80,17 +81,17 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
 
                 <CardContent className="space-y-5 pt-6">
                     <div className="flex flex-col  gap-3">
-                        <h3 className="  text-2xl font-semibold">Write a Review</h3>
+                        <h3 className="  text-2xl font-semibold font-poppins">Write a Review</h3>
                         <Rating rating={rating} onRatingChange={setRating} editable />
                         {rating > 0 && (
-                            <p className=" text-xs text-muted-foreground ">
+                            <p className=" text-xs text-muted-foreground font-poppins ">
                                 {rating <= 2 ? "We're sorry to hear that" : rating <= 3 ? 'Thanks for your feedback' : 'Glad you enjoyed it!'}
                             </p>
                         )}
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="review-text" className="text-sm">
+                        <Label htmlFor="review-text" className="text-sm font-poppins">
                             Your review
                         </Label>
                         <Textarea
@@ -99,6 +100,7 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
                             onChange={(e) => setComment(e.target.value)}
                             style={{ resize: 'none' }}
                             placeholder="Tell us what you think..."
+                            className='placeholder:font-poppins'
                             rows={3}
                         />
                     </div>
@@ -107,7 +109,7 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
                         disabled={rating === 0 || isPending}
                         onClick={handleSubmit}
                         size="lg"
-                        className="w-full cursor-pointer"
+                        className="w-full cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-white font-poppins font-semibold"
                     >
                         {isPending ? 'Submitting...' : 'Submit Review'}
                     </Button>
