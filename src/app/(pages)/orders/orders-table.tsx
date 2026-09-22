@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { MessageSquarePlus, ChevronDown, ChevronUp,X } from 'lucide-react';
+import { MessageSquarePlus, ChevronDown, ChevronUp, X } from 'lucide-react';
 import type { Order } from '../../utils/Types';
 import { colorClass, formatDisplayDate } from '../../utils';
 import { UseReview } from '../../hooks/UseReview';
@@ -29,92 +29,93 @@ function statusClass(status: Order['status']) {
 
 
 interface ReviewModelProps {
-  orderId: string;
-  onSuccess: () => void;
-  onClose: () => void;
+    orderId: string;
+    onSuccess: () => void;
+    onClose: () => void;
 }
 
 function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
-  const { mutateAsync: createReview, isPending } = UseReview(); 
-  const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+    const { mutateAsync: createReview, isPending } = UseReview();
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
 
-  useEffect(() => { 
-    document.body.classList.add('overflow-hidden'); 
-    return () => { 
-      document.body.classList.remove('overflow-hidden'); 
-    }; 
-  }, []); 
+    useEffect(() => {
+        document.body.classList.add('overflow-hidden');
+        return () => {
+            document.body.classList.remove('overflow-hidden');
+        };
+    }, []);
 
-  const handleSubmit = async () => {
-    if (!orderId) return;
-    try {
-      await createReview({ orderId, rating, comment });
-      setRating(0);
-      setComment('');
-      onSuccess();
-    } catch (error) {
-      console.error('Failed to submit review', error);
-    }
-  };
+    const handleSubmit = async () => {
+        if (!orderId) return;
+        try {
+            await createReview({ orderId, rating, comment });
+            setRating(0);
+            setComment('');
+            onSuccess();
+        } catch (error) {
+            console.error('Failed to submit review', error);
+        }
+    };
 
-  return (
-    <div
-      className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-10 backdrop-blur-xs"
-      onClick={onClose}
-    >
-      <Card
-        className="absolute top-[360px] left-1/2 -translate-x-1/2 w-full max-w-[500px]  z-50"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Cross Close Button */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="absolute right-4 top-4 h-8 w-8 rounded-md cursor-pointer text-muted-foreground hover:text-foreground"
-          onClick={onClose}
-          aria-label="Close review dialog"
+    return (
+        <div
+            className="fixed inset-0 z-50 bg-black/40 flex items-start justify-center pt-10 backdrop-blur-xs"
+            onClick={onClose}
         >
-          <X className="h-4 w-4" />
-        </Button>
+            <Card
+                className="absolute top-[360px] left-1/2 -translate-x-1/2 w-full max-w-[500px]  z-50"
+                onClick={(e) => e.stopPropagation()}
+            >
+                {/* Cross Close Button */}
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-4 top-4 h-8 w-8 rounded-md cursor-pointer text-muted-foreground hover:text-foreground"
+                    onClick={onClose}
+                    aria-label="Close review dialog"
+                >
+                    <X className="h-4 w-4" />
+                </Button>
 
-        <CardContent className="space-y-5 pt-6">
-          <div className="flex flex-col  gap-3">
-            <h3 className="  text-2xl font-semibold">Write a Review</h3>
-            <Rating rating={rating}   onRatingChange={setRating} editable />
-            {rating > 0 && (
-              <p className=" text-xs text-muted-foreground ">
-                {rating <= 2 ? "We're sorry to hear that" : rating <= 3 ? 'Thanks for your feedback' : 'Glad you enjoyed it!'}
-              </p>
-            )}
-          </div>
+                <CardContent className="space-y-5 pt-6">
+                    <div className="flex flex-col  gap-3">
+                        <h3 className="  text-2xl font-semibold">Write a Review</h3>
+                        <Rating rating={rating} onRatingChange={setRating} editable />
+                        {rating > 0 && (
+                            <p className=" text-xs text-muted-foreground ">
+                                {rating <= 2 ? "We're sorry to hear that" : rating <= 3 ? 'Thanks for your feedback' : 'Glad you enjoyed it!'}
+                            </p>
+                        )}
+                    </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="review-text" className="text-sm">
-              Your review
-            </Label>
-            <Textarea
-              id="review-text"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              className='resize-none'
-              placeholder="Tell us what you think..."
-              rows={3}
-            />
-          </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="review-text" className="text-sm">
+                            Your review
+                        </Label>
+                        <Textarea
+                            id="review-text"
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                            className='resize-none'
+                            style={{ resize: 'none' }}
+                            placeholder="Tell us what you think..."
+                            rows={3}
+                        />
+                    </div>
 
-          <Button
-            disabled={rating === 0 || isPending}
-            onClick={handleSubmit}
-            size="lg"
-            className="w-full cursor-pointer"
-          >
-            {isPending ? 'Submitting...' : 'Submit Review'}
-          </Button>
-        </CardContent>
-      </Card>
-    </div>
-  );
+                    <Button
+                        disabled={rating === 0 || isPending}
+                        onClick={handleSubmit}
+                        size="lg"
+                        className="w-full cursor-pointer"
+                    >
+                        {isPending ? 'Submitting...' : 'Submit Review'}
+                    </Button>
+                </CardContent>
+            </Card>
+        </div>
+    );
 }
 
 
@@ -135,11 +136,11 @@ function OrderItemList({ order }: { order: Order }) {
                     typeof item.productImage === 'string'
                         ? item.productImage
                         : item.productImage?.url ??
-                          item.image ??
-                          item.product?.productImage?.url ??
-                          (typeof item.productId === 'object'
-                              ? item.productId?.productImage?.url
-                              : undefined);
+                        item.image ??
+                        item.product?.productImage?.url ??
+                        (typeof item.productId === 'object'
+                            ? item.productId?.productImage?.url
+                            : undefined);
 
                 return (
                     <div
@@ -198,7 +199,7 @@ function OrderItemList({ order }: { order: Order }) {
                 >
                     {showAll ? (
                         <>
-                           Show Less <ChevronUp className="ml-1 h-3 w-3" />
+                            Show Less <ChevronUp className="ml-1 h-3 w-3" />
                         </>
                     ) : (
                         <>
