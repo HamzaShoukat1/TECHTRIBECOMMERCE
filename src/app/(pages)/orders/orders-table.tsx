@@ -97,7 +97,6 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
                             id="review-text"
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
-                            className='resize-none'
                             style={{ resize: 'none' }}
                             placeholder="Tell us what you think..."
                             rows={3}
