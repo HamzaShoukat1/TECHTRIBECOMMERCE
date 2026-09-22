@@ -64,7 +64,7 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
       onClick={onClose}
     >
       <Card
-        className="absolute top-[360px] left-1/2 -translate-x-1/2 w-full max-w-[400px] h-auto z-50"
+        className="absolute top-[360px] left-1/2 -translate-x-1/2 w-full max-w-[450px]  z-50"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Cross Close Button */}
@@ -97,6 +97,7 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
               id="review-text"
               value={comment}
               onChange={(e) => setComment(e.target.value)}
+              className='resize-none'
               placeholder="Tell us what you think..."
               rows={3}
             />
