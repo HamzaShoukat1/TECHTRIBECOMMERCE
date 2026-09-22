@@ -5,7 +5,7 @@ export function UseReview() {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (reviewData: { orderId: string, rating: number, comment: string }) => AddReview(reviewData),
+        mutationFn: (reviewData: { orderId: string, rating: number, comment?: string }) => AddReview(reviewData),
         onSuccess: (data) => {
             console.log("Review submitted successfully:", data);
             toast.success("review added SuccessFully", {
