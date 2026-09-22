@@ -38,7 +38,14 @@ export default function ReusableBanner({ title, image, parents = [], breadcrumbP
                         : "left-1/2 -translate-x-1/2 items-center text-center"
                         }`}
                 >
-                    <Image src={logo} alt="Furniro Logo" width={40} height={40} className="w-9 h-auto object-contain" />
+                    {breadcrumbPosition !== "start" && (
+                        <Image src={logo} alt="Furniro Logo" width={40} height={40} className="w-9 h-auto object-contain" />
+
+                    )
+
+
+
+                    }
 
                     <h1 className='font-poppins mb-2 font-bold tracking-normal text-3xl md:text-5xl text-black'>
                         {title}
