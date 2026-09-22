@@ -8,7 +8,8 @@ export function middleware(request: NextRequest) {
   const isProtectedPage =
     pathname === "/checkout" ||
     pathname.startsWith("/orders") ||
-    pathname.startsWith("/cart") ||
+    pathname.startsWith("/shop")
+  pathname.startsWith("/cart") ||
     pathname.startsWith("/admin");
 
   // Check authentication only for protected routes
