@@ -98,11 +98,11 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
                             id="review-text"
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
-                            style={{ resize: 'none' }}
+                            style={{ resize: 'none', height: '30px' }} 
                             placeholder="Tell us what you think..."
-                            className='placeholder:font-poppins h-[30px]'
-                            rows={3}
+                            className='placeholder:font-poppins' 
                         />
+
                     </div>
 
                     <Button
