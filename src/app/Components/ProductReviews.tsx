@@ -89,10 +89,8 @@ function ReviewItem({ review }: { review: Review }) {
             </div>
 
             <p style={{
-                whiteSpace: 'pre-wrap',
-                wordBreak: 'break-word',
-                overflowWrap: 'anywhere'
-            }} className="text-gray-600 leading-relaxed"> 
+                wordBreak: 'break-all',
+            }} className="text-gray-600 leading-relaxed w-full max-w-[900px]"> 
                 {displayText}
 
 
