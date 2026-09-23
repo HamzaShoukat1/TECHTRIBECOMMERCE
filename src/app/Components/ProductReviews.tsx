@@ -72,7 +72,7 @@ function ReviewItem({ review }: { review: Review }) {
     const displayText = isExpanded || !isLongComment ? comment : `${comment.slice(0, characterLimit)}...`;
 
     return (
-        <div className="border-b border-gray-100 pb-6 last:border-0">
+        <div className="border-b border-gray-100 pb-6 last:border-0  overflow-x-hidden">
             <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center space-x-3">
                     <span className="font-semibold text-gray-900">

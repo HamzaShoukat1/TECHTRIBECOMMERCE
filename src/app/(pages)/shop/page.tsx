@@ -130,7 +130,7 @@ function ShopContent() {
       />
 
       {/* FilterBar & Products Section */}
-      <section className="w-full max-w-[1440px] mx-auto items-center py-12 justify-center flex text-center md:text-start flex-col space-y-[32px]">
+      <section className="w-full max-w-[1440px] mx-auto  overflow-hidden items-center py-12 justify-center flex text-center md:text-start flex-col space-y-[32px]">
 
         {loading || isSearchLoading ? (
           /* Tailored Tailwind CSS Spinner Loader */
@@ -176,7 +176,7 @@ function ShopContent() {
         !isSearchLoading &&
         totalPages > 1 && (
 
-        <div className="flex items-center justify-center m-12 gap-5 font-sans text-sm font-medium selection:bg-transparent">
+        <div className="flex items-center justify-center m-12 gap-5 font-sans text-sm font-medium selection:bg-transparent ">
 
           {Array.from(
             { length: totalPages },
