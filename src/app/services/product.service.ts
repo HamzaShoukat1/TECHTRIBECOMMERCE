@@ -50,3 +50,11 @@ export async function logoutUser() {
 
     });
 }
+
+
+
+export async function searchProducts(query: string) {
+  return ApiClient(
+    `${BackenedUrl}/product/search?q=${encodeURIComponent(query)}`
+  );
+}
