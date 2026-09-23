@@ -27,7 +27,7 @@ export default function ReusableBanner({ title, image, parents = [], breadcrumbP
                     <Image
                         src={image}
                         alt="banner-image"
-                        className="w-full h-auto block"
+                        className="w-full h-35 md:h-auto block"
                         priority
                     />
                 )}

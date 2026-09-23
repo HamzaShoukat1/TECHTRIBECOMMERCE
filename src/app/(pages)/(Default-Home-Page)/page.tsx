@@ -27,7 +27,7 @@ export default async function Page() {
   return (
     <main className="w-full min-h-screen bg-white space-y-[32px]">
       {/* Hero Section */}
-      <section className="relative w-full h-[716px] overflow-hidden">
+      <section className="relative w-full h-[410px] md:h-[710px] overflow-hidden">
         <Image
           src={sectionImage}
           alt="Beautiful scandinavian interior mockup background showing a decorated wall"
@@ -71,9 +71,9 @@ export default async function Page() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full p-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 w-full p-4 ">
           {IMAGES_DATA.map((item) => (
-            <div key={item.id} className="flex flex-col items-center gap-4 group cursor-pointer">
+            <div key={item.id} className="flex flex-col justify-center items-center gap-4 group cursor-pointer">
               <div className="relative w-full aspect-[4/5] rounded-lg">
                 <Image
                   src={item.image}
@@ -143,15 +143,16 @@ export default async function Page() {
       </div>
 
       {/* Furniture Grid Section */}
-      <section className="w-full max-w-[1799px] space-x-[-39px] space-y-[-39px] mx-auto py-12 overflow-hidden">
-        <div className="flex flex-col items-center justify-center text-center mb-10">
-          <h2 className="font-poppins font-semibold text-[20px] text-gray-500 mb-1">
+      <section className="w-full max-w-[1799px] space-x-[-39px] space-y-[-39px] mx-auto py-10 overflow-hidden">
+        <div className="flex flex-col items-center justify-center text-center mb-6 md:mb-10 mr-4">
+          <h2 className="font-poppins font-semibold text-[16px] md:text-[20px] text-gray-500 mb-1">
             Share your setup with
           </h2>
-          <h1 className="font-poppins font-bold text-[40px] leading-[120%] tracking-normal text-[#3A3A3A]">
+          <h1 className="font-poppins font-bold text-[28px] sm:text-[34px] md:text-[40px] leading-[120%] tracking-normal text-[#3A3A3A]">
             #FuniroFurniture
           </h1>
         </div>
+
 
         <div className="grid grid-cols-12 gap-4 auto-rows-[120px] md:auto-rows-[180px] lg:auto-rows-[220px]">
           <div className="col-span-2 row-span-2">

@@ -181,41 +181,75 @@ export default function Page() {
 
             {/* Bottom Shop Features Banner */}
    {/* Banner */}
-<div className=" bg-[#FAF4ED]  font-poppins mx-auto py-[100px]  flex justify-center items-center">
-  <div className="w-full max-w-[1400px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-[30px] justify-items-center">
-
+{/* Banner */}
+<div className="bg-[#FAF4ED] font-poppins w-full py-12 md:py-16 flex justify-center items-center px-6 sm:px-12">
+  <div className="w-full max-w-[1400px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-6 justify-items-stretch">
+    
     {/* High Quality */}
-    <div className="flex items-center gap-[10px] w-full max-w-[337px]">
-      <Image src={trophy} alt="High Quality" className="w-[60px] h-[60px] object-contain flex-shrink-0" />
-      <div className="flex flex-col justify-center">
-        <h4 className="font-semibold text-[20px] md:text-[25px] text-[#242424] leading-tight">High Quality</h4>
-        <p className="text-[14px] md:text-[16px] text-[#898989] font-medium leading-normal mt-1 font-semibold">crafted from top materials</p>
+    <div className="flex items-center gap-4 w-full mx-auto max-w-[320px] sm:max-w-none">
+      <Image 
+        src={trophy} 
+        alt="High Quality" 
+        className="w-12 h-12 md:w-14 md:h-14 object-contain flex-shrink-0" 
+      />
+      <div className="flex flex-col justify-center min-w-0">
+        <h4 className="font-semibold text-lg md:text-xl lg:text-2xl text-[#242424] leading-tight truncate-none">
+          High Quality
+        </h4>
+        <p className="text-xs md:text-sm text-[#898989] font-medium leading-normal mt-1">
+          crafted from top materials
+        </p>
       </div>
     </div>
 
     {/* Warranty Protection */}
-    <div className="flex items-center gap-[10px] w-full max-w-[328px]">
-      <Image src={guarentee} alt="Warranty Protection" className="w-[60px] h-[60px] object-contain flex-shrink-0" />
-      <div className="flex flex-col justify-center">
-        <h4 className="font-semibold text-[20px] md:text-[25px] text-[#242424] leading-tight">Warranty Protection</h4>
-        <p className="text-[14px] md:text-[16px] text-[#898989] font-medium leading-normal mt-1 font-semibold">Over 2 years</p>
+    <div className="flex items-center gap-4 w-full mx-auto max-w-[320px] sm:max-w-none">
+      <Image 
+        src={guarentee} 
+        alt="Warranty Protection" 
+        className="w-12 h-12 md:w-14 md:h-14 object-contain flex-shrink-0" 
+      />
+      <div className="flex flex-col justify-center min-w-0">
+        <h4 className="font-semibold text-lg md:text-xl lg:text-2xl text-[#242424] leading-tight">
+          Warranty Protection
+        </h4>
+        <p className="text-xs md:text-sm text-[#898989] font-medium leading-normal mt-1">
+          Over 2 years
+        </p>
       </div>
     </div>
 
     {/* Free Shipping */}
-    <div className="flex items-center gap-[10px] w-full max-w-[300px]">
-      <Image src={Shipping} alt="Free Shipping" className="w-[60px] h-[60px] object-contain flex-shrink-0" />
-      <div className="flex flex-col justify-center">
-        <h4 className="font-semibold text-[20px] md:text-[25px] text-[#242424] leading-tight">Free Shipping</h4>
-        <p className="text-[14px] md:text-[16px] text-[#898989] font-medium leading-normal mt-1 font-semibold">Order over 150 $</p>
+    <div className="flex items-center gap-4 w-full mx-auto max-w-[320px] sm:max-w-none">
+      <Image 
+        src={Shipping} 
+        alt="Free Shipping" 
+        className="w-12 h-12 md:w-14 md:h-14 object-contain flex-shrink-0" 
+      />
+      <div className="flex flex-col justify-center min-w-0">
+        <h4 className="font-semibold text-lg md:text-xl lg:text-2xl text-[#242424] leading-tight">
+          Free Shipping
+        </h4>
+        <p className="text-xs md:text-sm text-[#898989] font-medium leading-normal mt-1">
+          Order over 150 $
+        </p>
       </div>
     </div>
+
     {/* 24 / 7 Support */}
-    <div className="flex items-center gap-[10px] w-full max-w-[259px]">
-      <Image src={CustomerSupport} alt="24/7 Support" className="w-[60px] h-[60px] object-contain flex-shrink-0" />
-      <div className="flex flex-col justify-center">
-        <h4 className="font-semibold text-[20px] md:text-[25px] text-[#242424] leading-tight">24 / 7 Support</h4>
-        <p className="text-[14px] md:text-[16px] text-[#898989] font-medium leading-normal mt-1 font-semibold">Dedicated support</p>
+    <div className="flex items-center gap-4 w-full mx-auto max-w-[320px] sm:max-w-none">
+      <Image 
+        src={CustomerSupport} 
+        alt="24/7 Support" 
+        className="w-12 h-12 md:w-14 md:h-14 object-contain flex-shrink-0" 
+      />
+      <div className="flex flex-col justify-center min-w-0">
+        <h4 className="font-semibold text-lg md:text-xl lg:text-2xl text-[#242424] leading-tight">
+          24 / 7 Support
+        </h4>
+        <p className="text-xs md:text-sm text-[#898989] font-medium leading-normal mt-1">
+          Dedicated support
+        </p>
       </div>
     </div>
 
