@@ -19,10 +19,10 @@ interface Review {
     createdAt: string;
     updatedAt: string;
 }
+
 export default function ProductReviewsTabs({ productId }: { productId: string }) {
     const [activeTab, setActiveTab] = useState("reviews");
     const { data: response, isLoading, isError } = useGetReviews(productId);
-
 
     const reviews: Review[] = Array.isArray(response)
         ? response
@@ -55,26 +55,49 @@ export default function ProductReviewsTabs({ productId }: { productId: string })
                     {!isLoading &&
                         !isError &&
                         reviews.map((review) => (
-                            <div key={review._id} className="border-b border-gray-100 pb-6 last:border-0">
-                                <div className="flex items-center justify-between mb-2">
-                                    <div className="flex items-center space-x-3">
-                                        <span className="font-semibold text-gray-900">
-                                            {review.userId?.FirstName || "Anonymous"}
-                                        </span>
-                                        <div className="flex text-yellow-400">
-                                            {"★".repeat(review.rating)}
-                                            {"☆".repeat(5 - review.rating)}
-                                        </div>
-                                    </div>
-                                    <span className="text-sm text-gray-400">
-                                        {formatDisplayDate(review.createdAt)}
-                                    </span>
-                                </div>
-                                <p className="text-gray-600 leading-relaxed">{review.comment}</p>
-                            </div>
+                            <ReviewItem key={review._id} review={review} />
                         ))}
                 </div>
             )}
+        </div>
+    );
+}
+
+function ReviewItem({ review }: { review: Review }) {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const characterLimit = 20;
+
+    const comment = review.comment || "";
+    const isLongComment = comment.length > characterLimit;
+    const displayText = isExpanded || !isLongComment ? comment : `${comment.slice(0, characterLimit)}...`;
+
+    return (
+        <div className="border-b border-gray-100 pb-6 last:border-0">
+            <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center space-x-3">
+                    <span className="font-semibold text-gray-900">
+                        {review.userId?.FirstName || "Anonymous"}
+                    </span>
+                    <div className="flex text-yellow-400">
+                        {"★".repeat(review.rating)}
+                        {"☆".repeat(5 - review.rating)}
+                    </div>
+                </div>
+                <span className="text-sm text-gray-400">
+                    {formatDisplayDate(review.createdAt)}
+                </span>
+            </div>
+            <p className="text-gray-600 leading-relaxed">
+                {displayText}
+                {isLongComment && (
+                    <button
+                        onClick={() => setIsExpanded(!isExpanded)}
+                        className="ml-2 text-yellow-500 hover:text-yellow-700 cursor-pointer font-medium inline-block focus:outline-none focus:underline"
+                    >
+                        {isExpanded ? 'Read less' : 'Read more'}
+                    </button>
+                )}
+            </p>
         </div>
     );
 }
