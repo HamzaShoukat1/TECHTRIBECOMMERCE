@@ -18,7 +18,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Rating } from '@/src/components/reui/rating';
-import { useRouter } from 'next/navigation';
 
 function statusClass(status: Order['status']) {
     if (status === 'DELIVERED') return 'bg-emerald-100 text-emerald-700';
@@ -216,7 +215,6 @@ function OrderItemList({ order }: { order: Order }) {
 }
 
 export function OrdersTable({ orders }: { orders: Order[] }) {
-    const router = useRouter()
 
     const [activeReviewOrderId, setActiveReviewOrderId] = useState<string | null>(
         null
