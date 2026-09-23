@@ -65,7 +65,7 @@ export default function ProductReviewsTabs({ productId }: { productId: string })
 
 function ReviewItem({ review }: { review: Review }) {
     const [isExpanded, setIsExpanded] = useState(false);
-    const characterLimit = 20;
+    const characterLimit = 100
 
     const comment = review.comment || "";
     const isLongComment = comment.length > characterLimit;
@@ -87,8 +87,15 @@ function ReviewItem({ review }: { review: Review }) {
                     {formatDisplayDate(review.createdAt)}
                 </span>
             </div>
-            <p className="text-gray-600 leading-relaxed">
+
+            <p style={{
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
+                overflowWrap: 'anywhere'
+            }} className="text-gray-600 leading-relaxed"> 
                 {displayText}
+
+
                 {isLongComment && (
                     <button
                         onClick={() => setIsExpanded(!isExpanded)}
