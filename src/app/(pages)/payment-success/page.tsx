@@ -1,6 +1,6 @@
-export const dynamic = "force-dynamic";
 import PaymentSuccessClientView from "../../Components/PaymentSuccessClientView";
 
+export const dynamic = "force-dynamic";
 
 interface PageProps {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
