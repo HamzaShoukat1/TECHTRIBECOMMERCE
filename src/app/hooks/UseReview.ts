@@ -14,6 +14,9 @@ export function UseReview() {
             queryClient.invalidateQueries({
                 queryKey: ["review"],
             });
+            queryClient.invalidateQueries({
+                queryKey:["AllOrders"]
+            })
         },
         onError: (err) => {
             if (err instanceof Error) {

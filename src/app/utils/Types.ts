@@ -2,7 +2,7 @@
 
 
 export type IProduct = {
-    _id:string
+    _id: string
     productName: string,
     productPrice: number,
     productImage: {
@@ -87,6 +87,7 @@ export type Order = {
         email: string;
         phone: string;
     };
+    alreadyReviewed: boolean
     createdAt: string;
 };
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { MessageSquarePlus, ChevronDown, ChevronUp, X } from 'lucide-react';
+import { MessageSquarePlus, ChevronDown, ChevronUp, X, CheckCircle2 } from 'lucide-react';
 import type { Order } from '../../utils/Types';
 import { colorClass, formatDisplayDate } from '../../utils';
 import { UseReview } from '../../hooks/UseReview';
@@ -18,6 +18,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Rating } from '@/src/components/reui/rating';
+import { useRouter } from 'next/navigation';
 
 function statusClass(status: Order['status']) {
     if (status === 'DELIVERED') return 'bg-emerald-100 text-emerald-700';
@@ -100,7 +101,7 @@ function ReviewModel({ orderId, onSuccess, onClose }: ReviewModelProps) {
                             onChange={(e) => setComment(e.target.value)}
                             style={{ resize: 'none' }}
                             placeholder="Tell us what you think..."
-                            className='placeholder:font-poppins'
+                            className='placeholder:font-poppins h-[30px]'
                             rows={3}
                         />
                     </div>
@@ -215,6 +216,8 @@ function OrderItemList({ order }: { order: Order }) {
 }
 
 export function OrdersTable({ orders }: { orders: Order[] }) {
+    const router = useRouter()
+
     const [activeReviewOrderId, setActiveReviewOrderId] = useState<string | null>(
         null
     );
@@ -273,19 +276,25 @@ export function OrdersTable({ orders }: { orders: Order[] }) {
                                     </TableCell>
                                     {order.status === 'DELIVERED' && (
                                         <TableCell className="px-5 py-4">
-                                            <Button
-                                                variant="ghost"
-                                                size="sm"
-                                                className={'cursor-pointer'}
-                                                onClick={() =>
-                                                    setActiveReviewOrderId(order._id)
-                                                }
-                                            >
-                                                <MessageSquarePlus className="mr-1 h-4 w-4" />
-                                                Review
-                                            </Button>
+                                            {order.alreadyReviewed ? (
+                                                <span className="text-sm font-medium text-muted-foreground flex items-center gap-1">
+                                                    <CheckCircle2 className="h-4 w-4 text-green-500" />
+                                                    Reviewed
+                                                </span>
+                                            ) : (
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="cursor-pointer"
+                                                    onClick={() => setActiveReviewOrderId(order._id)}
+                                                >
+                                                    <MessageSquarePlus className="mr-1 h-4 w-4" />
+                                                    Review
+                                                </Button>
+                                            )}
                                         </TableCell>
                                     )}
+
                                 </TableRow>
                             ))
                         )}
@@ -296,7 +305,10 @@ export function OrdersTable({ orders }: { orders: Order[] }) {
             {activeReviewOrderId && (
                 <ReviewModel
                     orderId={activeReviewOrderId}
-                    onSuccess={() => setActiveReviewOrderId(null)}
+
+                    onSuccess={() => setActiveReviewOrderId(null)
+
+                    }
                     onClose={() => setActiveReviewOrderId(null)}
                 />
             )}

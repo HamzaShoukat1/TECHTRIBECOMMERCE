@@ -7,11 +7,11 @@ export const useLogout = () => {
     const queryClient = useQueryClient();
     const router = useRouter();
 
-    const { mutate: logout,isPending } = useMutation({
+    const { mutate: logout, isPending } = useMutation({
         mutationFn: logoutUser,
         onSuccess: () => {
-            toast.success("Logged out successfully.",{
-                position:"top-left"
+            toast.success("Logged out successfully.", {
+                position: "top-left"
             });
             queryClient.setQueryData(["currentUser"], null);
             router.push("/login");
@@ -21,5 +21,5 @@ export const useLogout = () => {
         }
     });
 
-    return { logout,isPending };
+    return { logout, isPending };
 };
