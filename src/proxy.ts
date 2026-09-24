@@ -11,6 +11,7 @@ export async function proxy(req: NextRequest) {
 
         console.log('🔥 PROXY RUNNING');
     console.log('PATH:', req.nextUrl.pathname);
+    console.log('TOKEN: ', req.cookies.get('accessToken')?.value)
     
     const isProtectedRoute = protectedRoutes.some((route) => 
         path === route || path.startsWith(`${route}/`)
