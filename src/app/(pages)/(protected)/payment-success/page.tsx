@@ -1,4 +1,4 @@
-import PaymentSuccessClientView from "../../Components/PaymentSuccessClientView";
+import PaymentSuccessClientView from "../../../Components/PaymentSuccessClientView";
 
 export const dynamic = "force-dynamic";
 
