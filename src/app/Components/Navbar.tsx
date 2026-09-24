@@ -168,7 +168,7 @@ export default function Navbar() {
                 </button>
               </Link>
               <Link href="/signup" className="hidden sm:block">
-                <button className="text-xs font-medium text-white cursor-pointer bg-amber-600 py-1.5 px-3 rounded-md hover:bg-amber-700 transition-colors">
+                <button className="text-xs font-medium text-white cursor-pointer bg-yellow-500 hover:bg-yellow-600 py-1.5 px-3 rounded-md transition-colors">
                   Sign Up
                 </button>
               </Link>

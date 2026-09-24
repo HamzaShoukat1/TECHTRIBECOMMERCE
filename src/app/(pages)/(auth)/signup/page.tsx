@@ -25,7 +25,6 @@ export default function SignupForm() {
     },
   })
 
-  // 3. Declare the mutation hook
   const { mutate, isPending } = useMutation({
     mutationFn: createUser,
     onSuccess: (response) => {
@@ -121,7 +120,7 @@ export default function SignupForm() {
                       aria-invalid={fieldState.invalid}
                       placeholder="name@example.com"
                       disabled={isPending}
-                      className="h-11" // 💡 Increased input height
+                      className="h-11" 
                     />
                     {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
                   </Field>
@@ -157,7 +156,7 @@ export default function SignupForm() {
             <Button type="button" variant="outline" className="h-11 cursor-pointer" onClick={() => form.reset()} disabled={isPending}>
               Reset
             </Button>
-            <Button type="submit" form="form-rhf-signup" className="h-11 px-6 cursor-pointer" disabled={isPending}>
+            <Button type="submit" form="form-rhf-signup" className="h-11 px-6 bg-yellow-500 hover:bg-yellow-600 cursor-pointer" disabled={isPending}>
               {isPending ? "Submitting..." : "Sign Up"}
             </Button>
           </Field>
