@@ -4,7 +4,7 @@ import "./globals.css"
 
 import { CartProvider } from "./context/cartContext";
 import { Toaster } from "sonner";
-import Providers from "./provider"; // Your TanStack Query Provider
+import Providers from "./provider"; 
 import { AppChrome } from "./AppChrome";
 import OfflineGuard from "./Components/OfflineGuard";
 const geistSans = Geist({
@@ -32,11 +32,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className="flex flex-col flex-1 min-h-screen">
                 <OfflineGuard>
 
-                <Providers>
-                    <CartProvider>
-                        <AppChrome>{children}</AppChrome>
-                    </CartProvider>
-                </Providers>
+                    <Providers>
+                        <CartProvider>
+
+                                <AppChrome>{children}</AppChrome>
+                        </CartProvider>
+                    </Providers>
                 </OfflineGuard>
                 <Toaster position="bottom-right" />
             </body>
