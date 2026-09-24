@@ -6,7 +6,6 @@ import { CartProvider } from "./context/cartContext";
 import { Toaster } from "sonner";
 import Providers from "./provider";
 import { AppChrome } from "./AppChrome";
-import ProtectedRoute from "./Components/ProtectedRoute";
 import OfflineGuard from "./Components/OfflineGuard";
 const geistSans = Geist({
     variable: "--font-geist-sans",
