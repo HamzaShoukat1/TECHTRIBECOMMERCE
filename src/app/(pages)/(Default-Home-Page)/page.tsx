@@ -18,7 +18,7 @@ export default async function Page() {
 
   try {
     const productsResponse: IProductResponse = await getAllProducts();
-    products = productsResponse?.AllProducts?.slice(0, 8) ?? [];
+    products = productsResponse?.AllProducts?.slice(0, 4) ?? [];
   } catch (error) {
     console.error("Error loading products on Home Page:", error);
     products = [];
