@@ -7,6 +7,5 @@ export function useCartQuery() {
     return useQuery({
         queryKey: ["cart"],
         queryFn: getCartDetails,
-        staleTime: 1000 * 60 * 5
     });
 }
