@@ -456,10 +456,13 @@ export default function CheckoutPage() {
                         <button
                             type="submit"
                             disabled={isPending}
-                            className="border cursor-pointer border-black rounded-[15px] px-12 py-4 text-[16px] font-medium hover:bg-black hover:text-white transition"
+                            className="rounded-[15px] border cursor-pointer border-black px-12 py-4 text-base font-medium transition
+               hover:bg-black hover:text-white 
+               disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent disabled:hover:text-black"
                         >
                             {isPending ? "Creating checkout..." : "Place order"}
                         </button>
+
                     </div>
                 </div>
             </form>

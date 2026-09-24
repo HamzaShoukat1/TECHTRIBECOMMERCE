@@ -27,12 +27,12 @@ export default function Navbar() {
   const pathName = usePathname()
   const { setIsOpen } = useCart()
   const { data: cart } = useCartQuery()
-  const { data: user,isLoading:isUserLoading } = useQuery({
-     queryKey: ["currentUser"],
-      queryFn: getCurrentUser,
-       retry: false,
-         staleTime: 1000 * 60 * 5, 
-       });
+  const { data: user, isLoading: isUserLoading } = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: getCurrentUser,
+    retry: false,
+    staleTime: 1000 * 60 * 5,
+  });
 
   const isAuthPage = pathName === "/login" || pathName === "/signup"
 
@@ -130,10 +130,24 @@ export default function Navbar() {
               {/* Orders Icon - Now visible on ALL screen sizes */}
               {user && (
                 <Link href="/orders" className="inline-block">
-                  <button className="text-xs font-medium text-gray-600 cursor-pointer hover:text-amber-700 transition-colors py-1.5 px-3 rounded-md hover:bg-amber-50/50 border border-gray-300 whitespace-nowrap">
+                  <button className="text-xs font-medium hidden md:block text-gray-600 cursor-pointer hover:text-amber-700 transition-colors py-1.5 px-3 rounded-md hover:bg-amber-50/50 border border-gray-300 whitespace-nowrap">
                     My Orders
                   </button>
                 </Link>
+              )}
+              {pathName === "/shop" && (
+                <div className="relative w-full mb-1 block md:hidden">
+                  <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="w-full pl-9 pr-5 md:pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-amber-500 placeholder:text-xs md:placeholder:text-sm"
+                  />
+
+
+                </div>
               )}
 
               {/* Cart Icon trigger */}
@@ -151,29 +165,29 @@ export default function Navbar() {
             </>
           )}
 
-        {/* User management */}
-{isUserLoading ? (
-  <div className="flex items-center gap-3 pl-2 sm:border-l sm:border-gray-200 shrink-0">
-    <div className="w-16 h-7 bg-gray-200 animate-pulse rounded-md" />
-  </div>
-) : user ? (
-  <div className="flex items-center gap-3 pl-2 sm:border-l sm:border-gray-200 shrink-0">
-    <div className="hidden lg:block text-right">
-      <p className="text-xs font-semibold text-gray-900">{user.firstName}</p>
-      <p className="text-[10px] text-gray-500 truncate max-w-[120px]">{user.email}</p>
-    </div>
-    <button onClick={() => logout()} className="text-xs font-medium text-gray-600 cursor-pointer hover:text-red-600 transition-colors py-1.5 px-3 rounded-md hover:bg-red-50 border border-gray-300">Logout</button>
-  </div>
-) : (
-  <div className="flex gap-2 justify-center shrink-0">
-    <Link href="/login">
-      <button className="text-xs font-medium text-gray-600 cursor-pointer bg-white py-1.5 px-3 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors">Sign In</button>
-    </Link>
-    <Link href="/signup" className="hidden sm:block">
-      <button className="text-xs font-medium text-white cursor-pointer bg-yellow-500 hover:bg-yellow-600 py-1.5 px-3 rounded-md transition-colors">Sign Up</button>
-    </Link>
-  </div>
-)}
+          {/* User management */}
+          {isUserLoading ? (
+            <div className="flex items-center gap-3 pl-2 sm:border-l sm:border-gray-200 shrink-0">
+              <div className="w-16 h-7 bg-gray-200 animate-pulse rounded-md" />
+            </div>
+          ) : user ? (
+            <div className="flex items-center gap-3 pl-2 sm:border-l sm:border-gray-200 shrink-0">
+              <div className="hidden lg:block text-right">
+                <p className="text-xs font-semibold text-gray-900">{user.firstName}</p>
+                <p className="text-[10px] text-gray-500 truncate max-w-[120px]">{user.email}</p>
+              </div>
+              <button onClick={() => logout()} className="text-xs font-medium text-gray-600 cursor-pointer hover:text-red-600 transition-colors py-1.5 px-3 rounded-md hover:bg-red-50 border border-gray-300">Logout</button>
+            </div>
+          ) : (
+            <div className="flex gap-2 justify-center shrink-0">
+              <Link href="/login">
+                <button className="text-xs font-medium text-gray-600 cursor-pointer bg-white py-1.5 px-3 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors">Sign In</button>
+              </Link>
+              <Link href="/signup" className="hidden sm:block">
+                <button className="text-xs font-medium text-white cursor-pointer bg-yellow-500 hover:bg-yellow-600 py-1.5 px-3 rounded-md transition-colors">Sign Up</button>
+              </Link>
+            </div>
+          )}
 
         </div>
       </div>
@@ -182,19 +196,7 @@ export default function Navbar() {
       {!isAuthPage && isMenuOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-100 px-6 py-4 flex flex-col gap-3 shadow-md animate-in fade-in slide-in-from-top-2 duration-200">
 
-          {/* Mobile search integration */}
-          {pathName === "/shop" && (
-            <div className="relative w-full mb-1">
-              <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-amber-500"
-              />
-            </div>
-          )}
+
 
           {navItems.map((item) => {
             const isActive = pathName === item.route
