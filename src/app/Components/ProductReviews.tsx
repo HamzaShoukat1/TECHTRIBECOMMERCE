@@ -78,7 +78,7 @@ function ReviewItem({ review }: { review: Review }) {
                     <span className="font-semibold text-gray-900">
                         {review.userId?.FirstName || "Anonymous"}
                     </span>
-                    <div className="flex text-yellow-400">
+                    <div className="flex mr-12 md:mr-0 text-yellow-400">
                         {"★".repeat(review.rating)}
                         {"☆".repeat(5 - review.rating)}
                     </div>

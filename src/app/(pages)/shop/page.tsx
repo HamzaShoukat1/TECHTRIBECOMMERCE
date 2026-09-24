@@ -46,7 +46,7 @@ function ShopContent() {
 
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const productsPerPage = 4;
+  const productsPerPage = 12
 
 
   useEffect(() => {
@@ -133,7 +133,6 @@ function ShopContent() {
       <section className="w-full max-w-[1440px] mx-auto  overflow-hidden items-center py-12 justify-center flex text-center md:text-start flex-col space-y-[32px]">
 
         {loading || isSearchLoading ? (
-          /* Tailored Tailwind CSS Spinner Loader */
           <div className="flex flex-col items-center justify-center min-h-[300px] w-full">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#b68c2d]"></div>
 
@@ -142,7 +141,6 @@ function ShopContent() {
             </p>
           </div>
         ) : currentProducts.length === 0 ? (
-          /* Empty State fallback */
           <div className="flex items-center justify-center min-h-[300px] w-full">
             <p className="text-gray-500 text-lg font-medium">
               No products found.

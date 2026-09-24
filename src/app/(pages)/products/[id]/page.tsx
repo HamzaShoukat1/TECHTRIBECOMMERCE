@@ -41,23 +41,23 @@ export default async function ProductDetailsPage({ params }: any) {
 
     return (
         <>
-            <div className='flex bg-[#F9F1E7]'>
+            <div className='flex bg-[#F9F1E7] hidden md:block'>
                 <ReusableBanner
                     parents={[{ label: 'Shop', href: '/shop' }]}
                     breadcrumbPosition='start'
                     makeLineBigger='large'
                 />
-                <h1 className='absolute top-40 left-60'>
+                <h1 className='absolute top-40  left-50 md:left-130'>
                     {heading}
                 </h1>
             </div>
 
-            <div className='w-full flex flex-col md:flex-row  max-w-[1440px]  mx-auto bg-white py-10 px-8 gap-12 font-poppins'>
+            <div className='w-full flex flex-col md:flex-row  max-w-[1440px]  overflow-hidden mx-auto bg-white py-10 px-8 gap-12 font-poppins'>
 
                 {/* LEFT SIDE: Image Gallery Panel */}
                 <div className='flex gap-4 items-start'>
                     {/* Thumbnails */}
-                    <div className='flex flex-col gap-4'>
+                    <div className='flex flex-col gap-4 hidden md:block'>
                         {[1, 2, 3, 4].map((i) => (
                             <div key={i} className='w-[76px] h-[80px] bg-[#FFF9F3] rounded-10 flex items-center justify-center cursor-pointer border border-transparent hover:border-[#B88E2F]'>
                                 <Image
@@ -71,7 +71,7 @@ export default async function ProductDetailsPage({ params }: any) {
                         ))}
                     </div>
                     {/* Main Image */}
-                    <div className='w-full max-w-[423px] h-[500px] bg-[#F9F1E7] rounded-10 flex items-center justify-center overflow-hidden'>
+                    <div className='w-full max-w-[423px] h-100 md:h-[500px] bg-[#F9F1E7] rounded-10 flex items-center justify-center overflow-hidden'>
                         <Image
                             src={image}
                             alt={heading}

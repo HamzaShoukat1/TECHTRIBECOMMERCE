@@ -86,7 +86,7 @@ export default function ProductInteractiveSection({
                 )}
 
             {/* Quantity + Add To Cart */}
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col md:flex-row items-center gap-4">
 
                 <div className="flex items-center justify-between gap-4 border px-4 py-3 rounded-xl w-full max-w-[123px]">
 

@@ -13,7 +13,7 @@ type ProductTypes = {
 export default function ProductCard({ id, Label, image, heading, paragraph, price }: ProductTypes) {
   return (
     <Link href={`/products/${id}`} className="block h-full w-full">
-      <div className="w-full overflow-hidden pb-4 bg-white h-full flex flex-col sm:max-w-[285px] mx-auto p-4">
+      <div className="w-full overflow-hidden pb-4 bg-gray-100 h-full flex flex-col border sm:max-w-[285px] mx-auto p-4">
 
         {/* Image Container */}
         <div className="relative w-full max-w-sm h-70 overflow-hidden rounded-lg">

@@ -34,7 +34,7 @@ export default function ReusableBanner({ title, image, parents = [], breadcrumbP
 
                 <div
                     className={`absolute top-1/2 -translate-y-1/2 flex flex-col  gap-2 w-full px-4 ${breadcrumbPosition === "start"
-                        ? "left-0 items-start mt-3 text-left  mx-[29px] "
+                        ? " md:left-68 items-start mt-3 text-left  mx-[29px] "
                         : "left-1/2 -translate-x-1/2 items-center text-center"
                         }`}
                 >
@@ -60,7 +60,8 @@ export default function ReusableBanner({ title, image, parents = [], breadcrumbP
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
 
-                            <BreadcrumbSeparator />
+                            <BreadcrumbSeparator className="[&>svg]:w-5 [&>svg]:h-5 text-neutral-400" />
+
 
                             {parents.map((parent, index) => (
                                 <React.Fragment key={index}>
@@ -69,13 +70,13 @@ export default function ReusableBanner({ title, image, parents = [], breadcrumbP
 
                                         </BreadcrumbLink>
                                     </BreadcrumbItem>
-                                    <BreadcrumbSeparator />
+                                    <BreadcrumbSeparator className="[&>svg]:w-5  [&>svg]:h-5 text-neutral-400" />
+
                                 </React.Fragment>
                             ))}
 
-                            {/* FIXED: The pipe separator is now safely contained within a BreadcrumbItem structure to keep horizontal alignment unbroken */}
                             <li
-                                className={`text-neutral-400 font-light px-1 select-none flex  items-center 
+                                className={`text-neutral-400 font-light px-1  select-none flex  items-center 
     ${makeLineBigger === "large" ? "text-5xl leading-0 text-[#9F9F9F]" : "h-4"}`}
                                 aria-hidden="true"
                             >
