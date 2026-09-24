@@ -156,7 +156,7 @@ export default function SignupForm() {
             <Button type="button" variant="outline" className="h-11 cursor-pointer" onClick={() => form.reset()} disabled={isPending}>
               Reset
             </Button>
-            <Button type="submit" form="form-rhf-signup" className="h-11 px-6 bg-yellow-500 hover:bg-yellow-600 cursor-pointer" disabled={isPending}>
+            <Button type="submit" form="form-rhf-signup" className="h-11 px-6 bg-yellow-500  hover:bg-yellow-600 cursor-pointer" disabled={isPending}>
               {isPending ? "Submitting..." : "Sign Up"}
             </Button>
           </Field>
