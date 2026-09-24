@@ -27,7 +27,12 @@ export default function Navbar() {
   const pathName = usePathname()
   const { setIsOpen } = useCart()
   const { data: cart } = useCartQuery()
-  const { data: user } = useQuery({ queryKey: ["currentUser"], queryFn: getCurrentUser, retry: false });
+  const { data: user,isLoading:isUserLoading } = useQuery({
+     queryKey: ["currentUser"],
+      queryFn: getCurrentUser,
+       retry: false,
+         staleTime: 1000 * 60 * 5, 
+       });
 
   const isAuthPage = pathName === "/login" || pathName === "/signup"
 
@@ -146,34 +151,30 @@ export default function Navbar() {
             </>
           )}
 
-          {/* User management */}
-          {user ? (
-            <div className="flex items-center gap-3 pl-2 sm:border-l sm:border-gray-200 shrink-0">
-              <div className="hidden lg:block text-right">
-                <p className="text-xs font-semibold text-gray-900">{user.firstName}</p>
-                <p className="text-[10px] text-gray-500 truncate max-w-[120px]">{user.email}</p>
-              </div>
-              <button
-                onClick={() => logout()}
-                className="text-xs font-medium text-gray-600 cursor-pointer hover:text-red-600 transition-colors py-1.5 px-3 rounded-md hover:bg-red-50 border border-gray-300"
-              >
-                Logout
-              </button>
-            </div>
-          ) : (
-            <div className="flex gap-2 justify-center shrink-0">
-              <Link href="/login">
-                <button className="text-xs font-medium text-gray-600 cursor-pointer bg-white py-1.5 px-3 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors">
-                  Sign In
-                </button>
-              </Link>
-              <Link href="/signup" className="hidden sm:block">
-                <button className="text-xs font-medium text-white cursor-pointer bg-yellow-500 hover:bg-yellow-600 py-1.5 px-3 rounded-md transition-colors">
-                  Sign Up
-                </button>
-              </Link>
-            </div>
-          )}
+        {/* User management */}
+{isUserLoading ? (
+  <div className="flex items-center gap-3 pl-2 sm:border-l sm:border-gray-200 shrink-0">
+    <div className="w-16 h-7 bg-gray-200 animate-pulse rounded-md" />
+  </div>
+) : user ? (
+  <div className="flex items-center gap-3 pl-2 sm:border-l sm:border-gray-200 shrink-0">
+    <div className="hidden lg:block text-right">
+      <p className="text-xs font-semibold text-gray-900">{user.firstName}</p>
+      <p className="text-[10px] text-gray-500 truncate max-w-[120px]">{user.email}</p>
+    </div>
+    <button onClick={() => logout()} className="text-xs font-medium text-gray-600 cursor-pointer hover:text-red-600 transition-colors py-1.5 px-3 rounded-md hover:bg-red-50 border border-gray-300">Logout</button>
+  </div>
+) : (
+  <div className="flex gap-2 justify-center shrink-0">
+    <Link href="/login">
+      <button className="text-xs font-medium text-gray-600 cursor-pointer bg-white py-1.5 px-3 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors">Sign In</button>
+    </Link>
+    <Link href="/signup" className="hidden sm:block">
+      <button className="text-xs font-medium text-white cursor-pointer bg-yellow-500 hover:bg-yellow-600 py-1.5 px-3 rounded-md transition-colors">Sign Up</button>
+    </Link>
+  </div>
+)}
+
         </div>
       </div>
 
