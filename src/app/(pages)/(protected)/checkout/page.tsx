@@ -5,10 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-import shopPageBanner from "../../public/images/Shop-page-images/Rectangle 1(1).png";
+import shopPageBanner from "../../../public/images/Shop-page-images/Rectangle 1(1).png";
 
-import ReusableBanner from "../../Components/ReusableBanner";
-import { useCartQuery } from "../../hooks/useCartQuery";
+import ReusableBanner from "../../../Components/ReusableBanner";
+import { useCartQuery } from "../../../hooks/useCartQuery";
 
 import {
     CheckoutInput,

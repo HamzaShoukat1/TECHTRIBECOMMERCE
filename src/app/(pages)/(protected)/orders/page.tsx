@@ -1,7 +1,7 @@
 "use client";
 
-import { UseGetAllOrders } from "../../hooks/UseGetAllOrders";
-import UsableSkeleton from "../../Components/UsableSkeleton";
+import { UseGetAllOrders } from "../../../hooks/UseGetAllOrders";
+import UsableSkeleton from "../../../Components/UsableSkeleton";
 import { OrdersTable } from "./orders-table";
 
 export default function OrdersPage() {

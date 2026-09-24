@@ -3,12 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import { FaTrash } from "react-icons/fa";
-import shopPageBanner from "../../public/images/Shop-page-images/Rectangle 1(1).png";
+import shopPageBanner from "../../../public/images/Shop-page-images/Rectangle 1(1).png";
 import Link from "next/link";
-import ReusableBanner from "../../Components/ReusableBanner";
-import UsableSkeleton from "../../Components/UsableSkeleton";
-import { useCartQuery } from "../../hooks/useCartQuery";
-import { useRemoveCart } from "../../hooks/UseRemoveCart";
+import ReusableBanner from "../../../Components/ReusableBanner";
+import UsableSkeleton from "../../../Components/UsableSkeleton";
+import { useCartQuery } from "../../../hooks/useCartQuery";
+import { useRemoveCart } from "../../../hooks/UseRemoveCart";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 

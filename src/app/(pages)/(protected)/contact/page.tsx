@@ -1,14 +1,14 @@
 "use client"
 
 import React, { useState } from 'react';
-import shopPageBanner from '../../public/images/Shop-page-images/Rectangle 1(1).png';
+import shopPageBanner from '../../../public/images/Shop-page-images/Rectangle 1(1).png';
 import { MapPin, Phone, Clock } from 'lucide-react';
-import ReusableBanner from '../../Components/ReusableBanner';
-import { UseContact } from '../../hooks/UseContact';
-import trophy from "../../public/images/trophy 1.png";
-import guarentee from "../../public/images/guarantee.png";
-import Shipping from "../../public/images/shipping.png";
-import CustomerSupport from "../../public/images/customer-support.png";
+import ReusableBanner from '../../../Components/ReusableBanner';
+import { UseContact } from '../../../hooks/UseContact';
+import trophy from "../../../public/images/trophy 1.png";
+import guarentee from "../../../public/images/guarantee.png";
+import Shipping from "../../../public/images/shipping.png";
+import CustomerSupport from "../../../public/images/customer-support.png";
 import Image from 'next/image'
 export {
   trophy,

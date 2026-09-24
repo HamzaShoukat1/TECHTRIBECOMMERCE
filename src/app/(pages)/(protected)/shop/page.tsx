@@ -2,19 +2,19 @@
 
 import { useState, useEffect, Suspense } from "react";
 
-import shopPageBanner from "../../public/images/Shop-page-images/Rectangle 1(1).png";
+import shopPageBanner from "../../../public/images/Shop-page-images/Rectangle 1(1).png";
 
-import ReusableBanner from "../../Components/ReusableBanner";
-import { getAllProducts } from "../../services/product.service";
-import { IProduct, IProductResponse } from "../../utils/Types";
-import ProductCard from "../../Components/ProductCard";
-import trophy from "../../public/images/trophy 1.png";
-import guarentee from "../../public/images/guarantee.png";
+import ReusableBanner from "../../../Components/ReusableBanner";
+import { getAllProducts } from "../../../services/product.service";
+import { IProduct, IProductResponse } from "../../../utils/Types";
+import ProductCard from "../../../Components/ProductCard";
+import trophy from "../../../public/images/trophy 1.png";
+import guarentee from "../../../public/images/guarantee.png";
 import { useSearchParams } from "next/navigation";
-import { useProductSearch } from "../../hooks/useProductSearch";
-import { useDebounce } from "../../hooks/usedebounce";
-import Shipping from "../../public/images/shipping.png";
-import CustomerSupport from "../../public/images/customer-support.png";
+import { useProductSearch } from "../../../hooks/useProductSearch";
+import { useDebounce } from "../../../hooks/usedebounce";
+import Shipping from "../../../public/images/shipping.png";
+import CustomerSupport from "../../../public/images/customer-support.png";
 import Image from "next/image";
 
 export {
