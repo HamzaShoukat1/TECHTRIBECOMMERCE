@@ -136,7 +136,7 @@ export default function Navbar() {
                 </Link>
               )}
               {pathName === "/shop" && (
-                <div className="relative w-full mb-1 block md:hidden">
+                <div className="relative w-full mb-1 block sm:hidden">
                   <Search className="absolute left-3 top-2.5 h-4 w-4 text-gray-400" />
                   <input
                     type="text"
